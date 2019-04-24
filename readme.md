@@ -1,6 +1,6 @@
 # PROJECT MANAGEMENT DASHBOARD 
 
-#### [Visit App on Heroku](https://django-gamification.herokuapp.com/)
+#### [Visit App on Heroku](https://django-gamification1.herokuapp.com/)
 
 <br>
 
