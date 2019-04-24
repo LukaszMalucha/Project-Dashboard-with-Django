@@ -1,0 +1,96 @@
+{% extends "base.html" %} {% load staticfiles %}{% load materializecss %}
+{% block extrahead %}
+<link href="{% static 'css/forms.css' %}" rel="stylesheet"/>
+<link href="{% static 'css/data.css' %}" rel="stylesheet"/>
+{% endblock %}
+{% load bootstrap_tags %} {% block content %}
+{% block row_header %}
+<div class="row header details-header">
+    <div class="col-md-2 text-right plain-element">
+        <img src="{% static 'img/portraits/default.jpg' %}" class="img responsive img-header">
+    </div>
+
+    <div class="col-md-10 text-left">
+        <h4>Edit Profile</h4>
+    </div>
+</div>
+
+
+<div class="row row-message">
+    {% if messages %} {% for message in messages %} {% if message.tags == "success" %}
+    <div class="alert alert-success">
+        <div class="messages text-center">
+            {{ message }}
+        </div>
+    </div>
+    {% else %}
+    <div class="alert alert-danger">
+        <div class="messages text-center">
+            {{ message }}
+        </div>
+    </div>
+    {% endif %} {% endfor %}
+    {% else %}
+
+    {% endif %}
+</div>
+{% endblock %}
+<div class="dashboard-cards">
+    <div class="row row-cards">
+        <div class="col-md-5 no-padding">
+            <div class="card insights-card">
+                <div class="card-header">
+                    <img src="{% static 'img/icons/gear.png' %}" class="img-responsive">
+                    <p><b> Edit Profile </b></p>
+                </div>
+                <form class="form-signin form-wide" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <fieldset class="form-box">
+                        <div class="row">
+                            <div class="input-field col s4">
+                                <div class="input-field col s12">
+                                    <h6>My Position:</h6>
+                                </div>
+                                <div class="input-field col s12">
+                                    <h6>My Portrait:</h6>
+                                </div>
+
+                            </div>
+                            <div class="input-field col s4 property_input">
+                                <select name="position" required="required">
+                                    <option value="Coder">Coder</option>
+                                    <option value="PM">Project Manager</option>
+                                </select>
+                            </div>
+                            <div class="input-field col s6 property_input">
+                                <input placeholder="image" type="file" class="form-control file_input" name="image">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn-login"><span>Submit <i
+                                class="far fa-arrow-alt-circle-right"></i></span>
+                        </button>
+                    </fieldset>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+
+<div class="fixed-action-btn">
+    <a class="btn-floating btn-large blue" href="{% url 'dashboard:dashboard' %}">
+        <i class="large material-icons">exit_to_app</i>
+    </a>
+</div>
+
+
+
+<script>
+  $(document).ready(function(){
+    $('select').formSelect();
+  });
+
+</script>
+
+{% endblock %}

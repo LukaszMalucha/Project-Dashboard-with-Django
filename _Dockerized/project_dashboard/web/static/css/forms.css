@@ -1,0 +1,158 @@
+body {
+    background-image: url('../../static/img/background_form.png');
+    background-size: cover;
+}
+
+
+
+#page-index {
+
+    padding-top: 60px;
+    background-image: none;
+
+
+}
+
+.form-signin {
+    text-align: center;
+    max-width: 40%;
+    padding: 15px 0px 0px 0px;
+    margin: 0 auto;
+    background-color: white;
+    border-color: transparent;
+    border-radius: 15px;
+    color: #222222;
+    font-weight: bolder;
+    margin-bottom: 50px;
+}
+
+.btn-login {
+    width: 100%;
+    height: 50px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    border-color: transparent;
+    text-align: right;
+    color: white;
+    background-color: #165d81;
+    font-size: 18px;
+}
+
+.btn-login:hover, .btn-login:active, .btn-login:focus {
+    background-color: #0f415a;
+}
+
+
+
+#icon-login {
+    position: relative;
+    top: -50px;
+    margin: auto;
+    font-size: 5rem;
+    border-radius: 50px;
+    background-color: white;
+    padding: 3%;
+    color: #165d81;
+}
+
+.form-box {
+    margin-top: -50px;
+    padding: 0px;
+}
+
+.row-login {
+    padding-left: 5%;
+    padding-right: 5%;
+
+}
+
+.field-description {
+    text-align: right;
+    padding-top: 2px !important;
+    margin-bottom: 30px;
+}
+
+h6 {
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: #222;
+    color: grey;
+}
+
+input[type="email"]:not(.browser-default):focus:not([readonly]),
+input[type="password"]:not(.browser-default):focus:not([readonly]),
+input[type="text"]:not(.browser-default):focus:not([readonly]) {
+    border-bottom: 1px solid #165d81;
+    box-shadow: 0 1px 0 0 #26a69a;
+
+}
+
+input[type="email"]:not(.browser-default),
+input[type="password"]:not(.browser-default),
+input[type="text"]:not(.browser-default) {
+    font-size: 14px;
+    height: 2.5rem;
+}
+input[type="number"]:not(.browser-default),
+input.valid[type="number"]:not(.browser-default) {
+    text-align: center;
+}
+
+
+.input-field > label {
+    display: none;
+}
+
+
+.orange-text {
+    font-size: 12px;
+}
+
+blockquote {
+    font-size: 12px;
+    color: red;
+    border: none;
+    position: relative;
+    top: -50px;
+}
+
+
+.form-wide {
+    max-width: 100% !important;
+
+}
+
+.form-wide .btn-login {
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+
+
+/*----------------------------------------------
+    MEDIA QUERIES
+------------------------------------------------*/
+
+
+
+
+@media(max-width:1600px) {
+    .form-signin {
+    max-width: 60%;
+    }
+
+     #page-index {
+    padding-top: 0px;
+    }
+
+
+}
+
+@media(max-width:859px) {
+    .form-signin {
+    max-width: 100%;
+    }
+
+
+}
+

@@ -1,0 +1,6 @@
+static/* linguist-vendored
+user/templates/* linguist-vendored
+projects/templates/* linguist-vendored
+charity/templates/* linguist-vendored
+charity_donation/templates/* linguist-vendored
+_Dockerized/* linguist-vendored

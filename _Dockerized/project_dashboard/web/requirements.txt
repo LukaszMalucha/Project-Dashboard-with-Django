@@ -1,0 +1,8 @@
+dj-database-url==0.5.0
+Django==2.1.7
+django-forms-bootstrap==3.1.0
+django-materializecss-form==1.1.11
+djangorestframework==3.9.1
+djangorestframework-stubs==0.2.0
+Pillow==5.4.1
+stripe == 2.22.0

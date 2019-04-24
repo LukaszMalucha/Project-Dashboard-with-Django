@@ -1,0 +1,59 @@
+{% extends "base.html" %} {% load staticfiles %}{% load materializecss %}
+{% block extrahead %}
+<link href="{% static 'css/forms.css' %}" rel="stylesheet"/>
+{% endblock %}
+{% load bootstrap_tags %} {% block content %}
+{% block row_header %}
+<div class="row" style="min-height: 72px">
+    {% if messages %} {% for message in messages %} {% if message.tags == "success" %}
+    <div class="alert alert-success">
+        <div class="messages text-center">
+            {{ message }}
+        </div>
+    </div>
+    {% else %}
+    <div class="alert alert-danger">
+        <div class="messages text-center">
+            {{ message }}
+        </div>
+    </div>
+    {% endif %} {% endfor %}
+    {% else %}
+
+    {% endif %}
+</div>
+{% endblock %}
+
+
+<div class="container">
+
+    <form class="form-signin" method="post" action="{% url 'user:login' %}?next={{ next }}">
+        <i class="material-icons" id="icon-login">lock</i>
+        <fieldset class="form-box">
+            <div class="row text-center">
+                <h4>Login User</h4>
+            </div>
+            <div class="row text-center">
+                <div class="input-field col s6">
+                    <div class="input-field col s12 field-description">
+                        <h6>Your Email Address:</h6>
+                    </div>
+                    <div class="input-field col s12 field-description">
+                        <h6>Your Password:</h6>
+                    </div>
+                </div>
+                <div class="input-field col s6">
+                    {% csrf_token %}
+                    {{ login_form |materializecss }}
+                </div>
+            </div>
+            <div class="row text-center">
+                <a href="{% url 'user:password_reset' %}">Forgot my password</a>
+            </div>
+            <button type="submit" class="btn-login"><span>Continue <i class="far fa-arrow-alt-circle-right"></i></span>
+            </button>
+        </fieldset>
+    </form>
+</div> <!-- /container -->
+
+{% endblock %}

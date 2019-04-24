@@ -1,0 +1,225 @@
+{% extends "base.html" %} {% load staticfiles %}
+{% block extrahead %}
+<link href="{% static 'css/data.css' %}" rel="stylesheet"/>
+{% endblock %}
+{% load bootstrap_tags %} {% block content %}
+{% block row_header %}
+<div class="row header details-header">
+    <div class="col-md-2 text-right plain-element">
+        <img src="{% static 'img/d.png' %}" class="img responsive img-header">
+    </div>
+
+    <div class="col-md-10 text-left">
+        <div class="box">
+        <h4>Kanban Board</h4>
+        <a href="{% url 'projects:propose_project' %}" class="btn-algorithm blue">Propose Project</a>
+        </div>
+        <h6>Active Projects:  &nbsp; <b class="counter">{{ project_count }} </b></h6>
+        <h6>Issues Counter:  &nbsp; <b class="counter">{{ issue_count }}</b></h6>
+
+    </div>
+</div>
+<div class="row row-message">
+    {% if messages %} {% for message in messages %} {% if message.tags == "success" %}
+    <div class="alert alert-success">
+        <div class="messages text-center">
+            {{ message }}
+        </div>
+    </div>
+    {% else %}
+    <div class="alert alert-danger">
+        <div class="messages text-center">
+            {{ message }}
+        </div>
+    </div>
+    {% endif %} {% endfor %}
+    {% else %}
+
+    {% endif %}
+</div>
+{% endblock %}
+<div class="dashboard-cards">
+    <div class="row row-cards">
+        <div class="col-sm-8 col-md-4 col-lg-25 text-center">
+            <div class="card card-status">
+                <i class="fas fa-lightbulb"></i> Proposed
+            </div>
+        </div>
+        <div class="col-sm-8 col-md-4 col-lg-25 text-center">
+            <div class="card card-status">
+                <i class="fas fa-chart-line"></i> Analysis
+            </div>
+        </div>
+        <div class="col-sm-8 col-md-4 col-lg-25 text-center">
+            <div class="card card-status">
+                <i class="fas fa-cog"></i> Development
+            </div>
+        </div>
+        <div class="col-sm-8 col-md-4 col-lg-25 text-center">
+            <div class="card card-status">
+                <i class="fas fa-code"></i> Test
+            </div>
+        </div>
+        <div class="col-sm-8 col-md-4 col-lg-25 text-center">
+            <div class="card card-status">
+                <i class="fas fa-space-shuttle"></i> Deployment
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="row row-cards">
+        <div class="col-sm-8 col-md-4 col-lg-25 text-center">
+             {% for project in projects %} {% if project.phase == 'proposed' %}
+                <div class="card project-card">
+                <div class="row plain-element">
+                    <div class="col-md-10 plain-element text-left">
+                        <h6>{{ project.name|truncatechars:20 }}</h6>
+
+                    </div>
+                    <div class="col-xs-2 col-sm-3 col-md-2 plain-element">
+                        {% for profile in profiles %} {% if profile.owner == project.proposed_by %}
+                        <img src="{{ profile.image.url }}" class="img responsive portrait plain-element">
+                        {% endif %} {% endfor %}
+                    </div>
+                </div>
+                <br>
+                <div class="row plain-element">
+                    <div class="col-md-10 plain-element text-left">
+                        <p>{{ project.description|truncatechars:45 }}</p>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-2 plain-element" style="height: 100%">
+                        <button onclick="window.location='{% url 'projects:project_details' pk=project.id  %}'"
+                                class="btn btn-success btn-card" type="submit">
+                            <i class="fas fa-sign-in-alt"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+        <div class="col-sm-8 col-md-4 col-lg-25 text-center">
+            {% for project in projects %} {% if project.phase == 'analysis' %}
+                <div class="card project-card"  style="border-color:purple">
+                <div class="row plain-element">
+                    <div class="col-md-10 plain-element text-left">
+
+                        <h6>{{ project.name|truncatechars:20 }} </h6>
+
+                    </div>
+                    <div class="col-xs-2 col-sm-3 col-md-2 plain-element">
+                        {% for profile in profiles %} {% if profile.owner == project.proposed_by %}
+                        <img src="{{ profile.image.url }}" class="img responsive portrait plain-element">
+                        {% endif %} {% endfor %}
+                    </div>
+                </div>
+                <br>
+                <div class="row plain-element">
+                    <div class="col-md-10 plain-element text-left">
+                        <p>{{ project.description|truncatechars:45 }}</p>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-2 plain-element" style="height: 100%">
+                        <button onclick="window.location='{% url 'projects:project_details' pk=project.id  %}'"
+                                class="btn btn-success btn-card" type="submit">
+                            <i class="fas fa-sign-in-alt"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+        <div class="col-sm-8 col-md-4 col-lg-25 text-center">
+            {% for project in projects %} {% if project.phase == 'development' %}
+                <div class="card project-card"  style="border-color:green">
+                <div class="row plain-element">
+                    <div class="col-md-10 plain-element text-left">
+                        <h6>{{ project.name|truncatechars:20 }}</h6>
+                    </div>
+                    <div class="col-xs-2 col-sm-3 col-md-2 plain-element">
+                        {% for profile in profiles %} {% if profile.owner == project.proposed_by %}
+                        <img src="{{ profile.image.url }}" class="img responsive portrait plain-element">
+                        {% endif %} {% endfor %}
+                    </div>
+                </div>
+                <br>
+                <div class="row plain-element">
+                    <div class="col-md-10 plain-element text-left">
+                        <p>{{ project.description|truncatechars:45 }}</p>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-2 plain-element" style="height: 100%">
+                        <button onclick="window.location='{% url 'projects:project_details' pk=project.id %}'"
+                                class="btn btn-success btn-card" type="submit">
+                            <i class="fas fa-sign-in-alt"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+        <div class="col-sm-8 col-md-4 col-lg-25 text-center">
+            {% for project in projects %} {% if project.phase == 'test' %}
+                <div class="card project-card"  style="border-color:teal">
+                <div class="row plain-element">
+                    <div class="col-md-10 plain-element text-left">
+                        <h6>{{ project.name|truncatechars:20 }}</h6>
+                    </div>
+                    <div class="col-xs-2 col-sm-3 col-md-2 plain-element">
+                        {% for profile in profiles %} {% if profile.owner == project.proposed_by %}
+                        <img src="{{ profile.image.url }}" class="img responsive portrait plain-element">
+                        {% endif %} {% endfor %}
+                    </div>
+                </div>
+                <br>
+                <div class="row plain-element">
+                    <div class="col-md-10 plain-element text-left">
+                        <p>{{ project.description|truncatechars:45 }}</p>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-2 plain-element">
+                        <button onclick="window.location='{% url 'projects:project_details' pk=project.id %}'"
+                                class="btn btn-success btn-card" type="submit">
+                            <i class="fas fa-sign-in-alt"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+        <div class="col-sm-8 col-md-4 col-lg-25 text-center">
+            {% for project in projects %} {% if project.phase == 'deployment' %}
+                <div class="card project-card"  style="border-color:gold">
+                <div class="row plain-element">
+                    <div class="col-md-10 plain-element text-left">
+                        <h6>{{ project.name|truncatechars:20 }}</h6>
+                    </div>
+                    <div class="col-xs-2 col-sm-3 col-md-2 plain-element">
+                        {% for profile in profiles %} {% if profile.owner == project.proposed_by %}
+                        <img src="{{ profile.image.url }}" class="img responsive portrait plain-element">
+                        {% endif %} {% endfor %}
+                    </div>
+                </div>
+                <br>
+                <div class="row plain-element">
+                    <div class="col-md-10 plain-element text-left">
+                        <p>{{ project.description|truncatechars:45 }}</p>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-2 plain-element" style="height: 100%">
+                        <button onclick="window.location='{% url 'projects:project_details' pk=project.id %}'"
+                                class="btn btn-success btn-card" type="submit">
+                            <i class="fas fa-sign-in-alt"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+
+    </div>
+
+</div>
+
+
+{% endblock %}
