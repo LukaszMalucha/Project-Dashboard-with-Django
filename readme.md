@@ -101,10 +101,6 @@ This Project is a simulation of work environment, where more traditional agile t
 
 <br>
 
-### Travis CI:
-
-[![Build Status](https://travis-ci.com/LukaszMalucha/Project-Dashboard-with-Django.svg?branch=master)](https://travis-ci.com/LukaszMalucha/Project-Dashboard-with-Django)
-
 ## TOOLS, MODULES & TECHNIQUES
 
 ##### Web Development:
