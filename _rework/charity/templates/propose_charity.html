@@ -37,7 +37,7 @@
 {% endblock %}
 <div class="dashboard-cards">
     <div class="row row-cards">
-        <div class="col-md-5 no-padding">
+        <div class="col-md-5 plain-element">
             <div class="card insights-card">
                 <div class="card-header">
                     <img src="{% static 'img/icons/charity.png' %}" class="img-responsive">
@@ -48,17 +48,17 @@
                     <fieldset class="form-box">
                         {% for field in form %} {{ field.errors }}
                         {% if field.name != 'image' %}
-                        <div class="input-field col s6">
-                            <h6>{{field.label}}</h6>
+                        <div class="input-field col s5 text-right">
+                            <h6>{{field.label}}:</h6>
                         </div>
-                        <div class="input-field col s6">
+                        <div class="input-field col s7">
                             <input placeholder="{{field.label}}" name="{{field.name}}" class="form-control"/>
                         </div>
                         {% else %}
-                        <div class="input-field col s6">
-                            <h6>Charity Image</h6>
+                        <div class="input-field col s5 text-right">
+                            <h6>Charity Image:</h6>
                         </div>
-                        <div class="input-field col s6">
+                        <div class="input-field col s7">
                             <input placeholder="{{field.label}}" type="file" class="form-control file_input" name="image">
                         </div>
                         {% endif %}

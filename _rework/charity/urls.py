@@ -1,14 +1,13 @@
-from django.urls import path
+from django.urls import path, include
 from charity import views
+from rest_framework.routers import DefaultRouter
 
 app_name = 'charity'
+router = DefaultRouter()
+router.register('charities', views.CharityViewSet)
+
 
 urlpatterns = [
-    path('propose_charity/', views.propose_charity, name='propose_charity'),
-    path('delete_charity/<int:pk>', views.delete_charity, name='delete_charity'),
-    path('support/<id>', views.add_to_donations, name="add_to_donations"),
-    path('adjust/<id>', views.adjust_donations, name="adjust_donations"),
-    path('view_donations', views.view_donations, name="view_donations"),
-    path('charity_donation/', views.charity_donation, name="charity_donation")
-
+    path('charity_donation/', views.charity_donation, name="charity_donation"),
+    path('', include(router.urls))
     ]
