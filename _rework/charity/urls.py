@@ -8,6 +8,6 @@ router.register('charities', views.CharityViewSet)
 
 
 urlpatterns = [
-    path('charity_donation/', views.charity_donation, name="charity_donation"),
+    path('donate/', views.DonateView.as_view(), name="donate"),
     path('', include(router.urls))
     ]

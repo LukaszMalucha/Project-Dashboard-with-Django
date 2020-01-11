@@ -10,68 +10,6 @@ from rest_framework.response import Response
 from charity import serializers
 from core.models_charity import Charity, DonationLineItem
 from core.permissions import IsAdminOrReadOnly
-from .forms import DonationForm, MakeDonationForm
-
-
-# stripe.api_key = settings.STRIPE_SECRET
-
-
-@login_required()
-def charity_donation(request):
-    if request.method == "POST":
-        donation_form = DonationForm(request.POST)
-        make_donation_form = MakeDonationForm(request.POST)
-
-        messages.success(request, "Your Donation was successful. Thank you!")
-        return redirect(reverse('charity:charity'))
-
-        # ## PAYMENT
-        # if donation_form.is_valid() and make_donation_form.is_valid():
-        #     donation = donation_form.save(commit=False)
-        #     donation.save()
-        #
-        #     chosen_donations = request.session.get('chosen_donations',
-        #                                            {})  # request context from charity_choice app
-        #     total = 0
-        #     for id, quantity in chosen_donations.items():
-        #         charity = get_object_or_404(Charity, pk=id)
-        #         total += quantity * charity.donation
-        #         donation_line_item = DonationLineItem(
-        #             donation=donation,
-        #             charity=charity
-        #         )
-        #         donation_line_item.save()
-        #
-        #
-        #     try:
-        #         customer = stripe.Charge.create(
-        #             amount=int(total * 100),  ## counts in cents
-        #             currency="EUR",
-        #             description=request.user.email,
-        #             card=make_donation_form.cleaned_data['stripe_id'],
-        #         )
-        #     except stripe.error.CardError:
-        #         messages.error(request, "Your card was declined!")
-        #
-        #     if customer.paid:
-        #         messages.error(request, "You have successfully paid")
-        #         request.session['chosen_donations'] = {}
-        #         return redirect(reverse('charity:charity'))
-        #     else:
-        #         messages.error(request, "Unable to take payment")
-        # else:
-        #     print(make_donation_form.errors)
-        #     messages.error(request, "We were unable to take a payment with that card!")
-
-
-
-    else:
-        donation_form = DonationForm()
-        make_donation_form = MakeDonationForm()
-
-    return render(request, "charity_donation.html", {'donation_form': donation_form,
-                                                     'make_donation_form': make_donation_form,
-                                                     })
 
 
 class CharityViewSet(viewsets.ModelViewSet):
@@ -111,7 +49,10 @@ class DonateView(views.APIView):
     def get(self, request):
         return Response({"message": "Please visit our Fundraising Actions and become a part of our charity program."})
 
-    def post(self):
-        data = request.data
+    def post(self, request):
+        data = request.data['checkout']
+        for element in data:
+            pass
+
         return Response({'data': data})
 
