@@ -11,10 +11,9 @@
                       <button v-if="this.requestPosition == 'admin'" class="btn-inline-delete" @click="triggerDeleteCharity">Delete</button>
                     </span>
                     <p>{{ charity.description| truncatechars(60) }}</p>
-
-                    <form class="form-inline" method="post" action="">
-                        <button type="submit" class="btn btn-algorithm green">Donate 5€</button>
-                    </form>
+                        <button type="submit" @click="triggerAddDonation" class="btn btn-algorithm green">
+                          Donate 5 <img src="@/assets/img/leancoin-button.png" class="icon-small">
+                        </button>
 
                 </div>
             </div>
@@ -50,6 +49,9 @@ export default {
     triggerDeleteCharity() {
       // emit an event to delete an charity instance
       this.$emit("delete-charity", this.charity)
+    },
+    triggerAddDonation() {
+      this.$emit("add-donation", this.charity)
     },
     setRequestPosition() {
       this.requestPosition = window.localStorage.getItem("position");

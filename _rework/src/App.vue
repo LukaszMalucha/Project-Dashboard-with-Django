@@ -18,7 +18,7 @@ export default {
         const requestPosition = dataPosition["position"]
         window.localStorage.setItem("email", requestUser);
         window.localStorage.setItem("position", requestPosition);
-      }
+      },
     },
     created() {
         this.setUserInfo();

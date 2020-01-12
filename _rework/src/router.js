@@ -3,8 +3,12 @@ import Router from "vue-router";
 import Home from "./views/Home.vue";
 import Charity from "./views/Charity.vue";
 import CharityCreate from "./views/CharityCreate.vue";
-import CharityDonation from "./views/CharityDonation.vue";
-import CharityDonationList from "./views/CharityDonationList.vue";
+import CharityDonate from "./views/CharityDonate.vue";
+import CharityDonations from "./views/CharityDonations.vue";
+import ProjectCreate from "./views/ProjectCreate.vue";
+
+
+import NotFound from "./views/NotFound.vue";
 
 Vue.use(Router)
 
@@ -27,14 +31,26 @@ export default new Router({
       component: CharityCreate
     },
     {
-      path: "/charity-donation",
-      name: "charity-donation",
-      component: CharityDonation
+      path: "/charity-donate",
+      name: "charity-donate",
+      component: CharityDonate,
+      props: true
     },
     {
-      path: "/charity-donation-list",
-      name: "charity-donation-list",
-      component: CharityDonationList
+      path: "/charity-donations",
+      name: "charity-donations",
+      component: CharityDonations,
+      props: true
+    },
+    {
+      path: "/project-create",
+      name: "project-create",
+      component: ProjectCreate
+    },
+    {
+      path: "*",
+      name: "page-not-found",
+      component: NotFound,
     },
   ]
 })

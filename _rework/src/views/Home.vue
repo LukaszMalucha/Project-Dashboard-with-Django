@@ -1,16 +1,17 @@
 <template>
   <div class="row plain-element">
+    <RowNavHeader/>
     <div class="row header details-header">
       <div class="col-md-2 text-right plain-element img-column">
           <img src="@/assets/img/d.png" class="img responsive img-header">
       </div>
 
-      <div class="col-md-10 text-left">
+      <div class="col-md-8 text-left">
           <div class="box">
-            <h4>Kanban Board</h4>
-            <a href="" class="btn-algorithm blue">Propose Project</a>
+            <h5>Kanban Board</h5>
+            <router-link :to="{name: 'project-create'}" class="btn-algorithm blue">Propose Project</router-link>
           </div>
-          <h6>Active Projects:  &nbsp; <b class="counter">12 </b></h6>
+          <h6>Active Projects:  &nbsp; <b class="counter">{{countProjects }} </b></h6>
           <h6>Issues Counter:  &nbsp; <b class="counter">14 </b></h6>
       </div>
     </div>
@@ -47,12 +48,45 @@
 </template>
 
 <script>
+import { apiService } from "@/common/api.service.js";
+import RowNavHeader from "@/components/RowNavHeader.vue";
 
 export default {
   name: 'home',
   components: {
+    RowNavHeader
+  },
+  data() {
+    return {
+      search: "",
+      projects: [],
+
+      requestUser: null,
+      requestPosition: null,
+    }
+  },
+  computed: {
+    countProjects() { return this.projects.length }
+  },
+  methods: {
+    setRequestUser() {
+        this.requestUser = window.localStorage.getItem("email");
+    },
+    setRequestPosition() {
+        this.requestPosition = window.localStorage.getItem("position");
+    },
+    getProjectsData() {
+      let endpoint = "projects/projects/";
+      apiService(endpoint)
+        .then(data => {
+          this.projects.push(...data.results);
+        })
+    }
   },
   created() {
+    this.getProjectsData();
+    this.setRequestUser();
+    this.setRequestPosition();
     document.title = "Project Dashboard | Septellar";
   }
 }
