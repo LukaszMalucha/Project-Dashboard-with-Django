@@ -71,30 +71,30 @@
         <div class="col-sm-8 col-md-4 col-lg-25 text-center">
              {% for project in projects %} {% if project.phase == 'proposed' %}
                 <div class="card project-card">
-                <div class="row plain-element">
-                    <div class="col-xs-10 col-sm-10 col-md-10 plain-element text-left">
-                        <h6>{{ project.name|truncatechars:20 }}</h6>
+                    <div class="row plain-element">
+                        <div class="col-xs-10 col-sm-10 col-md-10 plain-element text-left">
+                            <h6>{{ project.name|truncatechars:20 }}</h6>
 
+                        </div>
+                        <div class="col-xs-2 col-sm-3 col-md-2 plain-element">
+                            {% for profile in profiles %} {% if profile.owner == project.proposed_by %}
+                            <img src="{{ profile.image.url }}" class="img responsive portrait plain-element">
+                            {% endif %} {% endfor %}
+                        </div>
                     </div>
-                    <div class="col-xs-2 col-sm-3 col-md-2 plain-element">
-                        {% for profile in profiles %} {% if profile.owner == project.proposed_by %}
-                        <img src="{{ profile.image.url }}" class="img responsive portrait plain-element">
-                        {% endif %} {% endfor %}
+                    <br>
+                    <div class="row plain-element">
+                        <div class="col-xs-10 col-sm-10 col-md-10 plain-element text-left">
+                            <p>{{ project.description|truncatechars:45 }}</p>
+                        </div>
+                        <div class="col-xs-2 col-sm-2 col-md-2 plain-element" style="height: 100%">
+                            <button onclick="window.location='{% url 'projects:project_details' pk=project.id  %}'"
+                                    class="btn btn-success btn-card" type="submit">
+                                <i class="fas fa-sign-in-alt"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
-                <br>
-                <div class="row plain-element">
-                    <div class="col-xs-10 col-sm-10 col-md-10 plain-element text-left">
-                        <p>{{ project.description|truncatechars:45 }}</p>
-                    </div>
-                    <div class="col-xs-2 col-sm-2 col-md-2 plain-element" style="height: 100%">
-                        <button onclick="window.location='{% url 'projects:project_details' pk=project.id  %}'"
-                                class="btn btn-success btn-card" type="submit">
-                            <i class="fas fa-sign-in-alt"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
             {% endif %}
             {% endfor %}
         </div>

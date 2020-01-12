@@ -1,16 +1,4 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib import messages
-from django.contrib.auth.decorators import login_required
-from django.urls import reverse
-from django.http import Http404
 
-from core.models import MyProfile
-from core.models_project import Project, ProjectMessage, ProjectPhase, RequiredSkills, Issue, TeamMember, CommitSkill
-from .forms import ProposeProjectForm, RequiredSkillsForm, ChangePhaseForm
-from .utils import project_prize, team_composition
-
-
-@login_required
 def project_details(request, pk):
     project = Project.objects.get(id=pk)
     issues = Issue.objects.filter(project=project)
@@ -30,7 +18,7 @@ def project_details(request, pk):
     return render(request, "project_details.html", context)
 
 
-@login_required
+
 def propose_project(request):
     my_profile = get_object_or_404(MyProfile, owner=request.user)
 
@@ -82,7 +70,7 @@ def propose_project(request):
 
     return render(request, 'propose_project.html', {'form': form})
 
-@login_required
+
 def project_skillset(request, pk):
     """DEFINE PROJECT SKILLSET"""
     project = Project.objects.get(id=pk)
@@ -100,7 +88,6 @@ def project_skillset(request, pk):
     return render(request, 'project_skillset.html', {'form': form})
 
 
-@login_required
 def advance_project(request, pk):
     """ADVANCE PROJECT TO THE NEW PHASE"""
     if not request.user.is_superuser:
@@ -133,7 +120,6 @@ def advance_project(request, pk):
     return render(request, 'advance_project.html', context)
 
 
-@login_required
 def complete_project(request, pk):
     """FINISH PROJECT"""
     if not request.user.is_superuser:
@@ -160,7 +146,7 @@ def complete_project(request, pk):
     return redirect(reverse('dashboard:dashboard'))
 
 
-@login_required
+
 def delete_project(request, pk):
     """REMOVE PROJECT"""
     if not request.user.is_superuser:
