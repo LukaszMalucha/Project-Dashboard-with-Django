@@ -8,5 +8,5 @@ router.register('projects', views.ProjectModelViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('team-requirements/<int:id>/', views.TeamRequirementsView.as_view(), name="team-requirements")
+    path('team-requirements/<int:pk>/', views.TeamRequirementsViews.as_view(), name="team-requirements")
 ]

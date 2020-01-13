@@ -23,14 +23,13 @@ class ProjectModelSerializer(serializers.ModelSerializer):
         read_only_fields = ("id", "budget", "phase", "proposed_by", "portrait_field", "pm_name_field")
 
 
-class TeamRequirementsSerializer(serializers.ModelSerializer):
+class TeamRequirementsModelSerializer(serializers.ModelSerializer):
     """Serializer for Project Team Requirements"""
 
     class Meta:
         model = TeamRequirementsModel
         fields = "__all__"
         read_only_fields = ("project",)
-
 
 class IssueModelSerializer(serializers.ModelSerializer):
     """Serializer for project issues"""

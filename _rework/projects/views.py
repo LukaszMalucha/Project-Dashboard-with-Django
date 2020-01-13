@@ -29,9 +29,26 @@ class ProjectModelViewSet(viewsets.ModelViewSet):
         serializer.save(proposed_by=self.request.user)
 
 
-class TeamRequirementsViewSet(views.APIView):
-    """Team Requirements Viewset"""
+class TeamRequirementsViews(views.APIView):
+    """Team Requirements Views"""
+    authentication_classes = (authentication.TokenAuthentication, authentication.SessionAuthentication)
+    permission_classes = (permissions.IsAuthenticated, IsAdminOrReadOnly)  ## DEL ADMIN ONLY, CREATE PM
+    serializer_class = serializers.TeamRequirementsModelSerializer
 
-    def get(self, request):
-        return Response({"asd": "zxc"})
+    def get(self, request, pk):
+        """Get team requirements for specific project"""
+        team_requirements = get_object_or_404(TeamRequirementsModel, project=pk)
+        serializer_context = {"request": request}
+        serializer = self.serializer_class(team_requirements, context=serializer_context)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def put(self, request, pk):
+        """Create team requirements for specific project"""
+        team_requirements = get_object_or_404(TeamRequirementsModel, project=pk)
+        serializer = serializers.TeamRequirementsModelSerializer(team_requirements, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
