@@ -2,7 +2,7 @@
 <div class="row plain-element">
   <div class="row header details-header">
       <div class="col-md-2 text-right plain-element img-column">
-          <img src="@/assets/img/propose_project.jpg" class="img responsive img-header">
+          <img src="@/assets/img/propose-project.jpg" class="img responsive img-header">
       </div>
       <div class="col-md-8 text-left">
           <div class="box">

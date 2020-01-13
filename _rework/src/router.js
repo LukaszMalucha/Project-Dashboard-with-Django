@@ -6,6 +6,9 @@ import CharityCreate from "./views/CharityCreate.vue";
 import CharityDonate from "./views/CharityDonate.vue";
 import CharityDonations from "./views/CharityDonations.vue";
 import ProjectCreate from "./views/ProjectCreate.vue";
+import ProjectDetails from "./views/ProjectDetails.vue";
+import ProjectTeamRequirements from "./views/ProjectTeamRequirements.vue";
+import ProjectAdvance from "./views/ProjectAdvance.vue";
 
 
 import NotFound from "./views/NotFound.vue";
@@ -47,6 +50,25 @@ export default new Router({
       name: "project-create",
       component: ProjectCreate
     },
+    {
+      path: "/projects/:id",
+      name: "project-details",
+      component: ProjectDetails,
+      props: true
+    },
+    {
+      path: "/projects-advance/:id",
+      name: "project-advance",
+      component: ProjectAdvance,
+      props: true
+    },
+    {
+      path: "/team-requirements/:id",
+      name: "team-requirements",
+      component: ProjectTeamRequirements,
+      props: true
+    },
+
     {
       path: "*",
       name: "page-not-found",

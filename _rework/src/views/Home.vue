@@ -1,6 +1,6 @@
 <template>
   <div class="row plain-element">
-    <RowNavHeader/>
+
     <div class="row header details-header">
       <div class="col-md-2 text-right plain-element img-column">
           <img src="@/assets/img/d.png" class="img responsive img-header">
@@ -43,30 +43,39 @@
               </div>
           </div>
       </div>
+      <div class="row row-cards">
+        <div class="col-sm-8 col-md-4 col-lg-25 text-center">
+            <ProjectCardComponent
+              v-for="project in projects"
+              :project="project"
+              :key="project.id"
+            />
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import { apiService } from "@/common/api.service.js";
-import RowNavHeader from "@/components/RowNavHeader.vue";
+import ProjectCardComponent from "@/components/ProjectCardComponent.vue"
 
 export default {
   name: 'home',
   components: {
-    RowNavHeader
+    ProjectCardComponent
   },
   data() {
     return {
       search: "",
       projects: [],
-
+      countProjects: 0,
       requestUser: null,
       requestPosition: null,
+
     }
   },
   computed: {
-    countProjects() { return this.projects.length }
   },
   methods: {
     setRequestUser() {
@@ -79,8 +88,14 @@ export default {
       let endpoint = "projects/projects/";
       apiService(endpoint)
         .then(data => {
-          this.projects.push(...data.results);
-        })
+          if (data) {
+            this.projects.push(...data.results);
+              this.countProjects = this.projects.length
+
+          }}).then (
+              window.console.log(this.projects)
+            )
+
     }
   },
   created() {
