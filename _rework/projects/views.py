@@ -52,3 +52,30 @@ class TeamRequirementsViews(views.APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+class ProjectPhaseViews(views.APIView):
+    """View for advancing project"""
+    authentication_classes = (authentication.TokenAuthentication, authentication.SessionAuthentication)
+    permission_classes = (permissions.IsAuthenticated, IsAdminOrReadOnly)  ## DEL ADMIN ONLY, CREATE PM
+    serializer_class = serializers.ProjectPhaseSerializer
+
+    def get(self, request, pk):
+        """Get team requirements for specific project"""
+        project_phase = get_object_or_404(ProjectModel, id=pk)
+        serializer_context = {"request": request}
+        serializer = self.serializer_class(project_phase, context=serializer_context)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def put(self, request, pk):
+        """Create team requirements for specific project"""
+        project_phase = get_object_or_404(ProjectModel, id=pk)
+        serializer = serializers.ProjectPhaseSerializer(project_phase, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+
+
+

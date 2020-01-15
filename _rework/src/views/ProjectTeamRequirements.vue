@@ -22,9 +22,9 @@
               <div class="card insights-card">
                   <div class="card-header">
                       <img src="@/assets/img/icons/gear.png" class="img-responsive">
-                      <h5> Required Skillset </h5>
+                      <h5> Team Requirements </h5>
                   </div>
-                  <form @submit.prevent="onSubmit" class="form-content form-wide" enctype="multipart/form-data">
+                  <form @submit.prevent="onSubmit" class="form-content form-wide">
                       <fieldset class="form-box">
                           <div id="formError" class="row row-error text-center">
                           {{ error }}
@@ -70,7 +70,7 @@
                             </div>
                           </div>
                           <div class="row"></div>
-                          <button type="submit" class="btn-proceed"><span>Propose Charity <i
+                          <button type="submit" class="btn-proceed"><span>Submit Requirements <i
                                   class="far fa-arrow-alt-circle-right"></i></span>
                           </button>
                       </fieldset>

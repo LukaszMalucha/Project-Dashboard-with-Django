@@ -42,7 +42,7 @@
 
 <script>
 export default {
-  name: 'charity-donations',
+  name: 'CharityDonations',
   components: {
   },
   props: {

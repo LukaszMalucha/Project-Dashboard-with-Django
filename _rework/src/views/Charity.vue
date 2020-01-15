@@ -46,7 +46,7 @@ import { apiService } from "@/common/api.service.js";
 import CharityComponent from "@/components/CharityComponent.vue"
 
 export default {
-  name: 'charity',
+  name: 'Charity',
   components: {
     CharityComponent
   },

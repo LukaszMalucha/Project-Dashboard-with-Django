@@ -9,7 +9,7 @@ import ProjectCreate from "./views/ProjectCreate.vue";
 import ProjectDetails from "./views/ProjectDetails.vue";
 import ProjectTeamRequirements from "./views/ProjectTeamRequirements.vue";
 import ProjectAdvance from "./views/ProjectAdvance.vue";
-
+import ProjectTerminate from "./views/ProjectTerminate.vue";
 
 import NotFound from "./views/NotFound.vue";
 
@@ -63,12 +63,17 @@ export default new Router({
       props: true
     },
     {
+      path: "/projects-terminate/:id",
+      name: "project-terminate",
+      component: ProjectTerminate,
+      props: true
+    },
+    {
       path: "/team-requirements/:id",
       name: "team-requirements",
       component: ProjectTeamRequirements,
       props: true
     },
-
     {
       path: "*",
       name: "page-not-found",

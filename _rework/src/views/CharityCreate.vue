@@ -74,7 +74,7 @@ import axios from 'axios'
 import { CSRF_TOKEN } from "@/common/csrf_token.js"
 import router from "@/router.js"
 export default {
-  name: 'charity-create',
+  name: 'CharityCreate',
   components: {
 
   },

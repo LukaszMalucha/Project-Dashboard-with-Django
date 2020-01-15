@@ -34,7 +34,7 @@
           </div>
           <div class="col-sm-8 col-md-4 col-lg-25 text-center">
               <div class="card card-status">
-                  <i class="fas fa-code"></i> Test
+                  <i class="fas fa-code"></i> Testing
               </div>
           </div>
           <div class="col-sm-8 col-md-4 col-lg-25 text-center">
@@ -61,7 +61,7 @@ import { apiService } from "@/common/api.service.js";
 import ProjectCardComponent from "@/components/ProjectCardComponent.vue"
 
 export default {
-  name: 'home',
+  name: 'Home',
   components: {
     ProjectCardComponent
   },

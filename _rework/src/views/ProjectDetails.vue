@@ -5,18 +5,18 @@
         <img src="@/assets/img/project-details.jpg" class="img responsive img-header">
     </div>
     <div class="col-md-10 text-left">
-        <div class="box">
+        <div class="box" v-if="project">
             <h5>{{ project.name }}</h5>
-            <router-link  :to="{name: 'project-advance', params: { id: project.id }}" class="btn-algorithm green">
+            <button @click="advanceProject()" class="btn-algorithm green">
                 <b v-if="project.phase == 'proposed'">Launch Project</b>
                 <b v-else>Advance Project</b>
-             </router-link>
+             </button>
 
             <a href="" class="btn-algorithm green">Finish
                 Project!</a>
-            <a href="" class="btn-algorithm red">Terminate Project</a>
+            <button @click="terminateProject()" class="btn-algorithm red">Terminate Project</button>
             <a href="" class="btn-algorithm red">Report Issue</a>
-            <router-link :to="{name: 'team-requirements', params: { id: project.id }}" class="btn-algorithm blue">Define Team Requirements</router-link>
+            <button @click="defineTeamRequirements()" class="btn-algorithm blue">Define Team Requirements</button>
         </div>
         <br>
         <table class="profile-details">
@@ -267,11 +267,27 @@ export default {
             this.project = null;
             document.title = "404 - Page Not Found"
           }
-
         })
+    },
+    advanceProject(){
+      this.$router.push({
+        name: "project-advance",
+        params: { id: this.id }
+      })
+    },
+    defineTeamRequirements(){
+      this.$router.push({
+        name: "team-requirements",
+        params: { id: this.id }
+      })
+    },
+    terminateProject(){
+      this.$router.push({
+        name: "project-terminate",
+        params: { id: this.id }
+      })
+    },
 
-
-    }
   },
   created() {
     this.getProjectData()

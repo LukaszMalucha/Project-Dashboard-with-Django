@@ -127,7 +127,7 @@
 <script>
 import { apiService } from "@/common/api.service.js";
 export default {
-  name: 'charity-donate',
+  name: 'CharityDonate',
   props: {
     checkout: {
       type: Array,
