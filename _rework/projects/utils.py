@@ -90,7 +90,7 @@ def team_composition(project_team):
 
 
 def project_prize(project, project_team):
-    """Leancoin prize for completing projects"""
+    """LeanCoin prize for completing projects"""
 
     team_members = 0
     for element in project_team:
