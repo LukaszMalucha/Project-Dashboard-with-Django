@@ -3,7 +3,7 @@
 
     <div class="row header details-header">
       <div class="col-md-2 text-right plain-element img-column">
-          <img src="@/assets/img/d.png" class="img responsive img-header">
+          <img src="@/assets/img/main.png" class="img responsive img-header">
       </div>
 
       <div class="col-md-8 text-left">

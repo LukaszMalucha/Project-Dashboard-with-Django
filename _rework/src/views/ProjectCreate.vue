@@ -103,7 +103,7 @@ export default {
           .then(response => {
             window.console.log(response);
             router.push({
-              name: 'project',
+              name: 'home',
             })
           })
           .catch(error => {
