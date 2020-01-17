@@ -68,7 +68,7 @@ export default {
   methods: {
     onSubmit() {
       let endpoint = `/projects/project-phase/${this.id}/`;
-      let method = "PUT";
+      let method = "PATCH";
       apiService(endpoint, method, {phase: this.phase})
       .then(data => {
            if (data.non_field_errors) {

@@ -34,6 +34,7 @@
             </tr>
         </table>
 
+
     </div>
   </div>
   <div class="dashboard-cards">
@@ -58,29 +59,56 @@
               <table>
                 <tr>
                   <td><b>MANAGER:</b></td>
-                  <td><img src="@/assets/img/team.png" class="img responsive img-icon"></td>
-
+                  <td>
+                    <img :src="pmPortrait" class="img responsive img-icon">
+                    <p class="tooltip-hover">{{ project.pm_name }}</p>
+                  </td>
                 </tr>
                 <tr>
                   <td><b>HTML</b>:</td>
-                  <td><img src="@/assets/img/team.png" class="img responsive img-icon"></td>
 
+                  <td>
+                    <div v-for="element in teamMembership" :key="element.id" class="plain-element">
+                      <img v-if="element.committed_skill == 'html'" :src="element.member_portrait" class="img responsive img-icon">
+                      <p class="tooltip-hover">{{element.member_name}}</p>
+                    </div>
+                  </td>
                 </tr>
                 <tr>
                   <td><b>CSS</b>:</td>
-                  <td><img src="@/assets/img/team.png" class="img responsive img-icon"></td>
+                  <td>
+                    <div v-for="element in teamMembership" :key="element.id" class="plain-element">
+                      <img v-if="element.committed_skill == 'css'" :src="element.member_portrait" class="img responsive img-icon">
+                      <p class="tooltip-hover">{{element.member_name}}</p>
+                    </div>
+                  </td>
                 </tr>
                 <tr>
                   <td><b>JS</b>:</td>
-                  <td><img src="@/assets/img/team.png" class="img responsive img-icon"></td>
+                  <td>
+                    <div v-for="element in teamMembership" :key="element.id" class="plain-element">
+                      <img v-if="element.committed_skill == 'js'" :src="element.member_portrait" class="img responsive img-icon">
+                      <p class="tooltip-hover">{{element.member_name}}</p>
+                    </div>
+                  </td>
                 </tr>
                 <tr>
                   <td><b>DB</b>:</td>
-                  <td><img src="@/assets/img/team.png" class="img responsive img-icon"></td>
+                  <td>
+                    <div v-for="element in teamMembership" :key="element.id" class="plain-element">
+                      <img v-if="element.committed_skill == 'db'" :src="element.member_portrait" class="img responsive img-icon">
+                      <p class="tooltip-hover">{{element.member_name}}</p>
+                    </div>
+                  </td>
                 </tr>
                 <tr>
                   <td><b>PYTHON</b>:</td>
-                  <td><img src="@/assets/img/team.png" class="img responsive img-icon"></td>
+                  <td>
+                    <div v-for="element in teamMembership" :key="element.id" class="plain-element">
+                      <img v-if="element.committed_skill == 'python'" :src="element.member_portrait" class="img responsive img-icon">
+                      <p class="tooltip-hover">{{element.member_name}}</p>
+                    </div>
+                  </td>
                 </tr>
               </table>
             </div>
@@ -251,7 +279,8 @@ export default {
       error: null,
       requestUser: null,
       teamRequirements: {},
-
+      teamMembership: [],
+      pmPortrait: "",
     }
   },
   methods: {
@@ -262,7 +291,10 @@ export default {
           if (data) {
             this.project = data;
             this.teamRequirements = data.team_requirements;
+            this.teamMembership = data.team_membership;
+            this.pmPortrait = data.portrait;
             document.title = this.project.name;
+            window.console.log(data)
           } else {
             this.project = null;
             document.title = "404 - Page Not Found"
@@ -288,6 +320,8 @@ export default {
       })
     },
 
+  },
+  mounted() {
   },
   created() {
     this.getProjectData()
