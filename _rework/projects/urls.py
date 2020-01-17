@@ -11,5 +11,6 @@ urlpatterns = [
     path('team-requirements/<int:pk>/', views.TeamRequirementsViews.as_view(), name="team-requirements"),
     path('project-phase/<int:pk>/', views.ProjectPhaseViews.as_view(), name="project-phase"),
     path('project-complete/<int:pk>/', views.CompleteProjectView.as_view(), name="project-complete"),
-    path('project-team/<int:pk>/', views.ProjectTeamView.as_view(), name="project-team"),
+    path('team-join/<int:pk>/', views.TeamJoinView.as_view(), name="project-team"),
+    path('team-reject/<int:pk>/<int:id>/', views.TeamRejectView.as_view(), name="team-reject")
 ]

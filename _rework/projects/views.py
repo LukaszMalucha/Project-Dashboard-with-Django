@@ -1,6 +1,6 @@
 from django.http import Http404
 from django.shortcuts import get_object_or_404
-from rest_framework import viewsets, status, filters, authentication, permissions, views
+from rest_framework import viewsets, status, filters, authentication, permissions, views, generics
 from rest_framework.response import Response
 from rest_framework.exceptions import ValidationError
 from projects import serializers
@@ -61,14 +61,14 @@ class ProjectPhaseViews(views.APIView):
 
     def get(self, request, pk):
         """Get project phase specific project"""
-        project_phase = get_object_or_404(models.ProjectModel, id=pk)
+        project_phase = get_object_or_404(models_project.ProjectModel, id=pk)
         serializer_context = {"request": request}
         serializer = self.serializer_class(project_phase, context=serializer_context)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def patch(self, request, pk):
         """Advance project to the next phase"""
-        project_phase = get_object_or_404(models.ProjectModel, id=pk)
+        project_phase = get_object_or_404(models_project.ProjectModel, id=pk)
         serializer = serializers.ProjectPhaseSerializer(project_phase, data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -83,7 +83,7 @@ class CompleteProjectView(views.APIView):
 
     def post(self, request, pk):
         """Finish the project"""
-        # project = get_object_or_404(models.ProjectModel, id=pk)
+        # project = get_object_or_404(models_project.ProjectModel, id=pk)
         # project_team = TeamMember.objects.filter(projects=project)
         # project_manager = models.MyProfile.objects.get(owner=project.proposed_by)
         #
@@ -108,16 +108,40 @@ class CompleteProjectView(views.APIView):
         #     return Response({"error": "We couldn't finish project at this time. Try again later"})
 
 
-class ProjectTeamView(views.APIView):
-    """Viewset for joining and leaving project team"""
+class TeamJoinView(views.APIView):
+    """View for joining project team"""
     authentication_classes = (authentication.TokenAuthentication, authentication.SessionAuthentication)
     permission_classes = (permissions.IsAuthenticated, IsAdminOrReadOnly)  ## DEL ADMIN ONLY, CREATE PM
     serializer_class = serializers.TeamMembershipModelSerializer
 
-    def get(self, request, pk):
+    def post(self, request, pk):
+        request_user = self.request.user
         project = get_object_or_404(models_project.ProjectModel, id=pk)
-        project_team = models_project.TeamMembershipModel.objects.filter(project=project).all()
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            serializer.save(member=request_user, project=project)
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class TeamRejectView(views.APIView):
+    """View for rejecting team member"""
+    authentication_classes = (authentication.TokenAuthentication, authentication.SessionAuthentication)
+    permission_classes = (permissions.IsAuthenticated, IsAdminOrReadOnly)  ## DEL ADMIN ONLY, CREATE PM
+    serializer_class = serializers.TeamRejectionSerializer
+
+    def get(self, request, pk, id):
+        project = get_object_or_404(models_project.ProjectModel, id=pk)
+        team_member = get_object_or_404(models_project.TeamMembershipModel, project=project, member=id)
         serializer_context = {"request": request}
-        serializer = self.serializer_class(project_team, context=serializer_context, many=True)
+        serializer = self.serializer_class(team_member, context=serializer_context)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+    def delete(self, request, pk, id):
+        project = get_object_or_404(models_project.ProjectModel, id=pk)
+        try:
+            team_member = get_object_or_404(models_project.TeamMembershipModel, project=project, member=id)
+            team_member.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        except TeamMembershipModel.DoesNotExist:
+            raise Http404

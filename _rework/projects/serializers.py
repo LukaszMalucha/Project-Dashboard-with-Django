@@ -28,7 +28,6 @@ class ProjectModelSerializer(serializers.ModelSerializer):
     
     def team_membership_field(self, obj):
         team = TeamMembershipModel.objects.filter(project=obj.id).values()
-
         return team
 
     class Meta:
@@ -58,7 +57,6 @@ class ProjectPhaseSerializer(serializers.ModelSerializer):
 
 class TeamMembershipModelSerializer(serializers.ModelSerializer):
     """Serializer for Project Team Membership"""
-
     portrait = serializers.SerializerMethodField("portrait_field")
 
     def portrait_field(self, obj):
@@ -68,6 +66,15 @@ class TeamMembershipModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = TeamMembershipModel
         fields = "__all__"
+        read_only_fields = ("project", "member", "member_name", "member_portrait")
+
+class TeamRejectionSerializer(serializers.ModelSerializer):
+    """Serializer for Project Team Rejection"""
+
+    class Meta:
+        model = TeamMembershipModel
+        fields = "__all__"
+        read_only_fields = ("project", "member_name", "member_portrait", "committed_skill")
 
 
 class IssueModelSerializer(serializers.ModelSerializer):
