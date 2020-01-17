@@ -45,13 +45,9 @@
             <img src="@/assets/img/team.png" class="img-responsive">
             <p><b> Project Team</b></p>
             <p>
-              <router-link :to="{name: 'project-create'}" class="btn-algorithm red">&nbsp;Reject
-                &nbsp;
-              </router-link>
+              <button @click="rejectCandidate()" class="btn-insights red">Reject Candidate</button>
+              <button @click="joinTeam()" class="btn-insights green">Join Team</button>
 
-              <router-link :to="{name: 'project-create'}" class="btn-algorithm green">&nbsp;&nbsp;
-                Join &nbsp;&nbsp;
-              </router-link>
             </p>
           </div>
           <div class="row-image">
@@ -59,15 +55,17 @@
               <table>
                 <tr>
                   <td><b>MANAGER:</b></td>
-                  <td>
+                  <td class="box">
+                  <div class="plain-element">
                     <img :src="pmPortrait" class="img responsive img-icon">
                     <p class="tooltip-hover">{{ project.pm_name }}</p>
+                  </div>
                   </td>
                 </tr>
                 <tr>
                   <td><b>HTML</b>:</td>
 
-                  <td>
+                  <td class="box">
                     <div v-for="element in teamMembership" :key="element.id" class="plain-element">
                       <img v-if="element.committed_skill == 'html'" :src="element.member_portrait" class="img responsive img-icon">
                       <p class="tooltip-hover">{{element.member_name}}</p>
@@ -76,7 +74,7 @@
                 </tr>
                 <tr>
                   <td><b>CSS</b>:</td>
-                  <td>
+                  <td class="box">
                     <div v-for="element in teamMembership" :key="element.id" class="plain-element">
                       <img v-if="element.committed_skill == 'css'" :src="element.member_portrait" class="img responsive img-icon">
                       <p class="tooltip-hover">{{element.member_name}}</p>
@@ -85,7 +83,7 @@
                 </tr>
                 <tr>
                   <td><b>JS</b>:</td>
-                  <td>
+                  <td class="box">
                     <div v-for="element in teamMembership" :key="element.id" class="plain-element">
                       <img v-if="element.committed_skill == 'js'" :src="element.member_portrait" class="img responsive img-icon">
                       <p class="tooltip-hover">{{element.member_name}}</p>
@@ -94,7 +92,7 @@
                 </tr>
                 <tr>
                   <td><b>DB</b>:</td>
-                  <td>
+                  <td class="box">
                     <div v-for="element in teamMembership" :key="element.id" class="plain-element">
                       <img v-if="element.committed_skill == 'db'" :src="element.member_portrait" class="img responsive img-icon">
                       <p class="tooltip-hover">{{element.member_name}}</p>
@@ -103,7 +101,7 @@
                 </tr>
                 <tr>
                   <td><b>PYTHON</b>:</td>
-                  <td>
+                  <td class="box">
                     <div v-for="element in teamMembership" :key="element.id" class="plain-element">
                       <img v-if="element.committed_skill == 'python'" :src="element.member_portrait" class="img responsive img-icon">
                       <p class="tooltip-hover">{{element.member_name}}</p>
@@ -111,6 +109,7 @@
                   </td>
                 </tr>
               </table>
+              <br>
             </div>
           </div>
         </div>
@@ -319,7 +318,18 @@ export default {
         params: { id: this.id }
       })
     },
-
+    joinTeam(){
+      this.$router.push({
+        name: "team-join",
+        params: { id: this.id }
+      })
+    },
+    rejectCandidate(){
+      this.$router.push({
+        name: "team-reject",
+        params: { id: this.id }
+      })
+    }
   },
   mounted() {
   },

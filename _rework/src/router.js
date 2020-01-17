@@ -10,6 +10,8 @@ import ProjectDetails from "./views/ProjectDetails.vue";
 import ProjectTeamRequirements from "./views/ProjectTeamRequirements.vue";
 import ProjectAdvance from "./views/ProjectAdvance.vue";
 import ProjectTerminate from "./views/ProjectTerminate.vue";
+import TeamJoin from "./views/TeamJoin.vue";
+import TeamReject from "./views/TeamReject.vue";
 
 import NotFound from "./views/NotFound.vue";
 
@@ -72,6 +74,18 @@ export default new Router({
       path: "/team-requirements/:id",
       name: "team-requirements",
       component: ProjectTeamRequirements,
+      props: true
+    },
+    {
+      path: "/team-join/:id",
+      name: "team-join",
+      component: TeamJoin,
+      props: true
+    },
+    {
+      path: "/team-reject/:id",
+      name: "team-reject",
+      component: TeamReject,
       props: true
     },
     {

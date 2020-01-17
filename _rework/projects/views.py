@@ -83,26 +83,27 @@ class CompleteProjectView(views.APIView):
 
     def post(self, request, pk):
         """Finish the project"""
-        # project = get_object_or_404(models_project.ProjectModel, id=pk)
-        # project_team = TeamMember.objects.filter(projects=project)
-        # project_manager = models.MyProfile.objects.get(owner=project.proposed_by)
-        #
-        # team_members, prize = project_prize(project, project_team)
+        project = get_object_or_404(models_project.ProjectModel, id=pk)
+        project_team = models_project.TeamMembershipModel.objects.filter(project=project)
+        project_manager = models.MyProfile.objects.get(owner=project.proposed_by)
+
+        team_members, prize = project_prize(project, project_team)
         # try:
         #     project_manager.my_wallet = project_manager.my_wallet + 540
         #     project_manager.save()
         #
         #
         #     for element in project_team:
-        #         user = element.current_user
-        #         winners = models.MyProfile.objects.filter(owner=user)
+        #         member = element.member
+        #         winners = models.MyProfile.objects.filter(owner=member)
         #         for element in winners:
         #             element.my_wallet += prize
         #             element.save()
         #
         #     project.delete()
-        return Response(
-            ({"message": "Project was successfully completed. Rewards have been distributed"}))  ## >>>>>>>>>>>>>>>>>>
+        #     return Response(
+        #         ({"message": "Project was successfully completed. Rewards have been distributed"}))
+        return Response(str(project_team))
 
         # except Http404:
         #     return Response({"error": "We couldn't finish project at this time. Try again later"})

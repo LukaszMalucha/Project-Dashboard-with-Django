@@ -1,6 +1,6 @@
 <template>
   <div class="card project-card">
-      <div class="row plain-element">
+      <div class="row plain-element project-card-top">
           <div class="col-xs-10 col-sm-10 col-md-10 plain-element text-left">
               <h6>{{ project.name|truncatechars(20) }}</h6>
 
@@ -10,7 +10,7 @@
           </div>
       </div>
       <br>
-      <div class="row plain-element">
+      <div class="row plain-element project-card-bottom">
           <div class="col-xs-10 col-sm-10 col-md-10 plain-element text-left">
               <p>{{ project.description|truncatechars(45) }}</p>
           </div>
