@@ -67,7 +67,7 @@ export default {
   },
   methods: {
     onSubmit() {
-      let endpoint = `/projects/project-phase/${this.id}/`;
+      let endpoint = `/api/projects/${this.id}/project-phase/`;
       let method = "PATCH";
       apiService(endpoint, method, {phase: this.phase})
       .then(data => {

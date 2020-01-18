@@ -107,7 +107,7 @@ export default {
   },
   methods: {
     onSubmit() {
-      let endpoint = `/projects/team-requirements/${this.id}/`;
+      let endpoint = `/api/projects/${this.id}/team-requirements/`;
       let method = "PUT";
       apiService(endpoint, method, {html: this.html, css: this.css, js: this.js, db: this.db, python: this.python})
         .then(data => {

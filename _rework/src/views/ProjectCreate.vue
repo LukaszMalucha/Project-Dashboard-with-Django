@@ -97,8 +97,8 @@ export default {
         let formData = new FormData();
         formData.append("name", this.projectName);
         formData.append("description", this.projectDescription);
-        formData.append("schedule", this.projectSchedule)
-        axios.post('/projects/projects/', formData,
+        formData.append("image_schedule", this.projectSchedule)
+        axios.post('/api/projects/projects/', formData,
         { headers: { 'Content-Type': undefined,'X-CSRFTOKEN': CSRF_TOKEN} } )
           .then(response => {
             window.console.log(response);
@@ -107,8 +107,8 @@ export default {
             })
           })
           .catch(error => {
-            window.console.log(error.response);
-            document.getElementById("formError").textContent = error.response.statusText;
+            window.console.log(error);
+            document.getElementById("formError").textContent = error.response.data.non_field_errors[0]
           })
         }
     }

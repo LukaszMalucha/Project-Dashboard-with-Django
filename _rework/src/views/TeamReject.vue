@@ -76,7 +76,7 @@ export default {
         this.requestUser = window.localStorage.getItem("email");
     },
     getProjectTeamData() {
-      let endpoint = `/projects/projects/${this.id}/`;
+      let endpoint = `/api/projects/projects/${this.id}/`;
       apiService(endpoint)
         .then(data => {
           if (data) {
@@ -89,7 +89,7 @@ export default {
         })
     },
     onSubmit() {
-      let endpoint = `/projects/team-reject/${this.id}/${this.member}/`;
+      let endpoint = `/api/projects/${this.id}/team-reject/${this.member}/`;
       let method = "DELETE";
       apiService(endpoint, method)
         .then(data => {

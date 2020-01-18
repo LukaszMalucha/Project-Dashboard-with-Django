@@ -9,7 +9,7 @@
       <div class="col-md-8 text-left">
           <div class="box">
             <h5>Kanban Board</h5>
-            <router-link :to="{name: 'project-create'}" class="btn-algorithm blue">Propose Project</router-link>
+            <router-link :to="{name: 'project-create'}" class="btn-algorithm blue">Start New Project</router-link>
           </div>
           <h6>Active Projects:  &nbsp; <b class="counter">{{countProjects }} </b></h6>
           <h6>Issues Counter:  &nbsp; <b class="counter">14 </b></h6>
@@ -85,7 +85,7 @@ export default {
         this.requestPosition = window.localStorage.getItem("position");
     },
     getProjectsData() {
-      let endpoint = "projects/projects/";
+      let endpoint = "/api/projects/projects/";
       apiService(endpoint)
         .then(data => {
           if (data) {

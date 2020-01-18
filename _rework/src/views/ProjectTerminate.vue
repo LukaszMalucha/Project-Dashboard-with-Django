@@ -55,7 +55,7 @@ export default {
   },
   methods: {
     onSubmit() {
-      let endpoint = `/projects/projects/${this.id}/`;
+      let endpoint = `/api/projects/projects/${this.id}/`;
       let method = "DELETE"
       try {
         apiService(endpoint, method).then(

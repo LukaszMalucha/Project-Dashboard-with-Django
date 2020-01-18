@@ -15,7 +15,7 @@
             <a href="" class="btn-algorithm green">Finish
                 Project!</a>
             <button @click="terminateProject()" class="btn-algorithm red">Terminate Project</button>
-            <a href="" class="btn-algorithm red">Report Issue</a>
+            <button @click="issueCreate()" class="btn-algorithm red">Report Issue</button>
             <button @click="defineTeamRequirements()" class="btn-algorithm blue">Define Team Requirements</button>
         </div>
         <br>
@@ -126,9 +126,9 @@
                     <th class="text-center">Date</th>
                     <th class="text-center">Log Entry</th>
                   </tr>
-                  <tr>
-                    <td></td>
-                    <td></td>
+                  <tr v-for="element in projectMessages" :key="element.id">
+                    <td>{{ formatDate (element.message_date) }}</td>
+                    <td>{{element.message}}</td>
                   </tr>
                 </table>
               </div>
@@ -178,7 +178,7 @@
             <p><b>Project Schedule </b> <br></p>
           </div>
           <div class="row-image">
-            <img src="" class="img-responsive">
+            <img :src="projectSchedule" class="img-responsive">
           </div>
         </div>
       </div>
@@ -241,14 +241,15 @@
               </tr>
               </thead>
               <tbody>
-              <tr>
-                <td class="text-center"><a target="_blank">asd</a>
-                <td class="text-center">zxc</td>
-                <td class="text-center"><img src="@/assets/img/leancoin.png" class="icon"> 11
+              <tr v-for="element in projectIssues" :key="element.id">
+                <td class="text-center"><a target="_blank">{{element.name}}</a>
+                <td class="text-center">{{element.description}}</td>
+                <td class="text-center"><img src="@/assets/img/leancoin.png" class="icon"> {{element.cost}}
                 </td>
-                <td class="text-center"><a
-                        href=""
-                        class="btn-inline red">&nbsp; Assign to Me &nbsp;</a></td>
+                <td id="assignCell" class="text-center" v-if="project.pm_email == element.assignee">
+                 <button id="buttonAssign" @click="assignIssue(element.id)" class="btn-inline red">Assign to Me</button>
+                </td>
+                <td class="text-center" v-else>{{element.assignee}}</td>
                 <td class="text-center"></td>
               </tr>
               </tbody>
@@ -279,19 +280,33 @@ export default {
       requestUser: null,
       teamRequirements: {},
       teamMembership: [],
+      projectMessages: [],
+      projectIssues: [],
       pmPortrait: "",
+      projectSchedule: "",
     }
   },
   methods: {
+    setRequestUser() {
+        this.requestUser = window.localStorage.getItem("email");
+    },
+  //  Date converter
+    formatDate(value) {
+      let val = (value).replace('T', ' at ')
+      return val.toString().slice(0, -8)
+    },
     getProjectData() {
-      let endpoint = `/projects/projects/${this.id}/`;
+      let endpoint = `/api/projects/projects/${this.id}/`;
       apiService(endpoint)
         .then(data => {
           if (data) {
             this.project = data;
             this.teamRequirements = data.team_requirements;
             this.teamMembership = data.team_membership;
+            this.projectMessages = data.project_messages;
             this.pmPortrait = data.portrait;
+            this.projectSchedule = data.image_schedule;
+            this.projectIssues = data.project_issues;
             document.title = this.project.name;
             window.console.log(data)
           } else {
@@ -329,11 +344,27 @@ export default {
         name: "team-reject",
         params: { id: this.id }
       })
+    },
+    issueCreate(){
+      this.$router.push({
+        name: "issue-create",
+        params: { id: this.id }
+      })
+    },
+    assignIssue(issue_id){
+    let endpoint = `/api/projects/issues/${issue_id}/issue-assign/`;
+        let method = "PATCH";
+        apiService(endpoint, method, {})
+        .then(
+          document.getElementById('buttonAssign').style.display = "none",
+          document.getElementById('assignCell').textContent = this.requestUser,
+        )
     }
   },
   mounted() {
   },
   created() {
+    this.setRequestUser()
     this.getProjectData()
   }
 

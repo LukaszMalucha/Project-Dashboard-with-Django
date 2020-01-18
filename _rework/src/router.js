@@ -12,6 +12,7 @@ import ProjectAdvance from "./views/ProjectAdvance.vue";
 import ProjectTerminate from "./views/ProjectTerminate.vue";
 import TeamJoin from "./views/TeamJoin.vue";
 import TeamReject from "./views/TeamReject.vue";
+import IssueCreate from "./views/IssueCreate.vue";
 
 import NotFound from "./views/NotFound.vue";
 
@@ -86,6 +87,12 @@ export default new Router({
       path: "/team-reject/:id",
       name: "team-reject",
       component: TeamReject,
+      props: true
+    },
+    {
+      path: "/issue-create/:id",
+      name: "issue-create",
+      component: IssueCreate,
       props: true
     },
     {

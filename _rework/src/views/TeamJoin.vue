@@ -76,7 +76,7 @@ export default {
         this.requestUser = window.localStorage.getItem("email");
     },
     onSubmit() {
-      let endpoint = `/projects/team-join/${this.id}/`;
+      let endpoint = `/api/projects/${this.id}/team-join/`;
       let method = "POST";
       apiService(endpoint, method, {project: this.id, member: this.requestUser, committed_skill: this.skill})
         .then(data => {
