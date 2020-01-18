@@ -8,9 +8,12 @@ router.register('projects', views.ProjectModelViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('team-requirements/<int:pk>/', views.TeamRequirementsViews.as_view(), name="team-requirements"),
-    path('project-phase/<int:pk>/', views.ProjectPhaseViews.as_view(), name="project-phase"),
-    path('project-complete/<int:pk>/', views.CompleteProjectView.as_view(), name="project-complete"),
-    path('team-join/<int:pk>/', views.TeamJoinView.as_view(), name="project-team"),
-    path('team-reject/<int:pk>/<int:id>/', views.TeamRejectView.as_view(), name="team-reject")
+    path('<int:pk>/team-requirements/', views.TeamRequirementsViews.as_view(), name="team-requirements"),
+    path('<int:pk>/project-phase/', views.ProjectPhaseViews.as_view(), name="project-phase"),
+    path('<int:pk>/project-complete/', views.CompleteProjectView.as_view(), name="project-complete"),
+    path('<int:pk>/team-join/', views.TeamJoinView.as_view(), name="project-team"),
+    path('<int:pk>/team-reject/<int:id>/', views.TeamRejectView.as_view(), name="team-reject"),
+    path('<int:pk>/issue-create/', views.IssueCreateView.as_view(), name="issue-create"),
+    path('issues/<int:id>/issue-assign/', views.IssueAssignView.as_view(), name="issue-assign"),
+    path('issues/<int:id>/issue-fixed/', views.IssueFixedView.as_view(), name="issue-fixed")
 ]

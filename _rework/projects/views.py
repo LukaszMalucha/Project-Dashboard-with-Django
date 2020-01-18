@@ -150,11 +150,60 @@ class TeamRejectView(views.APIView):
         except TeamMembershipModel.DoesNotExist:
             raise Http404
 
-class ProjectIssueView(views.APIView):
+
+class IssueCreateView(views.APIView):
     """Project Issue Viewset"""
     authentication_classes = (authentication.TokenAuthentication, authentication.SessionAuthentication)
     permission_classes = (permissions.IsAuthenticated, IsAdminOrReadOnly)  ## DEL ADMIN ONLY, CREATE PM
-    serializer_class = serializers.IssueModelSerializer
+    serializer_class = serializers.IssueCreateSerializer
 
     def get(self, request, pk):
         return Response({"message": f"Report an issue for the project with id: {pk}"})
+
+    def post(self, request, pk):
+        request_user = self.request.user
+        project = get_object_or_404(models_project.ProjectModel, id=pk)
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            serializer.save(assigned_to=request_user, project=project)
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class IssueAssignView(views.APIView):
+    """Assign Issue Viewset"""
+    authentication_classes = (authentication.TokenAuthentication, authentication.SessionAuthentication)
+    permission_classes = (permissions.IsAuthenticated, IsAdminOrReadOnly)  ## DEL ADMIN ONLY, CREATE PM
+
+    def get(self, request, id):
+        return Response({"message": f"Assign issue id: {id} to yourself"})
+
+    def patch(self, request, id):
+        issue = get_object_or_404(models_project.IssueModel, id=id)
+        try:
+            issue.assigned_to = self.request.user
+            issue.save()
+            return Response({"message": "Issue was successfully assigned to you"})
+        except Http404:
+            return Response({"error": "We couldn't assign that Issue to you at this time. Try again later"})
+
+class IssueFixedView(views.APIView):
+    """Assign Issue Viewset"""
+    authentication_classes = (authentication.TokenAuthentication, authentication.SessionAuthentication)
+    permission_classes = (permissions.IsAuthenticated, IsAdminOrReadOnly)  ## DEL ADMIN ONLY, CREATE PM
+
+    def get(self, request, id):
+        return Response({"message": f"Close issue id: {id}"})
+
+    def post(self, request, id):
+        issue = get_object_or_404(models_project.IssueModel, id=id)
+        my_profile = get_object_or_404(models.MyProfile, owner=request.user)
+        try:
+            my_profile.my_wallet = my_profile.my_wallet + issue.cost
+            my_profile.save()
+            issue.delete()
+            models_project.ProjectMessage.objects.create(
+                project=issue.project,
+                message='Issue "{0}" fixed by user {1}'.format(issue.name, issue.assigned_to)).save()
+        except Http404:
+            return Response({"error": "We couldn't proceed with closing the Issue at this time. Try again later"})

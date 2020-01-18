@@ -11,6 +11,7 @@ class ProjectModelSerializer(serializers.ModelSerializer):
 
     portrait = serializers.SerializerMethodField("portrait_field")
     pm_name = serializers.SerializerMethodField("pm_name_field")
+    pm_email = serializers.SerializerMethodField("pm_email_field")
     team_requirements = serializers.SerializerMethodField("team_requirements_field")
     team_membership = serializers.SerializerMethodField("team_membership_field")
     project_messages = serializers.SerializerMethodField("project_messages_field")
@@ -23,6 +24,10 @@ class ProjectModelSerializer(serializers.ModelSerializer):
     def pm_name_field(self, obj):
         user = get_object_or_404(models.User, id=obj.proposed_by.id)
         return user.name
+
+    def pm_email_field(self, obj):
+        user = get_object_or_404(models.User, id=obj.proposed_by.id)
+        return user.email
 
     def team_requirements_field(self, obj):
         team = get_object_or_404(models_project.TeamRequirementsModel, project=obj.id)
@@ -46,9 +51,8 @@ class ProjectModelSerializer(serializers.ModelSerializer):
         model = models_project.ProjectModel
         fields = "__all__"
         read_only_fields = (
-            "id", "budget", "phase", "proposed_by", "portrait_field", "pm_name_field",
-            "team_requirements_field", "team_membership_field", "project_messages_field"
-            "project_issues_field")
+            "id", "budget", "phase", "proposed_by", "portrait_field", "pm_name_field", "pm_email_field"
+            "team_requirements_field", "team_membership_field", "project_messages_field", "project_issues_field")
 
     def validate(self, attrs):
         """LeanCoins balance"""
@@ -99,12 +103,15 @@ class TeamRejectionSerializer(serializers.ModelSerializer):
         read_only_fields = ("project", "member_name", "member_portrait", "committed_skill")
 
 
-class IssueModelSerializer(serializers.ModelSerializer):
+class IssueCreateSerializer(serializers.ModelSerializer):
     """Serializer for project issues"""
 
     class Meta:
         model = models_project.IssueModel
         fields = "__all__"
-        read_only_fields = ("id",)
+        read_only_fields = ("id","project","assigned_to")
+
+
+
 
 
