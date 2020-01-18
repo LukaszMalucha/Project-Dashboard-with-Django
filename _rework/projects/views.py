@@ -38,15 +38,15 @@ class TeamRequirementsViews(views.APIView):
 
     def get(self, request, pk):
         """Get team requirements for specific project"""
-        team_requirements = get_object_or_404(models.TeamRequirementsModel, project=pk)
+        team_requirements = get_object_or_404(models_project.TeamRequirementsModel, project=pk)
         serializer_context = {"request": request}
         serializer = self.serializer_class(team_requirements, context=serializer_context)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def put(self, request, pk):
         """Create team requirements for specific project"""
-        team_requirements = get_object_or_404(models.TeamRequirementsModel, project=pk)
-        serializer = serializers.models.TeamRequirementsModelSerializer(team_requirements, data=request.data)
+        team_requirements = get_object_or_404(models_project.TeamRequirementsModel, project=pk)
+        serializer = serializers.TeamRequirementsModelSerializer(team_requirements, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
@@ -81,6 +81,9 @@ class CompleteProjectView(views.APIView):
     authentication_classes = (authentication.TokenAuthentication, authentication.SessionAuthentication)
     permission_classes = (permissions.IsAuthenticated, IsAdminOrReadOnly)  ## DEL ADMIN ONLY, CREATE PM
 
+    def get(self, request, pk):
+        return Response({"message": f"Finish the project with id: {pk}"})
+
     def post(self, request, pk):
         """Finish the project"""
         project = get_object_or_404(models_project.ProjectModel, id=pk)
@@ -88,25 +91,25 @@ class CompleteProjectView(views.APIView):
         project_manager = models.MyProfile.objects.get(owner=project.proposed_by)
 
         team_members, prize = project_prize(project, project_team)
-        # try:
-        #     project_manager.my_wallet = project_manager.my_wallet + 540
-        #     project_manager.save()
-        #
-        #
-        #     for element in project_team:
-        #         member = element.member
-        #         winners = models.MyProfile.objects.filter(owner=member)
-        #         for element in winners:
-        #             element.my_wallet += prize
-        #             element.save()
-        #
-        #     project.delete()
-        #     return Response(
-        #         ({"message": "Project was successfully completed. Rewards have been distributed"}))
-        return Response(str(project_team))
+        try:
+            project_manager.my_wallet = project_manager.my_wallet + 540
+            project_manager.save()
 
-        # except Http404:
-        #     return Response({"error": "We couldn't finish project at this time. Try again later"})
+            for element in project_team:
+                member = element.member
+                winners = models.MyProfile.objects.filter(owner=member)
+                for element in winners:
+                    element.my_wallet += prize
+                    element.save()
+
+                # project.delete()
+            return Response(
+                ({"message": f"Project was successfully completed. Each of {team_members} team members "
+                             f"received {prize} LeanCoins. Additionally 540 LeanCoins has been transferred "
+                             f"to {project_manager} for successful project completion"}))
+
+        except Http404:
+            return Response({"error": "We couldn't finish project at this time. Try again later"})
 
 
 class TeamJoinView(views.APIView):
@@ -146,3 +149,12 @@ class TeamRejectView(views.APIView):
             return Response(status=status.HTTP_204_NO_CONTENT)
         except TeamMembershipModel.DoesNotExist:
             raise Http404
+
+class ProjectIssueView(views.APIView):
+    """Project Issue Viewset"""
+    authentication_classes = (authentication.TokenAuthentication, authentication.SessionAuthentication)
+    permission_classes = (permissions.IsAuthenticated, IsAdminOrReadOnly)  ## DEL ADMIN ONLY, CREATE PM
+    serializer_class = serializers.IssueModelSerializer
+
+    def get(self, request, pk):
+        return Response({"message": f"Report an issue for the project with id: {pk}"})

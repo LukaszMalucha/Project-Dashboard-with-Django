@@ -92,12 +92,10 @@ def team_composition(project_team):
 def project_prize(project, project_team):
     """LeanCoin prize for completing projects"""
 
-    team_members = 0
-    for element in project_team:
-        team_members += 1
-    if team_members == 0:
-        team_members = 1
-
-    prize = project.budget / team_members
+    team_members = len(project_team)
+    if team_members != 0:
+        prize = project.budget / team_members
+    else:
+        prize = 0
 
     return team_members, prize
