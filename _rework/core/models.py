@@ -25,7 +25,10 @@ class UserManager(BaseUserManager):
         user.is_superuser = True
         user.is_staff = True
         user.save(using=self._db)
-        MyProfile.objects.get_or_create(owner=self, position="admin")
+        my_profile, created = MyProfile.objects.get_or_create(owner=user)
+        my_profile.position = "admin"
+        my_profile.my_wallet = 1000
+        my_profile.save()
 
         return user
 
@@ -44,14 +47,19 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def save(self, *args, **kwargs):
         super(User, self).save(*args, **kwargs)
-        MyProfile.objects.get_or_create(owner=self)
+        my_profile, created = MyProfile.objects.get_or_create(owner=self)
+        if my_profile.position == "PM":
+            my_profile.my_wallet = 500
+        elif my_profile.position == "Coder":
+            my_profile.my_wallet = 100
+        my_profile.save()
 
     # Add AUTH_USER_MODEL to settings !!!
 
 
 class MyProfile(models.Model):
     """User Profile Details"""
-    position = models.CharField(max_length=254, default='Coder', blank=True)
+    position = models.CharField(max_length=254, default='guest', blank=True)
     personality = models.CharField(max_length=254, default='', blank=True)
     image = models.ImageField(upload_to=content_file_name, default='portraits/default.jpg')
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -66,19 +74,6 @@ class MyProfile(models.Model):
 
     def __str__(self):
         return str(self.owner) + " profile"
-
-
-class Position(models.Model):
-    """Company Positions"""
-    name = models.CharField(max_length=254, default='undefined')
-
-    class Meta:
-        verbose_name = "Company Position"
-        verbose_name_plural = "Company Positions"
-
-    def __str__(self):
-        return self.name
-
 
 class Personality(models.Model):
     """Personality Test outcome"""
