@@ -17,40 +17,66 @@
     </div>
     <div class="dashboard-cards">
       <div class="row row-cards">
-          <div class="col-sm-8 col-md-4 col-lg-25 text-center">
-              <div class="card card-status">
-                  <i class="fas fa-lightbulb"></i> Proposed
+          <div class="col-sm-8 col-md-2 col-lg-2 text-center">
+              <div class="row plain-element">
+                <div class="card card-status">
+                    <i class="fas fa-lightbulb"></i> Proposed
+                </div>
+              </div>
+              <div v-for="project in projects"  :key="project.id" class="row plain-element">
+                  <ProjectCardComponent v-if="project.phase == 'proposed'" :project="project"/>
               </div>
           </div>
-          <div class="col-sm-8 col-md-4 col-lg-25 text-center">
-              <div class="card card-status">
-                  <i class="fas fa-chart-line"></i> Analysis
+          <div class="col-sm-8 col-md-2 col-lg-2 text-center">
+              <div class="row plain-element">
+                <div class="card card-status">
+                    <i class="fas fa-chart-line"></i> Analysis
+                </div>
+              </div>
+              <div v-for="project in projects"  :key="project.id" class="row plain-element">
+                  <ProjectCardComponent v-if="project.phase == 'analysis'" :project="project"/>
               </div>
           </div>
-          <div class="col-sm-8 col-md-4 col-lg-25 text-center">
-              <div class="card card-status">
-                  <i class="fas fa-cog"></i> Development
+          <div class="col-sm-8 col-md-2 col-lg-2 text-center">
+              <div class="row plain-element">
+                <div class="card card-status">
+                    <i class="fas fa-cog"></i> Development
+                </div>
+              </div>
+              <div v-for="project in projects"  :key="project.id" class="row plain-element">
+                  <ProjectCardComponent v-if="project.phase == 'development'" :project="project"/>
               </div>
           </div>
-          <div class="col-sm-8 col-md-4 col-lg-25 text-center">
-              <div class="card card-status">
-                  <i class="fas fa-code"></i> Testing
+          <div class="col-sm-8 col-md-2 col-lg-2 text-center">
+              <div class="row plain-element">
+                <div class="card card-status">
+                    <i class="fas fa-code"></i> Testing
+                </div>
+              </div>
+              <div v-for="project in projects"  :key="project.id" class="row plain-element">
+                  <ProjectCardComponent v-if="project.phase == 'testing'" :project="project"/>
               </div>
           </div>
-          <div class="col-sm-8 col-md-4 col-lg-25 text-center">
-              <div class="card card-status">
-                  <i class="fas fa-space-shuttle"></i> Deployment
+          <div class="col-sm-8 col-md-2 col-lg-2 text-center">
+              <div class="row plain-element">
+                <div class="card card-status">
+                    <i class="fas fa-space-shuttle"></i> Deployment
+                </div>
+              </div>
+              <div v-for="project in projects"  :key="project.id" class="row plain-element">
+                  <ProjectCardComponent v-if="project.phase == 'deployment'" :project="project"/>
               </div>
           </div>
-      </div>
-      <div class="row row-cards">
-        <div class="col-sm-8 col-md-4 col-lg-25 text-center">
-            <ProjectCardComponent
-              v-for="project in projects"
-              :project="project"
-              :key="project.id"
-            />
-        </div>
+          <div class="col-sm-8 col-md-2 col-lg-2 text-center">
+           <div class="row plain-element">
+              <div class="card card-status">
+                    <i class="fas fa-stop-circle"></i> On Hold
+              </div>
+              </div>
+              <div v-for="project in projects"  :key="project.id" class="row plain-element">
+                  <ProjectCardComponent v-if="project.phase == 'on hold'" :project="project"/>
+              </div>
+          </div>
       </div>
     </div>
   </div>

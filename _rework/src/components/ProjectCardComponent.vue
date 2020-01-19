@@ -1,5 +1,5 @@
 <template>
-  <div class="card project-card">
+  <div class="card project-card" :class="project.phase">
       <div class="row plain-element project-card-top">
           <div class="col-xs-9 col-sm-9 col-md-9 plain-element text-left">
               <h6>{{ project.name|truncatechars(20) }}</h6>
