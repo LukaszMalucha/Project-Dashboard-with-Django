@@ -57,7 +57,7 @@ class ProjectModelSerializer(serializers.ModelSerializer):
     def validate(self, attrs):
         """LeanCoins balance"""
         user = self.context['request'].user
-        profile = get_object_or_404(models.MyProfile, id=user.id)
+        profile = get_object_or_404(models.MyProfile, owner=user)
         if profile.my_wallet < 450:
             raise ValidationError(f" Your LeanCoin balance ({profile.my_wallet}) is insufficient to start new project")
         return attrs

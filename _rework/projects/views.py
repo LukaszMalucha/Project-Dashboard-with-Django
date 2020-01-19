@@ -14,7 +14,7 @@ from projects.utils import project_prize
 class ProjectModelViewSet(viewsets.ModelViewSet):
     """Project Viewset"""
     authentication_classes = (authentication.TokenAuthentication, authentication.SessionAuthentication)
-    permission_classes = (permissions.IsAuthenticated, IsAdminOrReadOnly)  ## DEL ADMIN ONLY, CREATE PM
+    permission_classes = (permissions.IsAuthenticated, IsAdminOrReadOnly)  # DEL ADMIN ONLY, CREATE PM
     serializer_class = serializers.ProjectModelSerializer
     filter_backends = (filters.SearchFilter, filters.OrderingFilter)
     search_fields = ("name", "proposed_by")
@@ -33,7 +33,7 @@ class ProjectModelViewSet(viewsets.ModelViewSet):
 class TeamRequirementsViews(views.APIView):
     """Team Requirements Views"""
     authentication_classes = (authentication.TokenAuthentication, authentication.SessionAuthentication)
-    permission_classes = (permissions.IsAuthenticated, IsAdminOrReadOnly)  ## DEL ADMIN ONLY, CREATE PM
+    permission_classes = (permissions.IsAuthenticated, IsAdminOrReadOnly)  # DEL ADMIN ONLY, CREATE PM
     serializer_class = serializers.TeamRequirementsModelSerializer
 
     def get(self, request, pk):
@@ -56,7 +56,7 @@ class TeamRequirementsViews(views.APIView):
 class ProjectPhaseViews(views.APIView):
     """View for advancing project"""
     authentication_classes = (authentication.TokenAuthentication, authentication.SessionAuthentication)
-    permission_classes = (permissions.IsAuthenticated, IsAdminOrReadOnly)  ## DEL ADMIN ONLY, CREATE PM
+    permission_classes = (permissions.IsAuthenticated, IsAdminOrReadOnly)  # DEL ADMIN ONLY, CREATE PM
     serializer_class = serializers.ProjectPhaseSerializer
 
     def get(self, request, pk):
@@ -79,7 +79,7 @@ class ProjectPhaseViews(views.APIView):
 class CompleteProjectView(views.APIView):
     """View for completing project"""
     authentication_classes = (authentication.TokenAuthentication, authentication.SessionAuthentication)
-    permission_classes = (permissions.IsAuthenticated, IsAdminOrReadOnly)  ## DEL ADMIN ONLY, CREATE PM
+    permission_classes = (permissions.IsAuthenticated, IsAdminOrReadOnly)  # DEL ADMIN ONLY, CREATE PM
 
     def get(self, request, pk):
         return Response({"message": f"Finish the project with id: {pk}"})
@@ -102,7 +102,7 @@ class CompleteProjectView(views.APIView):
                     element.my_wallet += prize
                     element.save()
 
-                # project.delete()
+            project.delete()
             return Response(
                 ({"message": f"Project was successfully completed. Each of {team_members} team members "
                              f"received {prize} LeanCoins. Additionally 540 LeanCoins has been transferred "
@@ -115,7 +115,7 @@ class CompleteProjectView(views.APIView):
 class TeamJoinView(views.APIView):
     """View for joining project team"""
     authentication_classes = (authentication.TokenAuthentication, authentication.SessionAuthentication)
-    permission_classes = (permissions.IsAuthenticated, IsAdminOrReadOnly)  ## DEL ADMIN ONLY, CREATE PM
+    permission_classes = (permissions.IsAuthenticated, IsAdminOrReadOnly)  # DEL ADMIN ONLY, CREATE PM
     serializer_class = serializers.TeamMembershipModelSerializer
 
     def post(self, request, pk):
@@ -131,7 +131,7 @@ class TeamJoinView(views.APIView):
 class TeamRejectView(views.APIView):
     """View for rejecting team member"""
     authentication_classes = (authentication.TokenAuthentication, authentication.SessionAuthentication)
-    permission_classes = (permissions.IsAuthenticated, IsAdminOrReadOnly)  ## DEL ADMIN ONLY, CREATE PM
+    permission_classes = (permissions.IsAuthenticated, IsAdminOrReadOnly)  # DEL ADMIN ONLY, CREATE PM
     serializer_class = serializers.TeamRejectionSerializer
 
     def get(self, request, pk, id):
@@ -154,7 +154,7 @@ class TeamRejectView(views.APIView):
 class IssueCreateView(views.APIView):
     """Project Issue Viewset"""
     authentication_classes = (authentication.TokenAuthentication, authentication.SessionAuthentication)
-    permission_classes = (permissions.IsAuthenticated, IsAdminOrReadOnly)  ## DEL ADMIN ONLY, CREATE PM
+    permission_classes = (permissions.IsAuthenticated, IsAdminOrReadOnly)  # DEL ADMIN ONLY, CREATE PM
     serializer_class = serializers.IssueCreateSerializer
 
     def get(self, request, pk):
@@ -166,6 +166,11 @@ class IssueCreateView(views.APIView):
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
             serializer.save(assigned_to=request_user, project=project)
+            models_project.ProjectMessageModel.objects.create(project=project,
+                                                              message=f"Issue '{request.data['name']}' "
+                                                                      f"raised by PM {request_user}."
+                                                              ).save()
+
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -173,7 +178,7 @@ class IssueCreateView(views.APIView):
 class IssueAssignView(views.APIView):
     """Assign Issue Viewset"""
     authentication_classes = (authentication.TokenAuthentication, authentication.SessionAuthentication)
-    permission_classes = (permissions.IsAuthenticated, IsAdminOrReadOnly)  ## DEL ADMIN ONLY, CREATE PM
+    permission_classes = (permissions.IsAuthenticated, IsAdminOrReadOnly)  # DEL ADMIN ONLY, CREATE PM
 
     def get(self, request, id):
         return Response({"message": f"Assign issue id: {id} to yourself"})
@@ -183,14 +188,19 @@ class IssueAssignView(views.APIView):
         try:
             issue.assigned_to = self.request.user
             issue.save()
+            models_project.ProjectMessageModel.objects.create(
+                project=issue.project,
+                message='Issue "{0}" assigned to user {1}'.format(issue.name, issue.assigned_to)
+            ).save()
             return Response({"message": "Issue was successfully assigned to you"})
         except Http404:
             return Response({"error": "We couldn't assign that Issue to you at this time. Try again later"})
 
+
 class IssueFixedView(views.APIView):
     """Assign Issue Viewset"""
     authentication_classes = (authentication.TokenAuthentication, authentication.SessionAuthentication)
-    permission_classes = (permissions.IsAuthenticated, IsAdminOrReadOnly)  ## DEL ADMIN ONLY, CREATE PM
+    permission_classes = (permissions.IsAuthenticated, IsAdminOrReadOnly)  # DEL ADMIN ONLY, CREATE PM
 
     def get(self, request, id):
         return Response({"message": f"Close issue id: {id}"})
@@ -202,7 +212,7 @@ class IssueFixedView(views.APIView):
             my_profile.my_wallet = my_profile.my_wallet + issue.cost
             my_profile.save()
             issue.delete()
-            models_project.ProjectMessage.objects.create(
+            models_project.ProjectMessageModel.objects.create(
                 project=issue.project,
                 message='Issue "{0}" fixed by user {1}'.format(issue.name, issue.assigned_to)).save()
         except Http404:

@@ -124,5 +124,8 @@ export default {
       })
     }
   },
+  created() {
+    document.title = "Project Team Requirements";
+  }
 }
 </script>

@@ -6,7 +6,7 @@
       </div>
       <div class="col-md-8 text-left">
           <div class="box">
-              <h5>Terminate Project </h5>
+              <h5>Finish Project </h5>
           </div>
       </div>
   </div>
@@ -15,8 +15,8 @@
         <div class="col-md-5 no-padding">
             <div class="card insights-card">
                 <div class="card-header">
-                    <img src="@/assets/img/icons/bin.png" class="img-responsive">
-                    <p><b> Terminate Project </b></p>
+                    <img src="@/assets/img/icons/gear.png" class="img-responsive">
+                    <p><b> Finish Project </b></p>
                 </div>
                  <form @submit.prevent="onSubmit" class="form-content form-wide" enctype="multipart/form-data">
                       <fieldset class="form-box">
@@ -24,7 +24,7 @@
                           {{ error }}
                           </div>
                           <div class="row"></div>
-                          <button type="submit" class="btn-proceed red"><span>Terminate Project <i
+                          <button type="submit" class="btn-proceed green"><span>Finish Project <i
                                   class="far fa-arrow-alt-circle-right"></i></span>
                           </button>
                       </fieldset>
@@ -42,7 +42,7 @@
 import { apiService } from "@/common/api.service.js";
 
 export default {
-  name: "ProjectTerminate",
+  name: "ProjectComplete",
   props: {
     id: {
       required: true,
@@ -55,8 +55,8 @@ export default {
   },
   methods: {
     onSubmit() {
-      let endpoint = `/api/projects/projects/${this.id}/`;
-      let method = "DELETE"
+      let endpoint = `/api/projects/${this.id}/project-complete/`;
+      let method = "POST"
       try {
         apiService(endpoint, method).then(
             this.$router.push({
@@ -70,8 +70,7 @@ export default {
     },
   },
   created() {
-    document.title = "Terminate Project";
+    document.title = "Finish Project";
   }
-
 }
 </script>

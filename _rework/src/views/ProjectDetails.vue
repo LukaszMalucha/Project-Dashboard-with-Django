@@ -10,10 +10,8 @@
             <button @click="advanceProject()" class="btn-algorithm green">
                 <b v-if="project.phase == 'proposed'">Launch Project</b>
                 <b v-else>Advance Project</b>
-             </button>
-
-            <a href="" class="btn-algorithm green">Finish
-                Project!</a>
+            </button>
+            <button @click="completeProject()" class="btn-algorithm green">Finish Project!</button>
             <button @click="terminateProject()" class="btn-algorithm red">Terminate Project</button>
             <button @click="issueCreate()" class="btn-algorithm red">Report Issue</button>
             <button @click="defineTeamRequirements()" class="btn-algorithm blue">Define Team Requirements</button>
@@ -186,9 +184,10 @@
         <div class="card insights-card">
           <div class="card-header">
             <img src="@/assets/img/icons/chart.png" class="img-responsive">
-            <p><b>Team Personalities </b> <br></p>
+            <p><b>Team - Robot Factory</b></p>
           </div>
           <div class="row-image">
+              <team-chart  :chart-data="teamCompositionData" :styles="chartStyles"></team-chart>
           </div>
           <br>
         </div>
@@ -207,15 +206,15 @@
                 </tr>
                 <tr>
                   <td>Productivity</td>
-                  <td>asd</td>
+                  <td>{{ projectAdvices.statement_1 }}</td>
                 </tr>
                 <tr>
                   <td>Innovation</td>
-                  <td>zxc</td>
+                  <td>{{ projectAdvices.statement_2 }}</td>
                 </tr>
                 <tr>
                   <td>Teamwork</td>
-                  <td>xcgv</td>
+                  <td>{{ projectAdvices.statement_3 }}</td>
                 </tr>
               </table>
             </div>
@@ -265,9 +264,13 @@
 
 <script>
 import { apiService } from "@/common/api.service.js";
+import TeamChart from "@/common/TeamChart.js";
 
 export default {
   name: "ProjectDetails",
+  components: {
+    TeamChart
+  },
   props: {
     id: {
       required: true
@@ -282,6 +285,8 @@ export default {
       teamMembership: [],
       projectMessages: [],
       projectIssues: [],
+      projectAdvices: [],
+      teamCompositionData: {},
       pmPortrait: "",
       projectSchedule: "",
     }
@@ -307,14 +312,32 @@ export default {
             this.pmPortrait = data.portrait;
             this.projectSchedule = data.image_schedule;
             this.projectIssues = data.project_issues;
+            this.projectAdvices = data.project_team_composition;
+            this.teamProfiles = this.projectAdvices.team_profiles;
+            this.fillTeamChart();
             document.title = this.project.name;
-            window.console.log(data)
+            window.console.log(this.teamProfiles)
           } else {
             this.project = null;
             document.title = "404 - Page Not Found"
           }
         })
     },
+    fillTeamChart(){
+        var dataset = this.teamProfiles;
+        var dataLabels = Object.keys(dataset);
+        var dataValues = Object.values(dataset);
+        this.teamCompositionData = {
+        labels: dataLabels,
+        datasets: [
+          {
+            backgroundColor: ["#2b5b89","#f28e2b", "#e15759", "#76b7b2"],
+            data: dataValues
+          }
+        ]
+      }
+    },
+
     advanceProject(){
       this.$router.push({
         name: "project-advance",
@@ -330,6 +353,12 @@ export default {
     terminateProject(){
       this.$router.push({
         name: "project-terminate",
+        params: { id: this.id }
+      })
+    },
+    completeProject(){
+      this.$router.push({
+        name: "project-complete",
         params: { id: this.id }
       })
     },
@@ -363,9 +392,18 @@ export default {
   },
   mounted() {
   },
+  computed: {
+    chartStyles () {
+      return {
+        height: `100%`,
+        position: "relative"
+      }
+    }
+  },
   created() {
     this.setRequestUser()
     this.getProjectData()
+
   }
 
 }

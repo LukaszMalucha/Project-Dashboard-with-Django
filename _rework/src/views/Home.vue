@@ -110,18 +110,16 @@ export default {
     setRequestPosition() {
         this.requestPosition = window.localStorage.getItem("position");
     },
-    getProjectsData() {
+    async getProjectsData() {
       let endpoint = "/api/projects/projects/";
-      apiService(endpoint)
+      await apiService(endpoint)
         .then(data => {
           if (data) {
             this.projects.push(...data.results);
               this.countProjects = this.projects.length
-
           }}).then (
               window.console.log(this.projects)
             )
-
     }
   },
   created() {
