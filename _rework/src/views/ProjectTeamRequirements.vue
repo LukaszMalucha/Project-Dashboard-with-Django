@@ -1,5 +1,5 @@
 <template>
-<div class="row plain-element">
+<div v-if="requestUser == projectPM" class="row plain-element">
   <div class="row header details-header">
       <div class="col-md-2 text-right plain-element img-column">
           <img src="@/assets/img/propose-project.jpg" class="img responsive img-header">
@@ -80,6 +80,9 @@
       </div>
   </div>
 </div>
+<div v-else class="row plain-element">
+    <NoPermissionComponent/>
+</div>
 </template>
 
 
@@ -87,9 +90,13 @@
 
 <script>
 import { apiService } from "@/common/api.service.js";
+import NoPermissionComponent from "@/components/NoPermissionComponent.vue"
 
 export default {
   name: "ProjectTeamRequirements",
+  components: {
+    NoPermissionComponent
+  },
   props: {
     id: {
       required: true,
@@ -103,9 +110,21 @@ export default {
       js: null,
       db: null,
       python: null,
+      projectPM: null,
+      requestUser: null,
     }
   },
   methods: {
+    setRequestUser() {
+        this.requestUser = window.localStorage.getItem("email");
+    },
+    getProjectData() {
+      let endpoint = `/api/projects/projects/${this.id}/`;
+      apiService(endpoint)
+          .then(data => {
+            this.projectPM = data.pm_email;
+          })
+    },
     onSubmit() {
       let endpoint = `/api/projects/${this.id}/team-requirements/`;
       let method = "PUT";
@@ -125,6 +144,8 @@ export default {
     }
   },
   created() {
+    this.setRequestUser();
+    this.getProjectData();
     document.title = "Project Team Requirements";
   }
 }

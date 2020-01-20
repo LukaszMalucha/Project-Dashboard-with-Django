@@ -1,5 +1,5 @@
 <template>
-<div class="row plain-element">
+<div v-if="requestUser != 'undefined'" class="row plain-element">
   <div class="row header details-header">
       <div class="col-md-2 text-right plain-element img-column">
           <img src="@/assets/img/propose-project.jpg" class="img responsive img-header">
@@ -66,27 +66,37 @@
     </div>
   </div>
 </div>
+<div v-else class="row plain-element">
+    <NoPermissionComponent/>
+</div>
 </template>
+
 
 
 <script>
 import axios from 'axios'
 import { CSRF_TOKEN } from "@/common/csrf_token.js"
 import router from "@/router.js"
+import NoPermissionComponent from "@/components/NoPermissionComponent.vue"
 
 export default {
   name: 'project-create',
   components: {
+    NoPermissionComponent
   },
   data() {
     return {
       error: "",
+      requestUser: "",
       projectName: null,
       projectDescription: null,
       projectSchedule: null,
     }
   },
    methods: {
+    setRequestUser() {
+        this.requestUser = window.localStorage.getItem("email");
+    },
     handleFileUpload() {
       this.projectSchedule = this.$refs.file.files[0];
     },
@@ -117,6 +127,7 @@ export default {
     
   },  
   created() {
+    this.setRequestUser();
     document.title = "Start New Project";
   }
 }

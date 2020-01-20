@@ -44,7 +44,7 @@
             <p><b> Project Team</b></p>
             <p>
               <button v-if="requestUser == project.pm_email" @click="rejectCandidate()" class="btn-insights red">Reject Candidate</button>
-              <button @click="joinTeam()" class="btn-insights green">Join Team</button>
+              <button v-if="requestPosition == 'Coder'" @click="joinTeam()" class="btn-insights green">Join Team</button>
 
             </p>
           </div>

@@ -1,5 +1,5 @@
 <template>
-<div class="row plain-element">
+<div v-if="requestPosition == 'admin'" class="row plain-element">
   <div class="row header details-header">
       <div class="col-md-2 text-right plain-element img-column">
           <img src="@/assets/img/charity.jpg" class="img responsive img-header">
@@ -65,6 +65,9 @@
       </div>
   </div>
 </div>
+<div v-else class="row plain-element">
+    <NoPermissionComponent/>
+</div>
 </template>
 
 
@@ -73,10 +76,11 @@
 import axios from 'axios'
 import { CSRF_TOKEN } from "@/common/csrf_token.js"
 import router from "@/router.js"
+import NoPermissionComponent from "@/components/NoPermissionComponent.vue"
 export default {
   name: 'CharityCreate',
   components: {
-
+    NoPermissionComponent
   },
   data() {
     return {
@@ -84,9 +88,13 @@ export default {
       charityName: null,
       charityDescription: null,
       charityImage: null,
+      requestPosition: null,
     }
   },
   methods: {
+    setRequestPosition() {
+        this.requestPosition = window.localStorage.getItem("position");
+    },
     handleFileUpload() {
       this.charityImage = this.$refs.file.files[0];
     },
@@ -114,6 +122,7 @@ export default {
       }
   },
   created() {
+    this.setRequestPosition();
     document.title = "New Fundraising Idea";
   }
 }

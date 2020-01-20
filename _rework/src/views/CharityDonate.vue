@@ -1,4 +1,5 @@
 <template>
+
 <div class="row plain-element">
   <div class="row header details-header">
       <div class="col-md-2 text-right plain-element img-column">

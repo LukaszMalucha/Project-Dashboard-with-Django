@@ -1,5 +1,5 @@
 <template>
-<div class="row plain-element">
+<div v-if="requestPosition == 'admin'" class="row plain-element">
   <div class="row header details-header">
       <div class="col-md-2 text-right plain-element img-column">
           <img src="@/assets/img/propose-project.jpg" class="img responsive img-header">
@@ -44,15 +44,21 @@
       </div>
   </div>
 </div>
-
+<div v-else class="row plain-element">
+    <NoPermissionComponent/>
+</div>
 </template>
 
 
 <script>
 import { apiService } from "@/common/api.service.js";
+import NoPermissionComponent from "@/components/NoPermissionComponent.vue"
 
 export default {
   name: "ProjectAdvance",
+  components: {
+    NoPermissionComponent
+  },
   props: {
     id: {
       required: true,
@@ -62,10 +68,14 @@ export default {
     return {
       error: null,
       phase: null,
+      requestPosition: null,
       phaseList: ["proposed", "analysis", "development", "testing", "deployment"],
     }
   },
   methods: {
+    setRequestPosition() {
+        this.requestPosition = window.localStorage.getItem("position");
+    },
     onSubmit() {
       let endpoint = `/api/projects/${this.id}/project-phase/`;
       let method = "PATCH";
@@ -89,6 +99,7 @@ export default {
 
   },
   created() {
+    this.setRequestPosition();
     document.title = "Advance Project";
   }
 }
