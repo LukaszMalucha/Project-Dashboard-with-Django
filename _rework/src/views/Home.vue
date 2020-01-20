@@ -11,8 +11,8 @@
             <h5>Kanban Board</h5>
             <router-link :to="{name: 'project-create'}" class="btn-algorithm blue">Start New Project</router-link>
           </div>
-          <h6>Active Projects:  &nbsp; <b class="counter">{{countProjects }} </b></h6>
-          <h6>Issues Counter:  &nbsp; <b class="counter">14 </b></h6>
+          <h6>Active Projects:  &nbsp; <b v-if="countProjects">{{ countProjects }} </b></h6>
+          <h6>Issues Counter:  &nbsp; <b v-if="countIssues">{{ countIssues }}</b></h6>
       </div>
     </div>
     <div class="dashboard-cards">
@@ -95,13 +95,18 @@ export default {
     return {
       search: "",
       projects: [],
-      countProjects: 0,
+      countIssues: null,
+      countProjects: null,
       requestUser: null,
       requestPosition: null,
 
     }
   },
   computed: {
+
+  },
+  mounted() {
+
   },
   methods: {
     setRequestUser() {
@@ -110,9 +115,9 @@ export default {
     setRequestPosition() {
         this.requestPosition = window.localStorage.getItem("position");
     },
-    async getProjectsData() {
+    getProjectsData() {
       let endpoint = "/api/projects/projects/";
-      await apiService(endpoint)
+      apiService(endpoint)
         .then(data => {
           if (data) {
             this.projects.push(...data.results);
@@ -120,13 +125,22 @@ export default {
           }}).then (
               window.console.log(this.projects)
             )
-    }
+    },
+    getIssueCount() {
+      let endpoint = "/api/projects/issue-count/";
+      apiService(endpoint)
+        .then(data => {
+          this.countIssues = data.issue_count
+      })
+    },
   },
   created() {
-    this.getProjectsData();
+    this.getProjectsData()
+    this.getIssueCount();
     this.setRequestUser();
     this.setRequestPosition();
     document.title = "Project Dashboard | Septellar";
+
   }
 }
 </script>

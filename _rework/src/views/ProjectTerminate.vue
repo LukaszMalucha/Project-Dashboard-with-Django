@@ -1,5 +1,5 @@
 <template>
-<div class="row plain-element">
+<div v-if="requestPosition == 'admin'" class="row plain-element">
   <div class="row header details-header">
       <div class="col-md-2 text-right plain-element img-column">
           <img src="@/assets/img/propose-project.jpg" class="img responsive img-header">
@@ -34,15 +34,21 @@
     </div>
   </div>
 </div>
-
+<div v-else class="row plain-element">
+    <NoPermissionComponent/>
+</div>
 </template>
 
 
 <script>
 import { apiService } from "@/common/api.service.js";
+import NoPermissionComponent from "@/components/NoPermissionComponent.vue"
 
 export default {
   name: "ProjectTerminate",
+  components: {
+    NoPermissionComponent
+  },
   props: {
     id: {
       required: true,
@@ -51,9 +57,13 @@ export default {
   data() {
     return {
         error: "",
+        requestPosition: null,
     }
   },
   methods: {
+    setRequestPosition() {
+        this.requestPosition = window.localStorage.getItem("position");
+    },
     onSubmit() {
       let endpoint = `/api/projects/projects/${this.id}/`;
       let method = "DELETE"
@@ -70,8 +80,8 @@ export default {
     },
   },
   created() {
+    this.setRequestPosition();
     document.title = "Terminate Project";
   }
-
 }
 </script>

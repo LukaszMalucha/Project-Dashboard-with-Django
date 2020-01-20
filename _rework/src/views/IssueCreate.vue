@@ -1,5 +1,5 @@
 <template>
-<div class="row plain-element">
+<div v-if="requestUser == projectPM" class="row plain-element">
   <div class="row header details-header">
       <div class="col-md-2 text-right plain-element img-column">
           <img src="@/assets/img/propose-project.jpg" class="img responsive img-header">
@@ -58,12 +58,16 @@
       </div>
   </div>
 </div>
+<div v-else class="row plain-element">
+    <NoPermissionComponent/>
+</div>
 </template>
 
 
 
 <script>
 import { apiService } from "@/common/api.service.js";
+import NoPermissionComponent from "@/components/NoPermissionComponent.vue"
 export default {
   name: 'IssueCreate',
   props: {
@@ -72,7 +76,7 @@ export default {
     }
   },
   components: {
-
+    NoPermissionComponent
   },
   data() {
     return {
@@ -80,9 +84,21 @@ export default {
       issueName: null,
       issueDescription: null,
       issueCost: null,
+      projectPM: null,
+      requestUser: null,
     }
   },
   methods: {
+    setRequestUser() {
+        this.requestUser = window.localStorage.getItem("email");
+    },
+    getProjectData() {
+      let endpoint = `/api/projects/projects/${this.id}/`;
+      apiService(endpoint)
+          .then(data => {
+            this.projectPM = data.pm_email;
+          })
+    },
     onSubmit() {
       if (!this.issueName || !this.issueDescription || !this.issueCost) {
         this.error = "Fields can't be empty";
@@ -109,6 +125,8 @@ export default {
     }
   },
   created() {
+    this.setRequestUser();
+    this.getProjectData();
     document.title = "Report Project Issue";
   }
 }

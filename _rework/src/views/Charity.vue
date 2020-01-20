@@ -75,8 +75,6 @@ export default {
       if (!this.check.includes(charity.id)) {
         this.check.push(charity.id)
         this.checkout.push(charity);
-        window.console.log(this.check);
-        window.console.log(this.checkout);
       }
     },
     getCharityData(){

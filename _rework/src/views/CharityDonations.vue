@@ -81,7 +81,6 @@ export default {
     },
     triggerDeleteDonation(charity) {
           this.cart.splice(this.cart.indexOf(charity), 1);
-          window.console.log(this.cart)
     }
   },
   filters: {
