@@ -1,6 +1,6 @@
 from django.db import models
 from django.conf import settings
-from django.core.validators import MinValueValidator
+from django.core.validators import MinValueValidator, MaxValueValidator
 from core.utils import schedule_file_name
 from django.shortcuts import get_object_or_404
 from core.models import MyProfile, User
@@ -26,7 +26,7 @@ class ProjectModel(models.Model):
     description = models.TextField(blank=False)
     phase = models.CharField(max_length=254, default="proposed", choices=PHASE_CHOICES)
     proposed_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    budget = models.DecimalField(max_digits=6, decimal_places=0, default=450, validators=[MinValueValidator(0)])
+    budget = models.IntegerField(default=450, validators=[MinValueValidator(0), MaxValueValidator(450)])
     image_schedule = models.ImageField(upload_to=schedule_file_name, default="schedules/default.jpg")
 
     class Meta:
@@ -47,17 +47,35 @@ class ProjectModel(models.Model):
     def __str__(self):
         return self.name
 
+
 class IssueModel(models.Model):
     """Bugs & Issues"""
     name = models.CharField(max_length=254, default="")
     description = models.TextField(blank=False)
-    cost = models.DecimalField(max_digits=3, decimal_places=0, default=0, validators=[MinValueValidator(0)])
+    cost = models.IntegerField(default=10, validators=[MinValueValidator(0), MaxValueValidator(450)])
     project = models.ForeignKey(ProjectModel, on_delete=models.CASCADE)
     assigned_to = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    assignee = models.CharField(max_length=254, default="none")
+
+    def get_email(self):
+        user = get_object_or_404(User, id=self.assigned_to.id)
+        return user.email
+
+    def save(self, *args, **kwargs):
+        self.assignee = self.get_email()
+        project = get_object_or_404(ProjectModel, id=self.project.id)
+        project.budget -= self.cost
+        if project.budget < 0:
+            project.phase = "on hold"
+            ProjectMessageModel.objects.create(project=project,
+                                               message=f"Project '{project.name}' was placed on hold."
+                                               ).save()
+        project.save()
+        super(IssueModel, self).save(*args, **kwargs)
 
     class Meta:
-        verbose_name = "Project Bugs & Issues"
-        verbose_name_plural = "Projects Bugs & Issues"
+        verbose_name = "Project Issue"
+        verbose_name_plural = "Projects Issues"
 
     def __str__(self):
         return "{0}-{1}".format(self.project.name, self.name)
@@ -87,6 +105,7 @@ class TeamMembershipModel(models.Model):
     committed_skill = models.CharField(max_length=254, default="html", choices=SKILL_CHOICES)
     member_name = models.CharField(max_length=254, default="none")
     member_portrait = models.CharField(max_length=254, default="none")
+    member_personality = models.CharField(max_length=254, default="none")
 
     def get_portrait(self):
         my_profile = get_object_or_404(MyProfile, id=self.member.id)
@@ -96,6 +115,10 @@ class TeamMembershipModel(models.Model):
         user = get_object_or_404(User, id=self.member.id)
         return user.name
 
+    def get_personality(self):
+        my_profile = get_object_or_404(MyProfile, id=self.member.id)
+        return my_profile.personality
+
     class Meta:
         verbose_name = "Team Membership"
         verbose_name_plural = "Team Memberships"
@@ -103,6 +126,7 @@ class TeamMembershipModel(models.Model):
     def save(self, *args, **kwargs):
         self.member_portrait = self.get_portrait()
         self.member_name = self.get_name()
+        self.member_personality = self.get_personality()
         super(TeamMembershipModel, self).save(*args, **kwargs)
 
     def __str__(self):

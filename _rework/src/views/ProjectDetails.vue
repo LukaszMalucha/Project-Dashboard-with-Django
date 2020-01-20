@@ -7,14 +7,14 @@
     <div class="col-md-10 text-left">
         <div class="box" v-if="project">
             <h5>{{ project.name }}</h5>
-            <button @click="advanceProject()" class="btn-algorithm green">
+            <button v-if="requestPosition == 'admin'" @click="advanceProject()" class="btn-algorithm green">
                 <b v-if="project.phase == 'proposed'">Launch Project</b>
                 <b v-else>Advance Project</b>
             </button>
-            <button @click="completeProject()" class="btn-algorithm green">Finish Project!</button>
-            <button @click="terminateProject()" class="btn-algorithm red">Terminate Project</button>
-            <button @click="issueCreate()" class="btn-algorithm red">Report Issue</button>
-            <button @click="defineTeamRequirements()" class="btn-algorithm blue">Define Team Requirements</button>
+            <button v-if="requestPosition == 'admin'" @click="completeProject()" class="btn-algorithm green">Finish Project!</button>
+            <button v-if="requestPosition == 'admin'" @click="terminateProject()" class="btn-algorithm red">Terminate Project</button>
+            <button v-if="requestUser == project.pm_email" @click="issueCreate()" class="btn-algorithm red">Report Issue</button>
+            <button v-if="requestUser == project.pm_email" @click="defineTeamRequirements()" class="btn-algorithm blue">Define Team Requirements</button>
         </div>
         <br>
         <table class="profile-details">
@@ -43,7 +43,7 @@
             <img src="@/assets/img/team.png" class="img-responsive">
             <p><b> Project Team</b></p>
             <p>
-              <button @click="rejectCandidate()" class="btn-insights red">Reject Candidate</button>
+              <button v-if="requestUser == project.pm_email" @click="rejectCandidate()" class="btn-insights red">Reject Candidate</button>
               <button @click="joinTeam()" class="btn-insights green">Join Team</button>
 
             </p>
@@ -281,6 +281,7 @@ export default {
       project: {},
       error: null,
       requestUser: null,
+      requestPosition: null,
       teamRequirements: {},
       teamMembership: [],
       projectMessages: [],
@@ -294,6 +295,9 @@ export default {
   methods: {
     setRequestUser() {
         this.requestUser = window.localStorage.getItem("email");
+    },
+    setRequestPosition() {
+        this.requestPosition = window.localStorage.getItem("position");
     },
   //  Date converter
     formatDate(value) {
@@ -316,7 +320,6 @@ export default {
             this.teamProfiles = this.projectAdvices.team_profiles;
             this.fillTeamChart();
             document.title = this.project.name;
-            window.console.log(this.teamProfiles)
           } else {
             this.project = null;
             document.title = "404 - Page Not Found"
@@ -401,8 +404,9 @@ export default {
     }
   },
   created() {
-    this.setRequestUser()
-    this.getProjectData()
+    this.setRequestUser();
+    this.setRequestPosition();
+    this.getProjectData();
 
   }
 
