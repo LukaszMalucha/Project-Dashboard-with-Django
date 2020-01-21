@@ -118,7 +118,6 @@ class GamificationAdviceModelAdmin(admin.ModelAdmin):
 
 admin.site.register(models.User, UserAdmin)
 admin.site.register(models.MyProfile, MyProfileModelAdmin)
-admin.site.register(models.Personality)
 
 admin.site.register(models_charity.CharityModel, CharityModelAdmin)
 admin.site.register(models_charity.DonationModel, DonationModelAdmin)

@@ -34,6 +34,11 @@ class ProjectModel(models.Model):
         verbose_name_plural = "Projects"
 
     def save(self, *args, **kwargs):
+        if self.budget < 0:
+            self.phase = "on hold"
+            ProjectMessageModel.objects.create(project=self,
+                                           message=f"Project '{self.name}' was placed on hold."
+                                           ).save()
         super(ProjectModel, self).save(*args, **kwargs)
         profile = get_object_or_404(MyProfile, owner=self.proposed_by)
         profile.my_wallet -= 450
@@ -65,11 +70,11 @@ class IssueModel(models.Model):
         self.assignee = self.get_email()
         project = get_object_or_404(ProjectModel, id=self.project.id)
         project.budget -= self.cost
-        if project.budget < 0:
-            project.phase = "on hold"
-            ProjectMessageModel.objects.create(project=project,
-                                               message=f"Project '{project.name}' was placed on hold."
-                                               ).save()
+        # if project.budget < 0:
+        #     project.phase = "on hold"
+        #     ProjectMessageModel.objects.create(project=project,
+        #                                        message=f"Project '{project.name}' was placed on hold."
+        #                                        ).save()
         project.save()
         super(IssueModel, self).save(*args, **kwargs)
 

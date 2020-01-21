@@ -47,14 +47,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def save(self, *args, **kwargs):
         super(User, self).save(*args, **kwargs)
-        my_profile, created = MyProfile.objects.get_or_create(owner=self)
-        if my_profile.position == "PM":
-            my_profile.my_wallet = 500
-        elif my_profile.position == "Coder":
-            my_profile.my_wallet = 100
-        my_profile.save()
-
-    # Add AUTH_USER_MODEL to settings !!!
+        MyProfile.objects.get_or_create(owner=self)
 
 
 class MyProfile(models.Model):
@@ -65,23 +58,16 @@ class MyProfile(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     my_wallet = models.DecimalField(max_digits=6, decimal_places=0, default=0)
 
+    def save(self, *args, **kwargs):
+        if self.position == "PM" and self.my_wallet == 0:
+            self.my_wallet = 500
+        if self.position == "Coder" and self.my_wallet == 0:
+            self.my_wallet = 100
+        super(MyProfile, self).save(*args, **kwargs)
+
     class Meta:
         verbose_name = "User Profile"
         verbose_name_plural = "User Profiles"
 
-    def get_absolute_url(self):
-        return reverse('profile', kwargs={'pk': self.pk})
-
     def __str__(self):
         return str(self.owner) + " profile"
-
-class Personality(models.Model):
-    """Personality Test outcome"""
-    name = models.CharField(max_length=254, default='undefined')
-
-    class Meta:
-        verbose_name = "Personality Type"
-        verbose_name_plural = "Personality Types"
-
-    def __str__(self):
-        return self.name
