@@ -1,10 +1,9 @@
 from django.contrib.auth import get_user_model
-from rest_framework.test import APIClient
-from django.urls import reverse
-from django.test import TestCase
 from django.shortcuts import get_object_or_404
-from core.models import MyProfile
+from django.test import TestCase
+
 from core import models_project
+from core.models import MyProfile
 
 
 class ProjectModelTest(TestCase):
@@ -111,3 +110,45 @@ class TeamMembershipModelTests(TestCase):
 
     def test_issue_str(self):
         self.assertEqual(str(self.team_member), "Test test@gmail.com js")
+
+    def test_name_field(self):
+        self.assertEqual(self.user.name, self.team_member.member_name)
+
+    def test_portrait_field(self):
+        my_profile = get_object_or_404(MyProfile, owner=self.user)
+        self.assertEqual(my_profile.image.url, self.team_member.member_portrait)
+
+    def test_personality_field(self):
+        my_profile = get_object_or_404(MyProfile, owner=self.user)
+        self.assertEqual(my_profile.personality, self.team_member.member_personality)
+
+
+class ProjectMessageModelTests(TestCase):
+
+    def setUp(self):
+        self.user = get_user_model().objects.create_user(
+            email="test@gmail.com",
+            password="test1234",
+            name="Test User"
+        )
+
+        self.project = models_project.ProjectModel.objects.create(name="Test", description="test",
+                                                                  proposed_by=self.user)
+        self.project_message = models_project.ProjectMessageModel.objects.create( project=self.project, message="Test")
+
+    def tearDown(self):
+        self.user.delete()
+        self.project.delete()
+        self.project_message.delete()
+
+
+    def test_project_message_str(self):
+        self.assertEqual(str(self.project_message), "Test")
+
+
+
+
+
+
+
+

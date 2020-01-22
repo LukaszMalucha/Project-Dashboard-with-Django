@@ -150,16 +150,3 @@ class ProjectMessageModel(models.Model):
 
     def __str__(self):
         return str(self.project)
-
-
-class GamificationAdviceModel(models.Model):
-    """Gamification advice for Team Composition"""
-    name = models.CharField(max_length=254, default="advice")
-    advice = models.TextField(blank=False)
-
-    class Meta:
-        verbose_name = "Team Gamification Advice"
-        verbose_name_plural = "Team Gamification Advices"
-
-    def __str__(self):
-        return str(self.name)

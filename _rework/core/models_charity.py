@@ -25,7 +25,7 @@ class DonationModel(models.Model):
     quantity = models.IntegerField(blank=False, default=5)
 
     def __str__(self):
-        return str(self.donor + ' - ' + self.charity.name)
+        return str(self.donor.name + ' - ' + self.charity.name)
 
     class Meta:
         verbose_name = "Charity Donation"

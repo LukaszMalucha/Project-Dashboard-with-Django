@@ -108,13 +108,6 @@ class ProjectMessageModelAdmin(admin.ModelAdmin):
     )
 
 
-class GamificationAdviceModelAdmin(admin.ModelAdmin):
-    """Displaying Gamification Advices in Admin Panel"""
-    list_display = ["name", "advice"]
-
-    class Meta:
-        model = models_project.GamificationAdviceModel
-
 
 admin.site.register(models.User, UserAdmin)
 admin.site.register(models.MyProfile, MyProfileModelAdmin)
@@ -128,4 +121,4 @@ admin.site.register(models_project.IssueModel, IssueModelAdmin)
 admin.site.register(models_project.TeamRequirementsModel, TeamRequirementsModelAdmin)
 admin.site.register(models_project.TeamMembershipModel, TeamMembershipModelAdmin)
 admin.site.register(models_project.ProjectMessageModel, ProjectMessageModelAdmin)
-admin.site.register(models_project.GamificationAdviceModel, GamificationAdviceModelAdmin)
+
