@@ -3,8 +3,9 @@ from charity import views
 from rest_framework.routers import DefaultRouter
 
 app_name = 'charity'
+
 router = DefaultRouter()
-router.register('charities', views.CharityViewSet)
+router.register('charities', views.CharityViewSet, basename="charities")
 
 
 urlpatterns = [

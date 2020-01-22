@@ -1,15 +1,11 @@
 from rest_framework import serializers
-from core.models_charity import Charity, Donation, DonationLineItem
+from core.models_charity import CharityModel, DonationModel
 
 
-class CharitySerializer(serializers.ModelSerializer):
+class CharityModelSerializer(serializers.ModelSerializer):
     """Serializer for new charity event"""
 
     class Meta:
-        model = Charity
+        model = CharityModel
         fields = '__all__'
         read_only_fields = ('id', 'donation')
-
-class DonationSerializer(serializers.ModelSerializer):
-    """Donation checkout serializer"""
-
