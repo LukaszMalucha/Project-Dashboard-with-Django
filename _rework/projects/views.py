@@ -91,27 +91,23 @@ class CompleteProjectView(views.APIView):
         project_manager = models.MyProfile.objects.get(owner=project.proposed_by)
 
         team_members, prize = project_prize(project, project_team)
-        try:
-            project_manager.my_wallet = project_manager.my_wallet + 540
-            project_manager.save()
 
-            for element in project_team:
-                member = element.member
-                winners = models.MyProfile.objects.filter(owner=member)
-                for element in winners:
-                    element.my_wallet += prize
-                    element.save()
+        project_manager.my_wallet = project_manager.my_wallet + 540
+        project_manager.save()
 
-            project.delete()
-            return Response(
-                ({"message": f"Project was successfully completed. Each of {team_members} team members "
-                             f"received {prize} LeanCoins. Additionally 540 LeanCoins has been transferred "
-                             f"to {project_manager} for successful project completion"}),
-                status=status.HTTP_204_NO_CONTENT)
+        for element in project_team:
+            member = element.member
+            winners = models.MyProfile.objects.filter(owner=member)
+            for element in winners:
+                element.my_wallet += prize
+                element.save()
 
-        except Http404:
-            return Response({"error": "We couldn't finish project at this time. Try again later"},
-                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        project.delete()
+        return Response(
+            ({"message": f"Project was successfully completed. Each of {team_members} team members "
+                         f"received {prize} LeanCoins. Additionally 540 LeanCoins has been transferred "
+                         f"to {project_manager} for successful project completion"}),
+            status=status.HTTP_204_NO_CONTENT)
 
 
 class TeamJoinView(views.APIView):
@@ -130,7 +126,7 @@ class TeamJoinView(views.APIView):
                 return Response({"error": "You have to submit gamification test at your Profile page first."},
                                 status=status.HTTP_400_BAD_REQUEST)
             serializer.save(member=request_user, project=project)
-            return Response(serializer.data)
+            return Response(serializer.data,  status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -199,7 +195,7 @@ class IssueAssignView(views.APIView):
                 message='Issue "{0}" assigned to user {1}'.format(issue.name, issue.assigned_to)
             ).save()
             return Response({"message": "Issue was successfully assigned to you"}, status=status.HTTP_200_OK)
-        except Http404:
+        except Exception as e:
             return Response({"error": "We couldn't assign that Issue to you at this time. Try again later"},
                             status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
@@ -222,7 +218,7 @@ class IssueFixedView(views.APIView):
             models_project.ProjectMessageModel.objects.create(
                 project=issue.project,
                 message='Issue "{0}" fixed by user {1}'.format(issue.name, issue.assigned_to)).save()
-        except Http404:
+        except Exception as e:
             return Response({"error": "We couldn't proceed with closing the Issue at this time. Try again later"})
 
 

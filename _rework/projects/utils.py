@@ -30,14 +30,14 @@ def team_composition(project_team):
     elif -5 <= innovation_ratio < 0:
         statement_2 = "Regular Brainstorm sessions recommended."
     elif innovation_ratio < -5:
-        statement_2 = "Regular Brainstorm sessions & Innovation Incentive setup recommended"
+        statement_2 = "Regular Brainstorm sessions & Innovation Incentive setup recommended."
     else:
         statement_2 = "Project Team Innovation Ration is well balanced."
 
     if teamwork_ratio > 5:
         statement_3 = "Slight risk of lower team efficiency due to increased social activities."
     elif 0 < teamwork_ratio <= 5:
-        statement_3 = "High Project Teamwork Ratio indicator. Standard monitoring practices advised"
+        statement_3 = "High Project Teamwork Ratio indicator. Standard monitoring practices advised."
     elif -5 <= teamwork_ratio < 0:
         statement_3 = "Implementation of Recognition Programs advised."
     elif teamwork_ratio < -5:
@@ -80,6 +80,7 @@ def project_prize(project, project_team):
     team_members = len(project_team)
     if team_members != 0:
         prize = project.budget / team_members
+        prize = int(round(prize))
     else:
         prize = 0
 
