@@ -4,6 +4,7 @@ from django.shortcuts import get_object_or_404
 from core import models_project
 from django.forms.models import model_to_dict
 from rest_framework.exceptions import ValidationError
+from projects.utils import team_composition
 
 
 class ProjectModelSerializer(serializers.ModelSerializer):
@@ -16,6 +17,7 @@ class ProjectModelSerializer(serializers.ModelSerializer):
     team_membership = serializers.SerializerMethodField("team_membership_field")
     project_messages = serializers.SerializerMethodField("project_messages_field")
     project_issues = serializers.SerializerMethodField("project_issues_field")
+    project_team_composition = serializers.SerializerMethodField("project_team_composition_field")
 
     def portrait_field(self, obj):
         user = get_object_or_404(models.MyProfile, id=obj.proposed_by.id)
@@ -30,9 +32,9 @@ class ProjectModelSerializer(serializers.ModelSerializer):
         return user.email
 
     def team_requirements_field(self, obj):
-        team = get_object_or_404(models_project.TeamRequirementsModel, project=obj.id)
-        team = model_to_dict(team)
-        return team
+        required_team = get_object_or_404(models_project.TeamRequirementsModel, project=obj.id)
+        required_team = model_to_dict(required_team)
+        return required_team
 
     def team_membership_field(self, obj):
         team = models_project.TeamMembershipModel.objects.filter(project=obj.id).values()
@@ -46,13 +48,20 @@ class ProjectModelSerializer(serializers.ModelSerializer):
         issues = models_project.IssueModel.objects.filter(project=obj.id).values()
         return issues
 
+    def project_team_composition_field(self, obj):
+        team = models_project.TeamMembershipModel.objects.values_list("member_personality", flat=True).filter(
+            project=obj.id)
+        team = team_composition(team)
+        return team
 
     class Meta:
         model = models_project.ProjectModel
         fields = "__all__"
         read_only_fields = (
             "id", "budget", "phase", "proposed_by", "portrait_field", "pm_name_field", "pm_email_field"
-            "team_requirements_field", "team_membership_field", "project_messages_field", "project_issues_field")
+                                                                                       "team_requirements_field",
+            "team_membership_field", "project_messages_field", "project_issues_field",
+            "project_team_composition_field")
 
     def validate(self, attrs):
         """LeanCoins balance"""
@@ -91,7 +100,7 @@ class TeamMembershipModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = models_project.TeamMembershipModel
         fields = "__all__"
-        read_only_fields = ("project", "member", "member_name", "member_portrait")
+        read_only_fields = ("project", "member", "member_name", "member_portrait", "member_personality")
 
 
 class TeamRejectionSerializer(serializers.ModelSerializer):
@@ -109,9 +118,4 @@ class IssueCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = models_project.IssueModel
         fields = "__all__"
-        read_only_fields = ("id","project","assigned_to")
-
-
-
-
-
+        read_only_fields = ("id", "project", "assigned_to")

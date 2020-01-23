@@ -1,31 +1,16 @@
 from core.models import MyProfile
+from collections import Counter
 
 
 def team_composition(project_team):
-    """Gamification guide for team composition"""
-    achievers = 0
-    explorers = 0
-    socializers = 0
-    killers = 0
-    team_profiles = []
-    if project_team:
-        for element in project_team:
-            team_profiles = MyProfile.objects.filter(owner=element.current_user)
-            for row in team_profiles:
-                if row.personality == "achiever":
-                    achievers += 1
-                elif row.personality == "explorer":
-                    explorers += 1
-                elif row.personality == "socializer":
-                    socializers += 1
-                elif row.personality == "killer":
-                    killers += 1
-    else:
-        pass
+    team_profiles = Counter(project_team)
 
-    efficiency_ratio = socializers * (-2) + explorers * 1 + killers * 2 + achievers * 3
-    innovation_ratio = socializers * (-2) + explorers * 3 + killers * 2 + achievers * 1
-    teamwork_ratio = socializers * 2 + explorers * (-2) + killers * (-2) + achievers * (-2)
+    efficiency_ratio = team_profiles["socializer"] * (-2) + team_profiles["explorer"] * 1 + team_profiles[
+        "killer"] * 2 + team_profiles["achiever"] * 3
+    innovation_ratio = team_profiles["socializer"] * (-2) + team_profiles["explorer"] * 3 + team_profiles[
+        "killer"] * 2 + team_profiles["achiever"] * 1
+    teamwork_ratio = team_profiles["socializer"] * 2 + team_profiles["explorer"] * (-2) + team_profiles["killer"] * (
+        -2) + team_profiles["achiever"] * (-2)
 
     if efficiency_ratio > 5:
         statement_1 = "High possibility of Project Fast-Tracking."
@@ -72,18 +57,18 @@ def team_composition(project_team):
         team_type = "Equilibrium"
 
     gamification_dict = {
-        'achievers': achievers,
-        'explorers': explorers,
-        'socializers': socializers,
-        'killers': killers,
-        'team_profiles': team_profiles,
-        'efficiency_ratio': efficiency_ratio,
-        'innovation_ratio': innovation_ratio,
-        'teamwork_ratio': teamwork_ratio,
-        'team_type': team_type,
-        'statement_1': statement_1,
-        'statement_2': statement_2,
-        'statement_3': statement_3
+        "achievers": team_profiles["achiever"],
+        "explorers": team_profiles["explorer"],
+        "socializers": team_profiles["socializer"],
+        "killers": team_profiles["killer"],
+        "team_profiles": team_profiles,
+        "efficiency_ratio": efficiency_ratio,
+        "innovation_ratio": innovation_ratio,
+        "teamwork_ratio": teamwork_ratio,
+        "team_type": team_type,
+        "statement_1": statement_1,
+        "statement_2": statement_2,
+        "statement_3": statement_3
     }
 
     return gamification_dict

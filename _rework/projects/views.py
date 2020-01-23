@@ -4,7 +4,7 @@ from rest_framework import viewsets, status, filters, authentication, permission
 from rest_framework.response import Response
 from rest_framework.exceptions import ValidationError
 from projects import serializers
-from core.permissions import IsAdminOrReadOnly
+from core.permissions import IsAdminOrReadOnly, IsOwnerOrReadOnly, IsFixingOrReadOnly, IsAdminOrReadAndCreateOnly
 from core import models
 from core import models_project
 
@@ -14,7 +14,7 @@ from projects.utils import project_prize
 class ProjectModelViewSet(viewsets.ModelViewSet):
     """Project Viewset"""
     authentication_classes = (authentication.TokenAuthentication, authentication.SessionAuthentication)
-    permission_classes = (permissions.IsAuthenticated, IsAdminOrReadOnly)  # DEL ADMIN ONLY, CREATE PM
+    permission_classes = (IsAdminOrReadAndCreateOnly,)
     serializer_class = serializers.ProjectModelSerializer
     filter_backends = (filters.SearchFilter, filters.OrderingFilter)
     search_fields = ("name", "proposed_by")
@@ -33,7 +33,7 @@ class ProjectModelViewSet(viewsets.ModelViewSet):
 class TeamRequirementsViews(views.APIView):
     """Team Requirements Views"""
     authentication_classes = (authentication.TokenAuthentication, authentication.SessionAuthentication)
-    permission_classes = (permissions.IsAuthenticated, IsAdminOrReadOnly)  # DEL ADMIN ONLY, CREATE PM
+    permission_classes = (permissions.IsAuthenticated, IsOwnerOrReadOnly)  # DEL ADMIN ONLY, CREATE PM
     serializer_class = serializers.TeamRequirementsModelSerializer
 
     def get(self, request, pk):
@@ -79,10 +79,10 @@ class ProjectPhaseViews(views.APIView):
 class CompleteProjectView(views.APIView):
     """View for completing project"""
     authentication_classes = (authentication.TokenAuthentication, authentication.SessionAuthentication)
-    permission_classes = (permissions.IsAuthenticated, IsAdminOrReadOnly)  # DEL ADMIN ONLY, CREATE PM
+    permission_classes = (permissions.IsAuthenticated, IsAdminOrReadOnly)
 
     def get(self, request, pk):
-        return Response({"message": f"Finish the project with id: {pk}"})
+        return Response({"message": f"Finish the project with id: {pk}"}, status=status.HTTP_200_OK)
 
     def post(self, request, pk):
         """Finish the project"""
@@ -106,16 +106,18 @@ class CompleteProjectView(views.APIView):
             return Response(
                 ({"message": f"Project was successfully completed. Each of {team_members} team members "
                              f"received {prize} LeanCoins. Additionally 540 LeanCoins has been transferred "
-                             f"to {project_manager} for successful project completion"}))
+                             f"to {project_manager} for successful project completion"}),
+                status=status.HTTP_204_NO_CONTENT)
 
         except Http404:
-            return Response({"error": "We couldn't finish project at this time. Try again later"})
+            return Response({"error": "We couldn't finish project at this time. Try again later"},
+                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 class TeamJoinView(views.APIView):
     """View for joining project team"""
     authentication_classes = (authentication.TokenAuthentication, authentication.SessionAuthentication)
-    permission_classes = (permissions.IsAuthenticated, IsAdminOrReadOnly)  # DEL ADMIN ONLY, CREATE PM
+    permission_classes = (permissions.IsAuthenticated,)
     serializer_class = serializers.TeamMembershipModelSerializer
 
     def post(self, request, pk):
@@ -123,6 +125,10 @@ class TeamJoinView(views.APIView):
         project = get_object_or_404(models_project.ProjectModel, id=pk)
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
+            profile = get_object_or_404(models.MyProfile, owner=request_user)
+            if profile.personality == "":
+                return Response({"error": "You have to submit gamification test at your Profile page first."},
+                                status=status.HTTP_400_BAD_REQUEST)
             serializer.save(member=request_user, project=project)
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -131,7 +137,7 @@ class TeamJoinView(views.APIView):
 class TeamRejectView(views.APIView):
     """View for rejecting team member"""
     authentication_classes = (authentication.TokenAuthentication, authentication.SessionAuthentication)
-    permission_classes = (permissions.IsAuthenticated, IsAdminOrReadOnly)  # DEL ADMIN ONLY, CREATE PM
+    permission_classes = (permissions.IsAuthenticated, IsOwnerOrReadOnly)
     serializer_class = serializers.TeamRejectionSerializer
 
     def get(self, request, pk, id):
@@ -154,11 +160,11 @@ class TeamRejectView(views.APIView):
 class IssueCreateView(views.APIView):
     """Project Issue Viewset"""
     authentication_classes = (authentication.TokenAuthentication, authentication.SessionAuthentication)
-    permission_classes = (permissions.IsAuthenticated, IsAdminOrReadOnly)  # DEL ADMIN ONLY, CREATE PM
+    permission_classes = (permissions.IsAuthenticated, IsOwnerOrReadOnly)
     serializer_class = serializers.IssueCreateSerializer
 
     def get(self, request, pk):
-        return Response({"message": f"Report an issue for the project with id: {pk}"})
+        return Response({"message": f"Report an issue for the project with id: {pk}"}, status=status.HTTP_200_OK)
 
     def post(self, request, pk):
         request_user = self.request.user
@@ -178,10 +184,10 @@ class IssueCreateView(views.APIView):
 class IssueAssignView(views.APIView):
     """Assign Issue Viewset"""
     authentication_classes = (authentication.TokenAuthentication, authentication.SessionAuthentication)
-    permission_classes = (permissions.IsAuthenticated, IsAdminOrReadOnly)  # DEL ADMIN ONLY, CREATE PM
+    permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request, id):
-        return Response({"message": f"Assign issue id: {id} to yourself"})
+        return Response({"message": f"Assign issue id: {id} to yourself"}, status=status.HTTP_200_OK)
 
     def patch(self, request, id):
         issue = get_object_or_404(models_project.IssueModel, id=id)
@@ -192,15 +198,16 @@ class IssueAssignView(views.APIView):
                 project=issue.project,
                 message='Issue "{0}" assigned to user {1}'.format(issue.name, issue.assigned_to)
             ).save()
-            return Response({"message": "Issue was successfully assigned to you"})
+            return Response({"message": "Issue was successfully assigned to you"}, status=status.HTTP_200_OK)
         except Http404:
-            return Response({"error": "We couldn't assign that Issue to you at this time. Try again later"})
+            return Response({"error": "We couldn't assign that Issue to you at this time. Try again later"},
+                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 class IssueFixedView(views.APIView):
     """Assign Issue Viewset"""
     authentication_classes = (authentication.TokenAuthentication, authentication.SessionAuthentication)
-    permission_classes = (permissions.IsAuthenticated, IsAdminOrReadOnly)  # DEL ADMIN ONLY, CREATE PM
+    permission_classes = (permissions.IsAuthenticated, IsFixingOrReadOnly)
 
     def get(self, request, id):
         return Response({"message": f"Close issue id: {id}"})
@@ -217,3 +224,13 @@ class IssueFixedView(views.APIView):
                 message='Issue "{0}" fixed by user {1}'.format(issue.name, issue.assigned_to)).save()
         except Http404:
             return Response({"error": "We couldn't proceed with closing the Issue at this time. Try again later"})
+
+
+class IssueCountView(views.APIView):
+    """Issue Counter"""
+    authentication_classes = (authentication.TokenAuthentication, authentication.SessionAuthentication)
+    permission_classes = (IsAdminOrReadOnly,)
+
+    def get(self, request):
+        queryset = models_project.IssueModel.objects.all()
+        return Response({"issue_count": len(queryset)})

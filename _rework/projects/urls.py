@@ -4,7 +4,7 @@ from rest_framework.routers import DefaultRouter
 
 app_name = 'projects'
 router = DefaultRouter()
-router.register('projects', views.ProjectModelViewSet)
+router.register('projects', views.ProjectModelViewSet, basename="projects")
 
 urlpatterns = [
     path('', include(router.urls)),
@@ -15,5 +15,6 @@ urlpatterns = [
     path('<int:pk>/team-reject/<int:id>/', views.TeamRejectView.as_view(), name="team-reject"),
     path('<int:pk>/issue-create/', views.IssueCreateView.as_view(), name="issue-create"),
     path('issues/<int:id>/issue-assign/', views.IssueAssignView.as_view(), name="issue-assign"),
-    path('issues/<int:id>/issue-fixed/', views.IssueFixedView.as_view(), name="issue-fixed")
+    path('issues/<int:id>/issue-fixed/', views.IssueFixedView.as_view(), name="issue-fixed"),
+    path('issue-count/', views.IssueCountView.as_view(), name="issue-count")
 ]
