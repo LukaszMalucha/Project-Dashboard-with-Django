@@ -1,10 +1,10 @@
 <template>
 <div v-if="total == 0" class="row plain-element">
   <div class="row header details-header">
-      <div class="col-md-2 text-right plain-element img-column">
+      <div class="col-md-1 text-left plain-element img-column">
           <img src="@/assets/img/charity.jpg" class="img responsive img-header">
       </div>
-      <div class="col-md-8 text-left">
+      <div class="col-md-8 text-left plain-element">
           <div class="box">
               <h5>Your Donation List is Empty </h5>
               <router-link :to="{name: 'charity'}" class="btn-algorithm green"><i class="fas fa-1x fa-donate"></i> Back to Charities</router-link>
@@ -18,10 +18,10 @@
 </div>
 <div v-else class="row plain-element">
   <div class="row header details-header">
-      <div class="col-md-2 text-right plain-element img-column">
+      <div class="col-md-1 text-left plain-element img-column">
           <img src="@/assets/img/charity.jpg" class="img responsive img-header">
       </div>
-      <div class="col-md-8 text-left">
+      <div class="col-md-8 text-left plain-element">
           <div class="box">
               <h5>Donation Checkout</h5>
           </div>
@@ -33,9 +33,9 @@
       </div>
   </div>
   <div class="dashboard-cards">
-    <div class="row row-cards" id="rowTransactionForm">
+    <div class="row row-form">" id="rowTransactionForm">
       <div class="col-md-4 no-padding">
-              <div class="card insights-card">
+              <div class="card form-card">
                   <div class="card-header">
                       <img src="@/assets/img/icons/charity.png" class="img-responsive">
                       <h5> Proceed with Donation </h5>

@@ -1,264 +1,281 @@
 <template>
-<div class="row plain-element">
-  <div class="row header details-header">
-    <div class="col-md-2 text-right plain-element img-column">
+  <div class="row plain-element">
+    <div class="row header details-header">
+      <div class="col-md-1 text-left plain-element img-column">
         <img src="@/assets/img/project-details.jpg" class="img responsive img-header">
-    </div>
-    <div class="col-md-10 text-left">
+      </div>
+      <div class="col-md-10 text-left plain-element">
         <div class="box" v-if="project">
-            <h5>{{ project.name }}</h5>
-            <button v-if="requestPosition == 'admin'" @click="advanceProject()" class="btn-algorithm green">
-                <b v-if="project.phase == 'proposed'">Launch Project</b>
-                <b v-else>Advance Project</b>
-            </button>
-            <button v-if="requestPosition == 'admin'" @click="completeProject()" class="btn-algorithm green">Finish Project!</button>
-            <button v-if="requestPosition == 'admin'" @click="terminateProject()" class="btn-algorithm red">Terminate Project</button>
-            <button v-if="requestUser == project.pm_email" @click="issueCreate()" class="btn-algorithm red">Report Issue</button>
-            <button v-if="requestUser == project.pm_email" @click="defineTeamRequirements()" class="btn-algorithm blue">Define Team Requirements</button>
+          <h5>{{ project.name }}</h5>
+          <button v-if="requestPosition == 'admin'" @click="advanceProject()" class="btn-algorithm green">
+            <b v-if="project.phase == 'proposed'">Launch Project</b>
+            <b v-else>Advance Project</b>
+          </button>
+          <button v-if="requestPosition == 'admin'" @click="completeProject()" class="btn-algorithm green">Finish
+            Project!
+          </button>
         </div>
         <br>
         <table class="profile-details">
-            <tr class>
-                <td>Manager: &nbsp;</td>
-                <td><b> &nbsp; {{ project.pm_name }}</b></td>
-            </tr>
-            <tr>
-                <td>Budget: &nbsp;</td>
-                <td><b><img src="@/assets/img/leancoin.png" class="icon"> {{ project.budget }}</b></td>
-            </tr>
-            <tr>
-                <td>Phase:</td>
-                <td><b>{{ project.phase }}</b></td>
-            </tr>
+          <tr class>
+            <td>Manager: &nbsp;</td>
+            <td class="td-position"><b> &nbsp; {{ project.pm_name }}</b></td>
+          </tr>
+          <tr>
+            <td>Budget: &nbsp;</td>
+            <td class="td-position"><b><img src="@/assets/img/leancoin.png" class="icon"> {{ project.budget }}</b></td>
+          </tr>
+          <tr>
+            <td>Phase:</td>
+            <td class="td-position"><b>{{ project.phase }}</b></td>
+          </tr>
         </table>
 
 
+      </div>
     </div>
-  </div>
-  <div class="dashboard-cards">
-    <div class="row row-cards">
-      <div class="col-md-3 plain-element">
-        <div class="card insights-card">
-          <div class="card-header">
-            <img src="@/assets/img/team.png" class="img-responsive">
-            <p><b> Project Team</b></p>
-            <p>
-              <button v-if="requestUser == project.pm_email" @click="rejectCandidate()" class="btn-insights red">Reject Candidate</button>
-              <button v-if="requestPosition == 'Coder'" @click="joinTeam()" class="btn-insights green">Join Team</button>
+    <div class="dashboard-cards">
+      <div class="row row-details">
+        <div class="col-md-6 col-left plain-element">
 
-            </p>
-          </div>
-          <div class="row-image">
-            <div class=" table-responsive table-profile">
-              <table>
-                <tr>
-                  <td><b>MANAGER:</b></td>
-                  <td class="box">
-                  <div class="plain-element">
-                    <img :src="pmPortrait" class="img responsive img-icon">
-                    <p class="tooltip-hover">{{ project.pm_name }}</p>
+          <div class="row plain-element">
+            <div class="col-md-12 plain-element">
+              <div class="card insights-card">
+                <div class="card-header">
+                  Project Team Requirements
+                  <button v-if="requestUser == project.pm_email" @click="defineTeamRequirements()" class="btn-insights green">
+                    Define Team Requirements
+                  </button>
+                </div>
+                <div class="row row-content">
+                  <div class="table-responsive table-skills">
+                    <table>
+                      <thead>
+                      <tr>
+                        <th class="text-center"><img src="@/assets/img/icons/html.png"
+                                                     class="img responsive img-skill"></th>
+                        <th class="text-center"><img src="@/assets/img/icons/css.png"
+                                                     class="img responsive img-skill"></th>
+                        <th class="text-center"><img src="@/assets/img/icons/js.png"
+                                                     class="img responsive img-skill"></th>
+                        <th class="text-center"><img src="@/assets/img/icons/db.png"
+                                                     class="img responsive img-skill"></th>
+                        <th class="text-center"><img src="@/assets/img/icons/python.png"
+                                                     class="img responsive img-skill"></th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr>
+                        <td class="text-center"><b>{{ teamRequirements.html }}</b></td>
+                        <td class="text-center"><b>{{ teamRequirements.css }}</b></td>
+                        <td class="text-center"><b>{{ teamRequirements.js }}</b></td>
+                        <td class="text-center"><b>{{ teamRequirements.db }}</b></td>
+                        <td class="text-center"><b>{{ teamRequirements.python }}</b></td>
+                      </tr>
+                      </tbody>
+                    </table>
                   </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td><b>HTML</b>:</td>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row plain-element">
+            <div class="col-md-12 plain-element">
+              <div class="card insights-card">
+                <div class="card-header">
+                  Project Team
+                    <button v-if="requestUser == project.pm_email" @click="rejectCandidate()" class="btn-insights red">
+                      Reject Candidate
+                    </button>
+                    <button v-if="requestPosition == 'Coder' && project.phase == 'proposed'" @click="joinTeam()"
+                            class="btn-insights green">Join Team
+                    </button>
+                </div>
+                <div class="row row-content">
+                  <div class="col-md-6 plain-element">
+                    <div class=" table table-team">
+                      <table>
+                        <tr>
+                          <td class="td-position"><b>Manager:</b></td>
+                          <td class="box plain-element">
+                            <div class="plain-element">
+                              <img :src="pmPortrait" class="img responsive img-icon">
+                              <p class="tooltip-hover">{{ project.pm_name }}</p>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="td-position"><b>Html</b>:</td>
 
-                  <td class="box">
-                    <div v-for="element in teamMembership" :key="element.id" class="plain-element">
-                      <img v-if="element.committed_skill == 'html'" :src="element.member_portrait" class="img responsive img-icon">
-                      <p class="tooltip-hover">{{element.member_name}}</p>
+                          <td class="box">
+                            <div v-for="element in teamMembership" :key="element.id" class="plain-element">
+                              <img v-if="element.committed_skill == 'html'" :src="element.member_portrait"
+                                   class="img responsive img-icon">
+                              <p class="tooltip-hover">{{element.member_name}}</p>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="td-position"><b>Css</b>:</td>
+                          <td class="box">
+                            <div v-for="element in teamMembership" :key="element.id" class="plain-element">
+                              <img v-if="element.committed_skill == 'css'" :src="element.member_portrait"
+                                   class="img responsive img-icon">
+                              <p class="tooltip-hover">{{element.member_name}}</p>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="td-position"><b>Js</b>:</td>
+                          <td class="box">
+                            <div v-for="element in teamMembership" :key="element.id" class="plain-element">
+                              <img v-if="element.committed_skill == 'js'" :src="element.member_portrait"
+                                   class="img responsive img-icon">
+                              <p class="tooltip-hover">{{element.member_name}}</p>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="td-position"><b>Db</b>:</td>
+                          <td class="box">
+                            <div v-for="element in teamMembership" :key="element.id" class="plain-element">
+                              <img v-if="element.committed_skill == 'db'" :src="element.member_portrait"
+                                   class="img responsive img-icon">
+                              <p class="tooltip-hover">{{element.member_name}}</p>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="td-position"><b>Python</b>:</td>
+                          <td class="box">
+                            <div v-for="element in teamMembership" :key="element.id" class="plain-element">
+                              <img v-if="element.committed_skill == 'python'" :src="element.member_portrait"
+                                   class="img responsive img-icon">
+                              <p class="tooltip-hover">{{element.member_name}}</p>
+                            </div>
+                          </td>
+                        </tr>
+                      </table>
+                      <br>
                     </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td><b>CSS</b>:</td>
-                  <td class="box">
-                    <div v-for="element in teamMembership" :key="element.id" class="plain-element">
-                      <img v-if="element.committed_skill == 'css'" :src="element.member_portrait" class="img responsive img-icon">
-                      <p class="tooltip-hover">{{element.member_name}}</p>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td><b>JS</b>:</td>
-                  <td class="box">
-                    <div v-for="element in teamMembership" :key="element.id" class="plain-element">
-                      <img v-if="element.committed_skill == 'js'" :src="element.member_portrait" class="img responsive img-icon">
-                      <p class="tooltip-hover">{{element.member_name}}</p>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td><b>DB</b>:</td>
-                  <td class="box">
-                    <div v-for="element in teamMembership" :key="element.id" class="plain-element">
-                      <img v-if="element.committed_skill == 'db'" :src="element.member_portrait" class="img responsive img-icon">
-                      <p class="tooltip-hover">{{element.member_name}}</p>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td><b>PYTHON</b>:</td>
-                  <td class="box">
-                    <div v-for="element in teamMembership" :key="element.id" class="plain-element">
-                      <img v-if="element.committed_skill == 'python'" :src="element.member_portrait" class="img responsive img-icon">
-                      <p class="tooltip-hover">{{element.member_name}}</p>
-                    </div>
-                  </td>
-                </tr>
-              </table>
-              <br>
+                  </div>
+                  <div class="col-md-6 plain-element">
+                    <div class="row plain-element">
+                  <team-chart :chart-data="teamCompositionData" :styles="chartStyles"></team-chart>
+                </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row plain-element">
+            <div class="col-md-12 plain-element">
+              <div class="card insights-card">
+                <div class="card-header">
+                  <p><b>Team Insights </b> <br></p>
+                </div>
+                <div class="row row-content">
+                  <div class=" table-responsive table-insights">
+                    <table>
+                      <tr>
+                        <th class="text-left">Area</th>
+                        <th class="text-left">Summary</th>
+                      </tr>
+                      <tr>
+                        <td>Team Type</td>
+                        <td>{{ projectAdvices.team_type }}</td>
+                      </tr>
+                      <tr>
+                        <td>Productivity</td>
+                        <td>{{ projectAdvices.statement_1 }}</td>
+                      </tr>
+                      <tr>
+                        <td>Innovation</td>
+                        <td>{{ projectAdvices.statement_2 }}</td>
+                      </tr>
+                      <tr>
+                        <td>Teamwork</td>
+                        <td>{{ projectAdvices.statement_3 }}</td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-        <div class="card insights-card">
-          <div class="card-header">
-            <img src="@/assets/img/icons/description.png" class="img-responsive">
-            <p><b> Project Log </b></p>
+        <div class="col-md-6 plain-element">
+          <div class="row plain-element">
+            <div class="col-md-12 plain-element">
+              <div class="card insights-card">
+                <div class="card-header">
+                  <p>Bugs & Issues</p>
+                    <button v-if="requestUser == project.pm_email" @click="issueCreate()" class="btn-insights red">Report Issue
+                    </button>
+                </div>
+                <div class="row row-content">
+                  <div class="table-responsive table-insights">
+                    <table>
+                      <thead>
+                      <tr>
+                        <th class="text-left">Issue</th>
+                        <th class="text-left">Description</th>
+                        <th class="text-left">Reward</th>
+                        <th class="text-left">Assigned to</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr v-for="element in projectIssues" :key="element.id">
+                        <td><a target="_blank">{{element.name}}</a>
+                        <td>{{element.description}}</td>
+                        <td><img src="@/assets/img/leancoin.png" class="icon"> {{element.cost}}
+                        </td>
+                        <td id="assignCell" v-if="project.pm_email == element.assignee">
+                          <button id="buttonAssign" @click="assignIssue(element.id)" class="btn-table green">Assign to Me
+                          </button>
+                        </td>
+                        <td v-else>{{element.assignee}}</td>
+
+                      </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="row-image">
-            <div class=" table-responsive table-log">
-              <div class="table-div plain-element">
-                <table>
-                  <tr>
-                    <th class="text-center">Date</th>
-                    <th class="text-center">Log Entry</th>
-                  </tr>
-                  <tr v-for="element in projectMessages" :key="element.id">
-                    <td>{{ formatDate (element.message_date) }}</td>
-                    <td>{{element.message}}</td>
-                  </tr>
-                </table>
+          <div class="row plain-element">
+            <div class="col-md-12 plain-element">
+              <div class="card insights-card">
+                <div class="card-header">
+                  <p>Project Log</p>
+                  <button v-if="requestPosition == 'admin'" @click="terminateProject()" class="btn-insights red">Terminate
+                    Project
+                  </button>
+                </div>
+                <div class="row row-content">
+                  <div class=" table-responsive table-insights">
+                    <div class="table-div plain-element">
+                      <table>
+                        <tr>
+                          <th class="text-left">Date</th>
+                          <th class="text-left">Log Entry</th>
+                        </tr>
+                        <tr v-for="element in projectMessages" :key="element.id">
+                          <td>{{ formatDate (element.message_date) }}</td>
+                          <td>{{element.message}}</td>
+                        </tr>
+                      </table>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="col-md-6 plain-element">
-        <div class="card insights-card">
-          <div class="card-header">
-            <img src="@/assets/img/team.png" class="img-responsive">
-            <p><b>Team Requirements </b> <br></p>
-          </div>
-          <div class="row-image">
-            <div class="table-responsive table-skills">
-              <table>
-                <thead>
-                <tr>
-                  <th class="text-center"><img src="@/assets/img/icons/html.png"
-                                               class="img responsive img-skill"></th>
-                  <th class="text-center"><img src="@/assets/img/icons/css.png"
-                                               class="img responsive img-skill"></th>
-                  <th class="text-center"><img src="@/assets/img/icons/js.png"
-                                               class="img responsive img-skill"></th>
-                  <th class="text-center"><img src="@/assets/img/icons/db.png"
-                                               class="img responsive img-skill"></th>
-                  <th class="text-center"><img src="@/assets/img/icons/python.png"
-                                               class="img responsive img-skill"></th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                  <td class="text-center"><h5><b>{{ teamRequirements.html }}</b></h5></td>
-                  <td class="text-center"><h5><b>{{ teamRequirements.css }}</b></h5></td>
-                  <td class="text-center"><h5><b>{{ teamRequirements.js }}</b></h5></td>
-                  <td class="text-center"><h5><b>{{ teamRequirements.db }}</b></h5></td>
-                  <td class="text-center"><h5><b>{{ teamRequirements.python }}</b></h5></td>
-                </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-        <div class="card insights-card">
-          <div class="card-header">
-            <img src="@/assets/img/icons/gear.png" class="img-responsive">
-            <p><b>Project Schedule </b> <br></p>
-          </div>
-          <div class="row-image">
-            <img :src="projectSchedule" class="img-responsive">
-          </div>
-        </div>
-      </div>
-      <div class="col-md-3 plain-element">
-        <div class="card insights-card">
-          <div class="card-header">
-            <img src="@/assets/img/icons/chart.png" class="img-responsive">
-            <p><b>Team - Robot Factory</b></p>
-          </div>
-          <div class="row-image">
-              <team-chart  :chart-data="teamCompositionData" :styles="chartStyles"></team-chart>
-          </div>
-          <br>
-        </div>
-        <div class="card insights-card">
-
-          <div class="card-header">
-            <img src="@/assets/img/icons/chart.png" class="img-responsive">
-            <p><b>Team Insights </b> <br></p>
-          </div>
-          <div class="row-image">
-            <div class=" table-responsive table-log">
-              <table>
-                <tr>
-                  <th class="text-center">Area</th>
-                  <th class="text-center">Insight</th>
-                </tr>
-                <tr>
-                  <td>Productivity</td>
-                  <td>{{ projectAdvices.statement_1 }}</td>
-                </tr>
-                <tr>
-                  <td>Innovation</td>
-                  <td>{{ projectAdvices.statement_2 }}</td>
-                </tr>
-                <tr>
-                  <td>Teamwork</td>
-                  <td>{{ projectAdvices.statement_3 }}</td>
-                </tr>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row row-cards">
-      <div class="card insights-card">
-        <div class="card-header">
-          <img src="@/assets/img/issue.png" class="img-responsive">
-          <p><b>Bugs & Issues </b> <br></p>
-        </div>
-        <div class="row-image">
-          <div class="table-responsive table-profile">
-            <table class="table">
-              <thead>
-              <tr>
-                <th class="text-center">Issue</th>
-                <th class="text-center">Description</th>
-                <th class="text-center">Reward</th>
-                <th class="text-center">Assigned to</th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr v-for="element in projectIssues" :key="element.id">
-                <td class="text-center"><a target="_blank">{{element.name}}</a>
-                <td class="text-center">{{element.description}}</td>
-                <td class="text-center"><img src="@/assets/img/leancoin.png" class="icon"> {{element.cost}}
-                </td>
-                <td id="assignCell" class="text-center" v-if="project.pm_email == element.assignee">
-                 <button id="buttonAssign" @click="assignIssue(element.id)" class="btn-inline red">Assign to Me</button>
-                </td>
-                <td class="text-center" v-else>{{element.assignee}}</td>
-                <td class="text-center"></td>
-              </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
-</div>
 </template>
 
 
@@ -411,4 +428,7 @@ export default {
   }
 
 }
+
+
+
 </script>

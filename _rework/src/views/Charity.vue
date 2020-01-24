@@ -1,15 +1,15 @@
 <template>
 <div class="row plain-element">
   <div class="row header details-header">
-      <div class="col-md-2 text-right plain-element img-column">
+      <div class="col-md-1 text-left plain-element img-column">
           <img src="@/assets/img/charity.jpg" class="img responsive img-header">
       </div>
-      <div class="col-md-8 text-left">
+      <div class="col-md-8 text-left plain-element">
           <div class="box">
               <h5>Fundraising Events </h5>
               <router-link :to="{name: 'charity-create'}" v-if="this.requestPosition == 'admin'" class="btn-algorithm green">New Charity</router-link>
               <div class="plain element" v-if="this.inCart > 0">
-                <router-link :to="{name: 'charity-donations', params: { cart: checkout }}" class="donation-button">
+                <router-link :to="{name: 'charity-donations', params: { cart: checkout , cartList: checkoutList}}" class="donation-button">
                   <i class="fas fa-donate"></i>
                   <label class="badge glow">{{ inCart }}</label>
                 </router-link>
@@ -57,7 +57,7 @@ export default {
       requestUser: null,
       requestPosition: null,
       checkout: [],
-      check: [],
+      checkoutList: [],
     }
   },
   computed: {
@@ -72,8 +72,8 @@ export default {
       this.requestPosition = window.localStorage.getItem("position");
     },
     addDonation(charity) {
-      if (!this.check.includes(charity.id)) {
-        this.check.push(charity.id)
+      if (!this.checkoutList.includes(charity.id)) {
+        this.checkoutList.push(charity.id)
         this.checkout.push(charity);
       }
     },

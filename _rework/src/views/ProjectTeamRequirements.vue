@@ -1,10 +1,10 @@
 <template>
 <div v-if="requestUser == projectPM" class="row plain-element">
   <div class="row header details-header">
-      <div class="col-md-2 text-right plain-element img-column">
+      <div class="col-md-1 text-left plain-element img-column">
           <img src="@/assets/img/propose-project.jpg" class="img responsive img-header">
       </div>
-      <div class="col-md-8 text-left">
+      <div class="col-md-8 text-left plain-element">
           <div class="box">
               <h5>Define Project Skill Requirements</h5>
           </div>
@@ -17,9 +17,9 @@
       </div>
   </div>
   <div class="dashboard-cards">
-      <div class="row row-cards">
+      <div class="row row-form">
           <div class="col-md-3 plain-element">
-              <div class="card insights-card">
+              <div class="card form-card">
                   <div class="card-header">
                       <img src="@/assets/img/icons/gear.png" class="img-responsive">
                       <h5> Team Requirements </h5>

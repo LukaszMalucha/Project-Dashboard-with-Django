@@ -1,10 +1,10 @@
 <template>
 <div class="row plain-element">
     <div class="row header details-header">
-      <div class="col-md-2 text-right plain-element img-column">
+      <div class="col-md-1 text-left plain-element img-column">
           <img src="@/assets/img/propose-project.jpg" class="img responsive img-header">
       </div>
-      <div class="col-md-8 text-left">
+      <div class="col-md-8 text-left plain-element">
           <div class="box">
               <h5>Join Team</h5>
           </div>
@@ -17,9 +17,9 @@
       </div>
   </div>
   <div class="dashboard-cards">
-      <div class="row row-cards">
+      <div class="row row-form">
           <div class="col-md-4 plain-element">
-              <div class="card insights-card">
+              <div class="card form-card">
                   <div class="card-header">
                       <img src="@/assets/img/icons/gear.png" class="img-responsive">
                       <h5> Join Team </h5>
@@ -84,11 +84,13 @@ export default {
               this.error = data.non_field_errors[0]
            } else if (!data) {
               this.error = "Something went wrong. Try again later"
+          } else if (data.error) {
+              this.error = data.error
           } else {
             this.$router.push({
                   name: "project-details",
                   params: { id: this.id }
-            })
+            });
           }
       })
     }

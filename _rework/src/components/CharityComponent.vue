@@ -7,7 +7,7 @@
       <div class="card-stacked">
                 <div class="card-content">
                     <span class="flex">
-                      <h5>{{ charity.name| truncatechars(16) }}</h5>
+                      <h5>{{ charity.name| truncatechars(20) }}</h5>
                       <button v-if="this.requestPosition == 'admin'" class="btn-inline-delete" @click="triggerDeleteCharity">Delete</button>
                     </span>
                     <p>{{ charity.description| truncatechars(60) }}</p>

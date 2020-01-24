@@ -2,11 +2,11 @@
   <div class="row plain-element">
 
     <div class="row header details-header">
-      <div class="col-md-2 text-right plain-element img-column">
+      <div class="col-md-1 text-left plain-element img-column">
           <img src="@/assets/img/main.png" class="img responsive img-header">
       </div>
 
-      <div class="col-md-8 text-left">
+      <div class="col-md-8 text-left plain-element">
           <div class="box">
             <h5>Kanban Board</h5>
             <router-link :to="{name: 'project-create'}" class="btn-algorithm blue">Start New Project</router-link>
