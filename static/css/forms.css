@@ -6,12 +6,15 @@ body {
 
 
 #page-index {
-
-    padding-top: 60px;
-    background-image: none;
-
-
+   background-image: none;
 }
+
+.form-container {
+    padding-top: 148px;
+    width: 70%;
+    margin: auto;
+}
+
 
 .form-signin {
     text-align: center;
@@ -22,7 +25,7 @@ body {
     border-color: transparent;
     border-radius: 15px;
     color: #222222;
-    font-weight: bolder;
+    font-weight: 600;
     margin-bottom: 50px;
 }
 
@@ -34,7 +37,7 @@ body {
     border-color: transparent;
     text-align: right;
     color: white;
-    background-color: #165d81;
+    background-color: #003f67;
     font-size: 18px;
 }
 
@@ -52,7 +55,7 @@ body {
     border-radius: 50px;
     background-color: white;
     padding: 3%;
-    color: #165d81;
+    color: #003f67;
 }
 
 .form-box {
@@ -74,7 +77,7 @@ body {
 
 h6 {
     font-size: 0.8rem;
-    font-weight: bold;
+    font-weight: 600;
     color: #222;
     color: grey;
 }
@@ -82,7 +85,7 @@ h6 {
 input[type="email"]:not(.browser-default):focus:not([readonly]),
 input[type="password"]:not(.browser-default):focus:not([readonly]),
 input[type="text"]:not(.browser-default):focus:not([readonly]) {
-    border-bottom: 1px solid #165d81;
+    border-bottom: 1px solid #003f67;
     box-shadow: 0 1px 0 0 #26a69a;
 
 }
@@ -128,6 +131,118 @@ blockquote {
 }
 
 
+/*----------------------------------------------
+    USER PROFILE
+------------------------------------------------*/
+
+.user-profile {
+  border-radius: 15px;
+  height: 600px;
+  width: 500px;
+  margin: auto;
+  background: white;
+  text-align: center !important;
+  position: relative;
+}
+
+.user-profile row {
+  margin: auto;
+}
+
+.user-profile table tr{
+  border: none;
+}
+
+.col-background {
+  height: 600px;
+  background: linear-gradient(to bottom, #522866 0%, #792a65 100%);
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+}
+
+.portrait {
+  padding:0;
+  background: #a7a7a7;
+  overflow: hidden;
+  width: 100px;
+  height: 100px;
+  margin: auto;
+  border-radius: 50%;
+}
+
+
+.img-portrait {
+  height: 100%;
+  margin: auto;
+  opacity: 0.98;
+}
+
+.img-portrait:hover {
+  opacity:0.8;
+  transform: scale(1.05);
+  transition-duration: 600ms;
+}
+
+.col-profile {
+  padding: 60px;
+}
+
+.col-profile h6 {
+  font-size: 14px;
+}
+
+.col-profile b {
+  color: #333 !important;
+}
+
+.btn-edit {
+  border: none;
+  border-radius: 10px;
+  height: 18px;
+  width: auto;
+  background: #792a65;
+  padding: 0px 6px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+  margin-left: 10px;
+  color: white;
+  position: absolute;
+}
+
+.btn-edit:hover,
+.btn-edit:active,
+.btn-edit:focus {
+  background: #652966;
+}
+
+.file-field input[type="text"]:not(.browser-default) {
+  border-bottom: 0px solid black;
+}
+
+.file-field .btn {
+  background-color: #792a65;
+  font-size: 10px;
+  height: 32px;
+  line-height: 32px;
+  border-radius: 5px;
+  margin-top: 10px;
+  width: 100%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.file-field .btn a {
+  color: white;
+}
+
+
+.file-field .btn:hover,
+.file-field .btn:active,
+.file-field .btn:focus {
+  color: white;
+  background: #652966;
+}
 
 /*----------------------------------------------
     MEDIA QUERIES

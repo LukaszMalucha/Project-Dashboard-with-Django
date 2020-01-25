@@ -1,5 +1,5 @@
-{% load staticfiles %}
 <!DOCTYPE html>
+{% load staticfiles %}
 <html>
 
 <head>
@@ -25,9 +25,11 @@
     <!-- FontAwesome Styles-->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css"
           integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/cb5db23bd5.js"></script>
     <!-- Custom Styles-->
     <link href="{% static 'css/custom-styles.css' %}" rel="stylesheet"/>
     <link href="{% static 'css/navbar.css' %}" rel="stylesheet"/>
+    <link href="{% static 'css/data.css' %}" rel="stylesheet"/>
     <!-- jQuery-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- Chart Js -->
@@ -43,15 +45,10 @@
       }
       @font-face {
         font-family: 'Source Sans Pro';
-        font-weight: bold 600;
+        font-weight: 600;
         src: url('{% static 'fonts/TTF/SourceSansPro-Semibold.ttf' %}');
       }
-      @font-face {
-        font-family: 'Raleway';
-        src: url('{% static 'fonts/TTF/Raleway-Regular.ttf' %}');
-      }
     </style>
-
 </head>
 
 <body>
@@ -60,21 +57,16 @@
     {% block navbar %}
     <nav class="navbar navbar-default top-navbar" role="navigation">
         <div class="navbar-header">
-            <a class="navbar-brand company-logo" href="{% url 'dashboard:dashboard' %}"><img class="company-logo"
+            <a class="navbar-brand company-logo" href="/"><img class="company-logo"
                                                                                              src="{% static 'img/logo-white.png' %}"
                                                                                              alt="Logo"/></a>
         </div>
         <ul class="nav navbar-top-links navbar-right">
-            <li>
-                <form action="{% url 'projects:find_project' %}" class="browser-default left">
-                    <i class="fas fa-search" id="search-icon"></i>
-                    <input id="search-input" placeholder="Find Project" type="text" class="browser-default search-field"
-                           name="query" value="" autocomplete="off" aria-label="Search box">
-                    <label for="search-input"></label>
-                    <i class="material-icons search-close-icon">cancel</i>
-                </form>
+            <li><a class="nav-link" href="/"><i class="fas fa-project-diagram"></i><b>Dashboard</b></a>
             </li>
-            <li><a class="nav-link" href="{% url 'charity:charity' %}"><i class="fas fa-donate"></i><b>Charity</b></a>
+            <li><a class="nav-link" href="/api/projects/"><i class="fas fa-terminal"></i><b>REST Api</b></a>
+            </li>
+            <li><a class="nav-link" href="/charity"><i class="fas fa-donate"></i><b>Charity</b></a>
             </li>
             <li><a class="nav-link"
                    href="{% url 'user:profile' %}"><i class="fas fa-user-alt"></i>
@@ -95,6 +87,7 @@
     <!-- DROPDOWN -->
     <ul id="dropdown-user" class="dropdown-content">
         {% if user.is_authenticated %}
+        <li><a href="{% url 'user:profile' %}"><i class="fas fa-sign-out-alt"></i> My Profile</a></li>
         <li><a href="{% url 'user:logout' %}"><i class="fas fa-sign-out-alt"></i> Log Out</a></li>
         {% else %}
         <li><a href="{% url 'user:login' %}"><i class="fa fa-user fa-fw"></i> Log In</a></li>
@@ -105,30 +98,23 @@
 
     <!-- MOBILE -->
     <ul class="sidenav" id="mobile-demo">
-
-        <li><a class="dropdown-button waves-effect waves-dark" href="{% url 'charity:charity' %}"><i
+        <li><a  href="/"><i class="fas fa-project-diagram"></i><b>Dashboard</b></a>
+            </li>
+        <li><a  href="/api/projects/"><i class="fas fa-terminal"></i><b>REST Api</b></a>
+            </li>
+        <li><a  href="/charity"><i
                 class="fas fa-donate"></i><b>Charity</b></a></li>
 
         {% if user.is_authenticated %}
+        <li><a href="{% url 'user:profile' %}"><i class="fas fa-sign-out-alt"></i> My Profile</a></li>
         <li><a class="dropdown-button waves-effect waves-dark" href="{% url 'user:logout' %}"><i
-                class="fas fa-sign-out-alt"></i><b> Log Out {{ user.name }}</b></a></li>
+                class="fas fa-sign-out-alt"></i><b>Log Out {{ user.name }}</b></a></li>
         {% else %}
         <li><a class="dropdown-button waves-effect waves-dark" href="{% url 'user:login' %}"><i
                 class="fa fa-user"></i><b> Log In</b></a></li>
         <li><a class="dropdown-button waves-effect waves-dark" href="{% url 'user:register' %}"><i
                 class="fas fa-tasks"></i><b> Register</b></a></li>
         {% endif %}
-        <br>
-        <li>
-            <form action="{% url 'projects:find_project' %}" class="browser-default left">
-                <i class="fas fa-search" id="search-icon"></i>
-                <input id="search-input" placeholder="Find Project" type="text" class="browser-default search-field"
-                       name="query" value="" autocomplete="off" aria-label="Search box">
-                <label for="search-input"></label>
-                <i class="material-icons search-close-icon">cancel</i>
-            </form>
-        </li>
-
     </ul>
     {% endblock %}
     <!-- PAGE-WRAPPER -->

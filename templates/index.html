@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+{% extends "base.html" %} {% load staticfiles %}
+{% block extrahead %}
+<link href="{% static 'css/data.css' %}" rel="stylesheet"/>
+{% endblock %}
+{% block content %}
+
+
+<noscript>
+  <strong>We're sorry but frontend doesn't work properly without JavaScript enabled. Please enable it to
+    continue.</strong>
+</noscript>
+<div id="app">
+</div>
+
+
+{% endblock %}
+
+{% block js %}
+<script src="https://leanbank.s3-eu-west-1.amazonaws.com/static/js/bundle.js"></script>
+{% endblock %}
+
+

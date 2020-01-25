@@ -23,11 +23,10 @@
     border: none;
     height: 42px;
     min-height: 42px;
-    padding-left: 11%;
-    padding-right: 10%;
+    padding-left: 10%;
+    padding-right: 9.5%;
     padding-top: 0px;
     padding-bottom: 0px;
-
 }
 
 .top-navbar .navbar-brand {
@@ -35,7 +34,7 @@
     width: 100%;
     height: 42px;
     text-align: left;
-    padding: 10px 5px 5px 5px;
+    padding: 10px 5px 5px 0px;
     font-weight: 700;
     color: white;
     background: transparent;
@@ -48,7 +47,6 @@
 
 .navbar-brand .company-logo {
     height: 2.2rem;
-
 }
 
 
@@ -68,7 +66,6 @@
     padding-top: 0px;
     padding-bottom: 0px;
     font-size: 13px;
-
 }
 
 .nav-link {
@@ -109,7 +106,6 @@ nav ul b {
 }
 
 .dropdown-content {
-    width: max-content !important;
     right: -50px !important;
     top: 42px !important;
 
@@ -131,20 +127,42 @@ nav ul b {
 }
 
 .sidenav-trigger {
-    height: 42px !important;
+    height: 40px !important;
 
 
 }
 
+nav a.sidenav-trigger {
+    line-height: 1;
+    display: block;
+    padding: 0px !important;
+    margin: 0px !important;
+    position: fixed;
+    top: 10px;
+    right: 10px;
+}
+
+
+nav a.sidenav-trigger i {
+    height: 40px;
+    line-height: 1;
+}
+
 .sidenav-trigger i {
-    font-weight: 600;
+    font-weight: bold;
 
 }
 
 
 #trigger {
+   position: fixed
+   height:24px;
    font-size: 24px;
-   padding: 10px 0px 10px 0px;
+   padding: 0px;
+}
+
+.sidenav li > a > i {
+    margin: 0px !important;
 }
 
 /* Hovers and Focuses --------------------------------------------------------*/
@@ -175,138 +193,6 @@ nav ul li:hover, nav ul li:active {
 .sidenav li:hover {
      background: #102332;
 }
-
-
-
-
-/*------------------------------------------------------------------------------
-    SEARCH BOX
-------------------------------------------------------------------------------*/
-
-nav form {
-  position: relative;
-  height: 100%;
-  background: inherit;
-  padding: 12px 15px 6px 0px;
-}
-
-
-.nav-wrapper{
-  background: inherit;
-
-}
-
-
-.search-close-icon{
-  display: none!important;
-  position: absolute;
-  top: 0;
-  left: 100%!important;
-  padding-left: 0px;
-  color: rgba(0, 0, 0, 0.54);
-  transition: color .2s;
-  cursor: pointer;
-}
-
-
-input.search-field {
-  font-weight: 500;
-  color: rgba(0, 0, 0, 0.54);
-  border-radius: 2px;
-  border: 0;
-  height: 22px;
-  padding: 8px 8px 8px 30px;
-  width: 160px;
-  background: white;
-  transition: background 0.2s, width .2s;
-}
-
-
-#search-icon {
-    position: relative;
-    color: #5e5e5e;
-    left: 30px;
-}
-
-
-input.search-field:hover {
-  background: white;
-}
-.searchbox {
-  position: relative;
-}
-
-::placeholder {
-  color: black;
-}
-input.search-field:focus {
-  outline: none;
-  width: 240px;
-  color: #212121;
-}
-input.search-field:focus:hover {
-  background: white;
-}
-.search-icon {
-  position: absolute;
-  top: 0;
-  padding-left: 20px;
-  color: rgba(0, 0, 0, 0.54);
-}
-.search-content {
-  color: #303c42;
-  width: 90%;
-  margin: auto;
-  height: auto;
-  padding: 8px 10px;
-}
-.search-heading {
-  color: #757575;
-  display: block;
-  font-size: 12px;
-  line-height: 30px;
-}
-input.search-field ~ .search-popup {
-  overflow: hidden;
-  left: 0px;
-  min-height: 50px;
-  max-height: 700px;
-  width: 200px;
-  top: -450px;
-  position: absolute;
-  z-index: 1;
-  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14),0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
-  transition: width .2s, top .2s ease-in-out;
-  border-radius: 2px;
-  background-color: #fff;
-}
-input.search-field:focus ~ .search-popup {
-  width: 500px;
-  top: 50px;
-}
-nav ul.popup-list a:hover {
-  background-color: initial;
-}
-nav ul.popup-list li {
-  float: none;
-}
-nav ul.popup-list li a {
-  line-height: 30px;
-  padding: 0;
-  font-size: 12px;
-  color: #212121 !important;
-}
-nav ul.popup-list li a:hover {
-  background-color: #f7f7f7;
-}
-
-
-.top-margin {
-  margin-top: 8px;
-}
-
-
-
 
 /*------------------------------------------------------------------------------
     Colors
@@ -394,21 +280,30 @@ nav ul a {
         width:30%;
     }
 
+}
 
+@media(min-width:1279px) {
 
+    .sidenav-trigger {
+        display: none !important;
+    }
 }
 
 
-@media(max-width:1025px) {
+@media(max-width:1279px) {
     .top-navbar {
-        padding:0px;
-        padding-left: 1%;
+        padding-left: 2%;
+        padding-right: 2%;
+    }
+
+    .top-navbar {
+        padding-left: 2%;
+        padding-right: 2%;
     }
 
     .top-navbar .navbar-brand {
         width: 280px;
     }
-
 
     .dropdown-content {
         margin-top: -10px;
@@ -419,9 +314,8 @@ nav ul a {
     }
 
     .navbar-header {
-        width: 60%;
+        width: 50%;
     }
-
     nav a.sidenav-trigger {
         line-height: 1;
         display: block;
@@ -430,99 +324,45 @@ nav ul a {
     nav a.sidenav-trigger i {
         height: 42px;
         line-height: 1;
+
     }
 
     #trigger {
-        margin: 2px 0px 0px 0px;
-    }
-
-    #search-form {
-        display:none;
-    }
-
-}
-
-@media only screen and (max-width: 600px) {
-
-  nav form {
-/*     left: calc(90vw - 100%); */
-  }
-
-  ::placeholder {
-    /* Chrome, Firefox, Opera, Safari 10.1+ */
-    color: transparent;
-  }
-
-  input.search-field {
-    width: 1px;
-    margin-right: 0px;
-    padding: 8px 25px;
-  }
-  input.search-field ~ .search-popup {
-    width: 1px;
-    margin-right: 0px;
-    padding: 8px 25px;
-  }
-
-  .search-icon {
-    top: 0;
-    padding-left: 15px;
-    color: rgba(0, 0, 0, 0.54);
-  }
-
-  input.search-field:focus {
-    margin-right: 0px;
-    width: 100vw;
-    padding: 8px 8px 8px 50px;
-  }
-
-  input.search-field:focus ~ .search-popup {
-    width: 100vw;
-  }
-
-  .search-content {
-    width: 100%;
-    padding: 8px 8px;
-  }
-
-  nav .nav-wrapper {
-    margin-right: 0px;
-  }
-
-    .top-navbar .navbar-right {
         position: relative;
-        top: -45px;
-        left: 20px;
+        top: -10px;
+        margin: 10px 0px 10px 0px;
     }
+
 }
 
 
-@media(max-width:525px) {
+
+@media(max-width:520px) {
+
+    .top-navbar {
+        padding-left: 2%;
+        padding-right: 2%;
+    }
+
+    .navbar-header {
+        width: 70%;
+    }
 
 
     .top-navbar .navbar-brand {
         height: 42px;
         width: 100%;
-        padding: 10px;
-
-
     }
-    .navbar-brand .fab {
-        font-size: 20px;
+
+    .navbar-brand i.large.material-icons {
 
     }
 
     .top-navbar .navbar-right {
         position: relative;
         top: -42px;
+        left: 30px;
     }
-
-    .card-status,
-    .img-column {
-        display: none;
-    }
-
-
 
 }
 

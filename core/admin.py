@@ -2,31 +2,30 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.utils.translation import gettext as _
 from django.contrib import admin
 
-
 from core import models, models_charity, models_project
 
 
 # USER
 
 class UserAdmin(BaseUserAdmin):
-    ordering = ['id']
-    list_display = ['email', 'name']
-    list_filter = ('is_active', 'is_staff', 'is_superuser')
-    search_fields = ['email', 'name']
+    ordering = ["id"]
+    list_display = ["email", "name"]
+    list_filter = ("is_active", "is_superuser")
+    search_fields = ["email", "name"]
 
     fieldsets = (
-        (None, {'fields': ('email', 'password')}),
-        (_('Personal Info'), {'fields': ('name',)}),
-        (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser')}),
-        (_('Important dates'), {'fields': ('last_login',)}))
+        (None, {"fields": ("email", "password")}),
+        (_("Personal Info"), {"fields": ("name",)}),
+        (_("Permissions"), {"fields": ("is_active", "is_superuser")}),
+        (_("Important dates"), {"fields": ("last_login",)}))
     # Page for adding new users
     add_fieldsets = (
-        (None, {'classes': ('wide',), 'fields': ('email', 'password1', 'password2')}),)
+        (None, {"classes": ("wide",), "fields": ("email", "password1", "password2")}),)
 
 
 class MyProfileModelAdmin(admin.ModelAdmin):
     """Displaying MyProfile in Admin Panel"""
-    list_display = ["owner", "position", "personality","image"]
+    list_display = ["owner", "position", "personality", "image"]
 
     class Meta:
         model = models.MyProfile
@@ -40,23 +39,22 @@ class MyProfileModelAdmin(admin.ModelAdmin):
 
 class CharityModelAdmin(admin.ModelAdmin):
     """Displaying Charity in Admin Panel"""
-    list_display = ["name","description"]
-    class Meta:
-        model = models_charity.Charity
+    ordering = ["name"]
+    list_display = ["name", "description"]
 
-class DonationLineAdminInline(admin.TabularInline):
-    """Displaying Single Donation in Admin Panel"""
-    model = models_charity.DonationLineItem
+    class Meta:
+        model = models_charity.CharityModel
 
 
 class DonationModelAdmin(admin.ModelAdmin):
-    """Donor & Date display in Admin Panel"""
-    inlines = (DonationLineAdminInline,)  # from above
-    list_display = ["donor", "date"]
-    date_hierarchy = 'date'
-
     class Meta:
-        model = models_charity.Donation
+        model = models_charity.DonationModel
+
+    list_display = ["charity", "date"]
+
+    list_filter = (
+        "donor", "charity__name"
+    )
 
 
 # PROJECTS
@@ -64,10 +62,11 @@ class DonationModelAdmin(admin.ModelAdmin):
 
 class ProjectModelAdmin(admin.ModelAdmin):
     """Displaying Projects in Admin Panel"""
-    list_display = ["name", "phase", 'proposed_by', 'budget']
+    ordering = ["name"]
+    list_display = ["name", "phase", "proposed_by", "budget", "id"]
 
     class Meta:
-        model = models_project.Project
+        model = models_project.ProjectModel
 
 
 class IssueModelAdmin(admin.ModelAdmin):
@@ -79,76 +78,49 @@ class IssueModelAdmin(admin.ModelAdmin):
     )
 
     class Meta:
-        model = models_project.Issue
+        model = models_project.IssueModel
 
 
-class RequiredSkillsModelAdmin(admin.ModelAdmin):
+class TeamRequirementsModelAdmin(admin.ModelAdmin):
     """Displaying Skillset List in Admin Panel"""
-    list_display = ["project","html","css","js","db","python"]
+    list_display = ["project", "html", "css", "js", "db", "python"]
+
     class Meta:
-        model = models_project.RequiredSkills
+        model = models_project.TeamRequirementsModel
 
 
-class TeamMemberModelAdmin(admin.ModelAdmin):
+class TeamMembershipModelAdmin(admin.ModelAdmin):
     """Displaying Team Membership in Admin Panel"""
-    list_display = ["current_user", "user_projects"]
+    list_display = ["project", "member", "committed_skill"]
 
-    search_fields = ["current_user", "user_projects"]
-
-    class Meta:
-        model = models_project.TeamMember
-
-    def user_projects(self, obj):
-        return "\n".join([p.name for p in obj.projects.all()])
-
-
-class CommitSkillModelAdmin(admin.ModelAdmin):
-    """Displaying Team Membership in Admin Panel"""
-    list_display = ["project", "user", "skill"]
-    search_fields = ["user", "skill"]
-    list_filter = (
-        "project", "skill"
-    )
+    search_fields = ["project", "member", "committed_skill"]
 
     class Meta:
-        model = models_project.CommitSkill
+        model = models_project.TeamMembershipModel
 
 
 class ProjectMessageModelAdmin(admin.ModelAdmin):
     """Displaying Project Messages in Admin Panel"""
     list_display = ["project", "message_date", "message"]
-    # change_list_template = 'admin/project_message_summary_change_list.html'
-    date_hierarchy = 'message_date'
+    # change_list_template = "admin/project_message_summary_change_list.html"
+    date_hierarchy = "message_date"
     search_fields = ["message"]
     list_filter = (
-        'project',
+        "project",
     )
-
-class GamificationAdviceModelAdmin(admin.ModelAdmin):
-    """Displaying Gamification Advices in Admin Panel"""
-    list_display = ["name", "advice"]
-
-    class Meta:
-        model = models_project.GamificationAdvice
-
-
-
 
 
 
 admin.site.register(models.User, UserAdmin)
 admin.site.register(models.MyProfile, MyProfileModelAdmin)
-admin.site.register(models.Personality)
-admin.site.register(models.Position)
 
-admin.site.register(models_charity.Charity, CharityModelAdmin)
-admin.site.register(models_charity.Donation, DonationModelAdmin)
+admin.site.register(models_charity.CharityModel, CharityModelAdmin)
+admin.site.register(models_charity.DonationModel, DonationModelAdmin)
 
-admin.site.register(models_project.Project, ProjectModelAdmin)
+admin.site.register(models_project.ProjectModel, ProjectModelAdmin)
 
-admin.site.register(models_project.ProjectPhase)
-admin.site.register(models_project.Issue, IssueModelAdmin)
-admin.site.register(models_project.RequiredSkills, RequiredSkillsModelAdmin)
-admin.site.register(models_project.CommitSkill, CommitSkillModelAdmin)
-admin.site.register(models_project.ProjectMessage, ProjectMessageModelAdmin)
-admin.site.register(models_project.GamificationAdvice, GamificationAdviceModelAdmin)
+admin.site.register(models_project.IssueModel, IssueModelAdmin)
+admin.site.register(models_project.TeamRequirementsModel, TeamRequirementsModelAdmin)
+admin.site.register(models_project.TeamMembershipModel, TeamMembershipModelAdmin)
+admin.site.register(models_project.ProjectMessageModel, ProjectMessageModelAdmin)
+

@@ -1,27 +1,28 @@
 from django.shortcuts import get_object_or_404
 
-from core import models, models_project
+from core import models
+from core import models_project
 
 
 def compile_profile(user):
     """compile user profile for the view"""
-    issues = models_project.Issue.objects.filter(assigned_to=user)
-    projects = models_project.Project.objects.filter(proposed_by=user)
-    # handling empty joined_projects
-    try:
-        joined_teams = get_object_or_404(models_project.TeamMember,
-                                         current_user=user)
-        joined_projects = joined_teams.projects.all()
-    except:
-        joined_projects = []
-
-    personalities = models.Personality.objects.all()
-    positions = models.Position.objects.all()
     my_profile = get_object_or_404(models.MyProfile, owner=user)
+    if my_profile.position == "PM":
+        position = "Project Manager"
+    elif my_profile.position == "admin":
+        position = "Program Manager"
+    elif my_profile.position == "Coder":
+        position = "Coder"
+    else:
+        position = "guest"
 
-    context = {'user': user, 'projects': projects, 'issues': issues,
-               'my_profile': my_profile, 'personalities': personalities,
-               'positions': positions, 'joined_projects': joined_projects}
+    issues = models_project.IssueModel.objects.filter(assigned_to=user)
+    teams = models_project.TeamMembershipModel.objects.filter(member=user)
+    projects = models_project.ProjectModel.objects.filter(proposed_by=user)
+
+    context = {"user": user, "my_profile": my_profile,
+               "position": position, "issues": issues,
+               "teams": teams, "projects": projects}
 
     return context
 
@@ -29,7 +30,7 @@ def compile_profile(user):
 def personality_test(answers_list):
     score = 0
 
-    for element in answers_list:  ## score counter
+    for element in answers_list:  # score counter
         if element == "answer_1":
             score += 1
         elif element == "answer_2":
@@ -41,12 +42,12 @@ def personality_test(answers_list):
 
     # Score personality
     if score <= 11:
-        personality = 'socializer'
+        personality = "socializer"
     elif 11 < score <= 15:
-        personality = 'explorer'
+        personality = "explorer"
     elif 15 < score <= 20:
-        personality = 'achiever'
+        personality = "achiever"
     else:
-        personality = 'killer'
+        personality = "killer"
 
     return personality

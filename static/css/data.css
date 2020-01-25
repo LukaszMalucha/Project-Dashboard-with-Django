@@ -2,16 +2,6 @@
     DATA STYLES
 ------------------------------------------------------------------------------*/
 
-body {
-    background-image: none;
-}
-
-
-
-#page-index {
-    padding-top: 0px;
-}
-
 .dashboard-cards {
     border: none;
     text-align: center;
@@ -25,9 +15,14 @@ body {
 }
 
 .row-cards {
-    width: 80%;
+    width: 82%;
     text-align: center;
     margin: auto;
+}
+
+.row-form {
+  width: 80%;
+  margin: auto;
 }
 
 
@@ -51,123 +46,223 @@ table {
     background-color: white;
     border-radius: 5px;
     margin-left: 0px;
+
+}
+
+.table-responsive {
+  border: none;
+}
+
+#rowTransactionReceipt {
+  display: none;
+}
+
+/*------------------------------------------------------------------------------
+    PROJECT DETAILS ROWS & COLUMNS
+------------------------------------------------------------------------------*/
+
+.row-details {
+  width: 80%;
+  margin: auto;
+  background: white;
+  border-radius: 2px;
+  margin-bottom: 50px;
+  min-height: 600px;
 }
 
 
 
 /*------------------------------------------------------------------------------
-    CARDS
+    PROJECT DETAILS CARDS
 ------------------------------------------------------------------------------*/
 
-.card-status {
-   border-radius: 5px;
-   padding: 1%;
-   text-shadow: 1px 1px #e3e3e3;
-   font-size: 1.6rem;
-   box-shadow: 0 2px 2px 0 #A9A9A9, 0 2px 1px -2px #838383, 0 1px 4px 0 #838383;
-   width: 95%;
-   margin: auto;
-   margin-bottom: 5%;
-}
-
-.card-status i {
-    color: #003f67;
-    font-weight: bold;
-    font-size: 1.4rem;
-}
-
-.project-card {
-    padding-left: 5%;
-    border-radius: 5px;
-    border-left: 4px solid #ff5722;
-    width: 95%;
-    margin: auto;
-    margin-bottom: 5%;
-}
-
-.project-card h6 {
-    font-size: 1.4rem;
-    font-weight: bold;
-
-}
-
-.project-card p {
-    height: 60px;
-}
-
-.portrait {
-    width: 100%;
-    border-top-right-radius: 5px;
-    border-bottom-left-radius: 5px;
-}
-
-.btn-card {
-    width: 100%;
-    height: 70px;
-    background: #003f67;
-    padding: 1%;
-    border-radius: 0px;
-    border-bottom-right-radius: 5px;
-    border-top-left-radius: 5px;
-}
-
-.btn-card:hover,
-.btn-card:active,
-.btn-card:focus {
-
-background: #102332;
-}
-
-
 .insights-card {
+    text-align: left;
+    width: 98%;
+    margin: auto;
+    margin-top: 5px;
+    margin-bottom: 16px;
+    float: none;
+    box-shadow: none;
+    border: 1px solid #dddddd;
+    font-size: 14px;
+    text-shadow: 1px 1px #f7f7f7;
+    min-height: 200px;
+
+}
+
+.insights-card .card-header {
+   display: flex;
+   padding: 2px;
+   height: 32px;
+   width: 100%;
+   border-left: 1px solid #dddddd;
+   border-right: 1px solid #dddddd;
+   border-top: 1px solid #dddddd;
+
+}
+
+.insights-card .card-header {
+    position: relative;
+    z-index: 1;
+    margin-bottom: 20px;
+    background-color: #2b5b89;
+    padding: 6px;
+    font-size: 16px;
+    color: white;
+    line-height: 1;
+    font-weight: 600;
+    text-transform: uppercase;
+    text-shadow: none;
+}
+
+
+.insights-card .row-content {
+      padding: 6px;
+}
+
+.table-team {
+  margin: 0px;
+
+}
+
+
+.table-team td,
+.table-team tr {
+    border: 1px solid transparent;
+    padding: 2px !important;
+    height: 55px;
+    vertical-align: middle !important;
+}
+
+.table-team td {
+  padding-left: 8px;
+  font-size: 0.9rem;
+}
+
+.td-position {
+  width: 25px;
+}
+
+.table-team th {
+    padding-left: 2px !important;
+}
+
+
+.table-insights tr,
+.table-insights td {
+    border: none !important;
+    font-size: 12px;
+}
+
+.table-skills tr,
+.table-skill td {
+    border: none;
+
+}
+
+.table-insights td:first-child {
+  width: 20%;
+}
+
+.img-skill {
+    width: 28px;
+    height: 28px;
+    border-radius: 5px;
+    margin: 2px;
+}
+
+.img-icon {
+    width: 30px;
+    height: 45px;
+    border-radius: 5px;
+    margin: 5px 5px 0px 5px;
+}
+
+
+.btn-table {
+    background: #003f67;
+    color: white;
+    font-size: 12px;
+    border-radius: 5px;
+    border: none;
+    height: 20px;
+    line-height: 20px;
+    text-shadow: none;
+}
+
+.btn-long {
+    margin-left: 0px;
+    margin-top: 0px;
+}
+
+.btn-table:hover,
+.btn-table:active,
+.btn-table:focus {
+    background: #4c7894;
+    color: white;
+}
+
+.btn-table-delete {
+  background: #c90f19 !important;
+  font-size: 10px;
+  color: white;
+  position: absolute;
+  right: 2px;
+  margin-top: 2px;
+  border-radius: 5px;
+  border: none;
+  height: 18px;
+  line-height: 16px;
+  text-shadow: none;
+}
+
+
+/*------------------------------------------------------------------------------
+    FORM CARDS
+------------------------------------------------------------------------------*/
+
+.form-card {
     box-shadow: 0 3px 3px 0 #A9A9A9, 0 3px 1px -2px #838383, 0 1px 5px 0 #838383;
     text-align: left;
-    width: 90%;
-    margin: 0 auto;
-    margin-bottom: 50px;
+    width: 100%;
+    margin-bottom: 30px;
     float: none;
     border-radius: 5px;
     font-size: 14px;
     text-shadow: 1px 1px #f7f7f7;
-    max-height: 1000px;
-
-
 }
 
-
-
-.insights-card:hover {
+.form-card:hover {
     box-shadow: 0 3px 3px 0 #2d4b65, 0 3px 2px -2px #2d4b65, 0 2px 5px 0 #2d4b65;
 }
 
-.insights-card .card-top {
+.form-card .card-top {
     padding: 1% 3% 1% 3%;
     color: rgba(0,0,0,.9);
     border-bottom: 1px solid rgba(0,0,0,.15);
 
 }
 
-.insights-card .card-top i {
+.form-card .card-top i {
     font-size: 16px;
 }
 
 
-.insights-card .card-header {
+.form-card .card-header {
    display: flex;
-   align-items:left;
    padding: 6px 8px 6px 8px;
    height: 48px;
    width: 100%;
 }
 
-
-.insights-card .card-header b {
-    font-size: 1.4rem;
+.form-card .card-header b {
+    font-size: 0.9rem;
     color: black;
-    font-weight: 600
+    font-weight: 600;
 }
 
-.insights-card .card-header p {
+.form-card .card-header p {
     margin-left: 5px;
     margin-top: 2px;
     font-size: 0.7rem;
@@ -176,27 +271,32 @@ background: #102332;
     width:75%;
 }
 
-.insights-card .row-comment {
+.form-card .card-header h5 {
+    font-weight: 500;
+    margin: 5px;
+    font-size: 20px;
+
+}
+
+.form-card .row-comment {
     padding: 3px 8px 3px 8px;
     margin-bottom: 10px;
     color: color: rgba(0,0,0,.75);
 }
 
-.insights-card  .row-image {
+.form-card  .row-image {
     margin-bottom: 0px;
     padding: 3px 8px 3px 8px;
-
 }
 
-.schedule {
 
-    min-height: 482px;
-}
-
+/*------------------------------------------------------------------------------
+    CHARITY CARDS
+------------------------------------------------------------------------------*/
 
 .card.horizontal {
     border-radius: 5px !important;
-    width: 90%;
+    width: 96%;
     margin: auto;
     margin-bottom: 20px;
     height: 180px;
@@ -204,72 +304,94 @@ background: #102332;
 
 .card.horizontal h5{
     color: #003f67;
+    height: 40px;
 }
 
 
 .card.horizontal .card-content p {
-    height: 50px;
+    height: 80px;
 }
 
 .card.horizontal .card-image img {
     height: 100%;
 }
 
-
-
-
-
 .card .card-content {
     padding: 16px;
     padding-top: 0px;
     text-align: left;
-    font-family: 'Raleway';
     font-size: 12px;
 
 }
 
 .card .card-content h5 {
     margin-top: 5px;
-    font-family: 'Raleway';
     font-weight: 700;
     font-size: 1.4rem;
 }
 
+.card-receipt {
+  padding: 15px;
+  width: 90%;
+  margin: auto;
+
+}
+
+.card-receipt h4 {
+  margin: 15px 0px;
+}
+
+.card-receipt .row-total {
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  margin: 40px 0px;
+}
+
+.card-receipt tr {
+  border: none;
+}
+
+.badge {
+  margin-bottom: 0px;
+}
 
 
 /*------------------------------------------------------------------------------
     FORMS
 ------------------------------------------------------------------------------*/
 
-textarea.materialize-textarea:focus:not([readonly])  + label {
-    color: #165d81;
-}
-
-textarea.materialize-textarea:focus:not([readonly]) {
-    border-bottom: 1px solid #165d81;
-    -webkit-box-shadow: 0 1px 0 0 #165d81;
-    box-shadow: 0 1px 0 0 #165d81;
-
-}
-[type="radio"]:checked,
-[type="radio"]:not(:checked) {
-    opacity: 1;
-    margin-right: 5px;
-    position: inherit;
-}
-
-.form-signin {
-    max-width: 60%;
-    padding: 40px 0px 0px 0px;
+.form-content {
+    padding: 20px 0px 0px 0px;
     margin-bottom: 0px;
+    font-weight: 600;
 }
 
-.form-signin h6 {
+.form-content .form-box {
+  padding: 0px;
+}
+
+.form-content h6 {
     font-size: 1rem;
 }
 
-.form-signin p {
+.form-content p {
     display: none;
+}
+
+.btn-proceed {
+    width: 100%;
+    height: 50px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-color: transparent;
+    text-align: right;
+    color: white;
+    background-color: #003f67;
+    font-size: 18px;
+}
+
+.btn-proceed:hover, .btn-proceed:active, .btn-proceed:focus {
+    background-color: #0f415a;
 }
 
 
@@ -297,7 +419,7 @@ textarea.materialize-textarea:focus:not([readonly]) {
     display: none
 }
 
-.form-signin .errorlist {
+.form-content .errorlist {
     display: none
 }
 
@@ -315,16 +437,54 @@ textarea.materialize-textarea:focus:not([readonly]) {
     margin-bottom: 20px;
 }
 
+
+textarea.materialize-textarea:focus:not([readonly])  + label {
+    color: #003f67;
+}
+
+textarea.materialize-textarea:focus:not([readonly]) {
+    border-bottom: 1px solid #003f67;
+    -webkit-box-shadow: 0 1px 0 0 #003f67;
+    box-shadow: 0 1px 0 0 #003f67;
+
+}
+[type="radio"]:checked,
+[type="radio"]:not(:checked) {
+    opacity: 1;
+    margin-right: 5px;
+    position: inherit;
+}
+
+input[type="number"]:not(.browser-default) {
+  text-align: center;
+}
+
+.form-content [type="radio"]:checked,
+.form-content [type="radio"]:not(:checked) {
+    opacity: 0;
+    margin-right: 0px;
+    position: inherit;
+
+}
+
+[type="radio"]:checked + span::after, [type="radio"].with-gap:checked + span::after {
+    background-color: #003f67;
+    border: 1px solid #003f67;
+}
+
 /*------------------------------------------------------------------------------
     BUTTONS
 ------------------------------------------------------------------------------*/
+button {
+  font-family: 'Source Sans Pro', sans-serif;
+}
 
 .btn-enter {
     height: 100%;
     width: 100%;
     text-align: right;
     font-size: 16px;
-    font-weight: bold;
+    font-weight: 600;
     background: transparent;
     box-shadow: none;
     border:none;
@@ -350,17 +510,22 @@ textarea.materialize-textarea:focus:not([readonly]) {
 .btn-algorithm {
     border-radius: 5px;
     margin-left: 40px;
-    height: 30px;
+    height: 24px;
     width: auto;
-    padding: 1px 10px 1px 10px;
+    padding: 0px 6px;
     font-size: 14px;
-    font-weight: bold;
-    line-height: 28px;
-    margin-top: 10px;
+    font-weight: 600;
+    line-height: 24px;
+    margin-top: 0px;
     color: white;
     border: none;
     text-shadow: none;
 }
+
+.btn-algorithm i {
+  font-size: 14px;
+}
+
 
 .btn-algorithm:hover,
 .btn-algorithm:focus,
@@ -368,37 +533,46 @@ textarea.materialize-textarea:focus:not([readonly]) {
     color: white;
 }
 
-
 .donation-button {
     margin-top: 10px;
     margin-left: 10px;
+    background:transparent;
+    border:none;
+}
 
+.donation-button i{
+  font-size: 24px;
+  position: relative;
+  top: 2px;
 }
 
 .donation-button label {
     background: orange;
     text-shadow: none;
+    position: relative;
+    top: 2px;
 }
 
+.btn-insights {
+    border-radius: 5px;
+    margin-left: auto;
+    height: 20px;
+    width: auto;
+    padding: 1px 4px;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 18px;
+    color: white;
+    border: none;
+    text-shadow: none;
+}
 
 /*------------------------------------------------------------------------------
     TABLES
 ------------------------------------------------------------------------------*/
 
 
-.table-profile td,
-.table-profile tr {
-    border: 1px solid transparent;
-    padding-left: 2px !important;
-    height: 40px;
-    vertical-align: middle !important;
 
-}
-
-.table-profile th {
-    padding-left: 2px !important;
-
-}
 
 .table-long {
     margin-bottom: 26px;
@@ -406,11 +580,9 @@ textarea.materialize-textarea:focus:not([readonly]) {
 }
 
 
-
 .table > tbody > tr >td  {
     padding-left: 0px;
     padding-top: 0px;
-
 }
 
 
@@ -418,32 +590,6 @@ textarea.materialize-textarea:focus:not([readonly]) {
 width: 35%;
 }
 
-.table-log {
-    font-size: 12px;
-    overflow: auto;
-    max-height: 500px;
-}
-
-
-.table-log td:first-child {
-    width: 30%;
-
-}
-
-
-.table-skills tr,
-.table-skills td {
-    border: none;
-}
-
-
-/*------------------------------------------------------------------------------
-    STATISTICS
-------------------------------------------------------------------------------*/
-
-#myChart {
-    min-height: 300px;
-}
 
 
 /*------------------------------------------------------------------------------
@@ -454,7 +600,19 @@ width: 35%;
 @media(max-width:1700px) {
 
     .row-cards {
-    width: 100%;
+      width: 100%;
+    }
+
+    .row-form {
+      width: 98%;
+      margin-left: 1%;
+      margin-right: 1%;
+    }
+
+    .row-details {
+      width: 98%;
+      margin-left: 1%;
+      margin-right: 1%;
     }
 
     .project-card h6 {
@@ -467,21 +625,9 @@ width: 35%;
         font-size: 12px;
     }
 
-    .btn-card {
-        height: 60px;
-    }
-
-    .card-status {
-        font-size: 1.4rem;
-    }
-
     .btn-algorithm {
         height: 24px;
         line-height: 22px;
-    }
-
-    .box {
-        margin-bottom: 0;
     }
 
     .insights-card {
@@ -492,34 +638,6 @@ width: 35%;
 
 
 @media(max-width:1025px) {
-
-    .card-status {
-        font-size: 1.2rem;
-    }
-
-    .company-card {
-        width: 50%;
-        margin: auto;
-        margin-bottom: 20px;
-    }
-
-    .company-card h5 {
-        height: 20px
-    }
-
-
-    .card .card-image img {
-        height: 100% !important;
-    }
-
-    .col-lg-4 {
-        width: 100% ;
-    }
-
-
-    .tableau_card {
-        overflow: auto;
-    }
 
     .btn-algorithm {
         margin-left: 10px;
@@ -535,27 +653,18 @@ width: 35%;
         display:none;
     }
 
-     .form-signin {
+     .form-content {
         max-width: 100%;
     }
 
-    .project-card h6 {
-        font-size: 0.9rem;
-    }
+}
 
-    .project-card p {
-        height: 40px;
-        font-size: 0.7rem;
-    }
+@media(max-width:991px) {
+  .row-cards {
+    width: 30%;
+    margin-right: 70%;
+  }
 
-    .btn-card {
-        width: 100%;
-        height: 40px;
-    }
-
-    .btn-card i {
-        font-size: 1rem;
-    }
 }
 
 

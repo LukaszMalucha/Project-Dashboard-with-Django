@@ -2,32 +2,37 @@
 {% block extrahead %}
 <link href="{% static 'css/forms.css' %}" rel="stylesheet"/>
 {% endblock %}
-{% load bootstrap_tags %} {% block content %}
-{% block row_header %}
-<div class="row" style="min-height: 72px">
-    {% if messages %} {% for message in messages %} {% if message.tags == "success" %}
-    <div class="alert alert-success">
-        <div class="messages text-center">
-            {{ message }}
-        </div>
-    </div>
-    {% else %}
-    <div class="alert alert-danger">
-        <div class="messages text-center">
-            {{ message }}
-        </div>
-    </div>
-    {% endif %} {% endfor %}
-    {% else %}
+{% load bootstrap_tags %}
 
+{% block content %}
+
+{% block row_header %}
+<div class="row row-message">
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.tags == "success" %}
+            <div class="alert alert-success">
+                <div class="messages text-center">
+                    {{ message }}
+                </div>
+            </div>
+            {% else %}
+            <div class="alert alert-danger">
+                <div class="messages text-center">
+                    {{ message }}
+                </div>
+            </div>
+            {% endif %}
+        {% endfor %}
     {% endif %}
 </div>
+
 {% endblock %}
 
 
-<div class="container">
+<div class="form-container">
 
-    <form class="form-signin" method="post" action="{% url 'user:login' %}?next={{ next }}">
+    <form class="form-signin" method="post" action="{% url 'user:login' %}">
         <i class="material-icons" id="icon-login">lock</i>
         <fieldset class="form-box">
             <div class="row text-center">
@@ -54,6 +59,7 @@
             </button>
         </fieldset>
     </form>
-</div> <!-- /container -->
+</div>
+<!-- /container -->
 
 {% endblock %}

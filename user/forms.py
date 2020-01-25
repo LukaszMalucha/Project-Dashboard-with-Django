@@ -29,16 +29,13 @@ class UserRegistrationForm(UserCreationForm):
         password1 = self.cleaned_data.get('password1')
         password2 = self.cleaned_data.get('password2')
 
-        if not password1 or not password2:
-            raise ValidationError("Password must not be empty")
-
         if password1 != password2:
             raise ValidationError("Passwords do not match")
 
         return password2
 
 
-class MyDetailsForm(forms.ModelForm):
+class MyProfileForm(forms.ModelForm):
     """User Details"""
     class Meta:
         model = MyProfile
@@ -83,8 +80,8 @@ class PersonalityForm(forms.Form):
 
     question_5 = forms.CharField(label="In a game, You'd prefer to:", widget=forms.RadioSelect(choices=CHOICES_5))
 
-    CHOICES_6 = [('answer_1', 'you prefer to hear what someone has to say?'),
-                 ('answer_2', 'you are bragging about having best equipment in the area?'),
+    CHOICES_6 = [('answer_1', 'You prefer to hear what someone has to say?'),
+                 ('answer_2', 'You are bragging about having best equipment in the area?'),
                  ('answer_3', 'How many other players you have defeated in challenges?'),
                  ('answer_4', 'About how to find a secret item?')]
 

@@ -1,161 +1,68 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib import messages
-from django.urls import reverse
-from .forms import ProposeCharityForm, DonationForm, MakeDonationForm
-
-from django.contrib.auth.decorators import login_required
-
-from core.models_charity import Charity, DonationLineItem
-from core.models import MyProfile
-from .forms import ProposeCharityForm
 from django.http import Http404
-from django.conf import settings
-import stripe
-
-# stripe.api_key = settings.STRIPE_SECRET
-
-
-@login_required
-def charity(request):
-    """CHARITIES PAGE"""
-    charities = Charity.objects.all()
-    my_profile = get_object_or_404(MyProfile, owner=request.user)
-    donations = DonationLineItem.objects.all()
-    # Adding 1235 for display purposes ;)
-    donation_count = len(donations) * 5 + 1235
-    charity_count = len(charities)
-
-    context = {"charities": charities, "my_profile": my_profile, 'donation_count': donation_count,
-               'charity_count': charity_count}
-
-    return render(request, "charity.html", context)
+from django.shortcuts import get_object_or_404
+from rest_framework import viewsets, status, filters, authentication, permissions, views
+from rest_framework.response import Response
+from rest_framework.exceptions import ValidationError
+from charity import serializers
+from core.models import MyProfile
+from core.models_charity import CharityModel, DonationModel
+from core.permissions import IsAdminOrReadOnly
 
 
-@login_required
-def propose_charity(request):
-    """ADMIN ADDS NEW CHARITY"""
-    if not request.user.is_superuser:
-        raise Http404
+class CharityViewSet(viewsets.ModelViewSet):
+    """Charity events viewset"""
+    authentication_classes = (authentication.TokenAuthentication, authentication.SessionAuthentication)
+    permission_classes = (permissions.IsAuthenticated, IsAdminOrReadOnly)
+    serializer_class = serializers.CharityModelSerializer
+    filter_backends = (filters.SearchFilter, filters.OrderingFilter)
+    search_fields = ("name",)
+    ordering_fields = '__all__'
+    queryset = CharityModel.objects.all()
 
-    if request.method == 'POST':
+    def get_queryset(self):
+        """Return list of charities"""
+        queryset = self.queryset
+        return queryset.order_by('name')
 
-        form = ProposeCharityForm(request.POST, request.FILES)
+    def retrieve(self, request, pk=None, **kwargs):
+        """Retrieve charity details"""
+        queryset = CharityModel.objects.all()
+        charity_instance = get_object_or_404(queryset, pk=pk)
+        serializer = serializers.CharityModelSerializer(charity_instance)
+        return Response(serializer.data)
 
-        if form.is_valid():
-            name = form.cleaned_data['name']
-            description = form.cleaned_data['description']
-            donation = 5  ## fixed 5eu donation amount
-            image = form.cleaned_data['image']
-
-            new_charity = Charity.objects.create(
-                name=name,
-                description=description,
-                donation=donation,
-                image=image,
-            )
-            new_charity.save()
-
-            return redirect(reverse('charity:charity'))
-
-
-    else:
-        form = ProposeCharityForm()
-
-    return render(request, 'propose_charity.html', {'form': form})
+    def destroy(self, request, pk=None, **kwargs):
+        """Deleting charity event"""
+        queryset = CharityModel.objects.all()
+        charity_instance = get_object_or_404(queryset, pk=pk)
+        self.perform_destroy(charity_instance)
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-def delete_charity(request, pk):
-    """ADMIN'S DELETE CHARITY"""
-    if not request.user.is_superuser:
-        raise Http404
+class DonateView(views.APIView):
+    """Donation viewset"""
+    authentication_classes = (authentication.TokenAuthentication, authentication.SessionAuthentication)
+    permission_classes = (permissions.IsAuthenticated,)
 
-    if request.method == 'DELETE':
-        charity = get_object_or_404(Charity, pk=pk)
-        charity.delete()
+    def get(self, request):
+        return Response({"message": "Please visit our Fundraising Actions and become a part of our charity program."},
+                        status=status.HTTP_200_OK)
 
-        return redirect(reverse('charity:charity'))
-
-
-def view_donations(request):
-    """VIEW CHOSEN DONATIONS"""
-    return render(request, "view_donations.html")
-
-
-def add_to_donations(request, id):
-    """CHOSE YOUR DONATION"""
-    quantity = 1  ## fixed quantity allowed per one session
-
-    chosen_donations = request.session.get('chosen_donations', {})
-    chosen_donations[id] = chosen_donations.get(id, quantity)
-
-    request.session['chosen_donations'] = chosen_donations
-    return redirect(reverse('charity:charity'))
-
-
-def adjust_donations(request, id):
-    """CHOOSE YOUR DONATION"""
-    chosen_donations = request.session.get('chosen_donations', {})
-
-    chosen_donations.pop(id)
-
-    request.session['chosen_donations'] = chosen_donations
-    return render(request, "view_donations.html")
-
-
-@login_required()
-def charity_donation(request):
-
-    if request.method == "POST":
-        donation_form = DonationForm(request.POST)
-        make_donation_form = MakeDonationForm(request.POST)
-
-        messages.success(request, "Your Donation was successful. Thank you!")
-        return redirect(reverse('charity:charity'))
-
-        ### PAYMENT
-        # if donation_form.is_valid() and make_donation_form.is_valid():
-        #     donation = donation_form.save(commit=False)
-        #     donation.save()
-        #
-        #     chosen_donations = request.session.get('chosen_donations',
-        #                                            {})  # request context from charity_choice app
-        #     total = 0
-        #     for id, quantity in chosen_donations.items():
-        #         charity = get_object_or_404(Charity, pk=id)
-        #         total += quantity * charity.donation
-        #         donation_line_item = DonationLineItem(
-        #             donation=donation,
-        #             charity=charity
-        #         )
-        #         donation_line_item.save()
-
-
-        #     try:
-        #         customer = stripe.Charge.create(
-        #             amount=int(total * 100),  ## counts in cents
-        #             currency="EUR",
-        #             description=request.user.email,
-        #             card=make_donation_form.cleaned_data['stripe_id'],
-        #         )
-        #     except stripe.error.CardError:
-        #         messages.error(request, "Your card was declined!")
-        #
-        #     if customer.paid:
-        #         messages.error(request, "You have successfully paid")
-        #         request.session['chosen_donations'] = {}
-        #         return redirect(reverse('charity:charity'))
-        #     else:
-        #         messages.error(request, "Unable to take payment")
-        # else:
-        #     print(make_donation_form.errors)
-        #     messages.error(request, "We were unable to take a payment with that card!")
-
-
-
-    else:
-        donation_form = DonationForm()
-        make_donation_form = MakeDonationForm()
-
-    return render(request, "charity_donation.html", {'donation_form': donation_form,
-                                                     'make_donation_form': make_donation_form,
-                                                     'publishable': settings.STRIPE_PUBLISHABLE})
+    def post(self, request):
+        data = request.data['checkout']
+        total = len(data) * 5
+        queryset = CharityModel.objects.all()
+        my_profile = get_object_or_404(MyProfile, owner=request.user)
+        if my_profile.my_wallet < total:
+            return Response({"error": "Insufficient leancoins to proceed with the transaction."},
+                            status=status.HTTP_400_BAD_REQUEST)
+        try:
+            for element in data:
+                charity = get_object_or_404(queryset, pk=int(element))
+                DonationModel.objects.create(donor=request.user, charity=charity)
+            my_profile.my_wallet -= total
+            my_profile.save()
+        except Http404:
+            return Response({"error": "We couldn't proceed with transaction at this time. Try again later"},
+                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        return Response({"message": "You have successfully paid"}, status=status.HTTP_201_CREATED)

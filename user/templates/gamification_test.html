@@ -6,12 +6,21 @@
 {% load bootstrap_tags %} {% block content %}
 {% block row_header %}
 <div class="row header details-header">
-    <div class="col-md-2 text-right plain-element img-column">
+      <div class="col-md-1 text-left plain-element img-column">
+        {% if my_profile.image %}
+        <img src="{{ my_profile.image.url }}" class="img responsive img-header">
+        {% else %}
         <img src="{% static 'img/portraits/default.jpg' %}" class="img responsive img-header">
-    </div>
-
-    <div class="col-md-10 text-left">
-        <h4>Gamification Test</h4>
+        {% endif %}
+      </div>
+    <div class="col-md-8 text-left">
+        <h5>Gamification Test</h5>
+        <p>
+            The test is based on a character theory. This character theory consists of four characters: Achievers,
+            Explorers, Socializers, and Killers. These are imagined according to a preference for interacting
+            with other players vs. exploring the world and also preference for interaction vs. unilateral action.
+            Different personalities respond differently to gamification elements.
+        </p>
     </div>
 </div>
 <div class="row row-message">
@@ -34,12 +43,12 @@
 </div>
 {% endblock %}
 <div class="dashboard-cards">
-    <div class="row row-cards">
+    <div class="row row-form">
         <div class="col-md-6 no-padding">
-            <div class="card insights-card">
+            <div class="card form-card">
                 <div class="card-header">
                     <img src="{% static 'img/icons/gear.png' %}" class="img-responsive">
-                    <p><b> Gamification Test </b></p>
+                    <h5>Gamification Test</h5>
                 </div>
                 <br>
                 <div class="text-left">
@@ -54,6 +63,7 @@
             </div>
         </div>
     </div>
+    <br><br><br>
 </div>
 
 

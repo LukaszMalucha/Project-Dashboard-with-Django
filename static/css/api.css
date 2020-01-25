@@ -119,6 +119,22 @@ btn-default:focus,
     padding-left: 25px;
 }
 
+#get-form .dropdown-menu {
+  background-color: white;
+  height: 70px;
+}
+
+
+#get-form .dropdown-menu a {
+  height: 100% !important;
+}
+
+#deleteModal {
+  width: 600px;
+  height: 230px;
+  background: transparent;
+}
+
 /*------------------------------------------------------------------------------
     TOP NAVBAR
 ------------------------------------------------------------------------------*/
@@ -128,32 +144,226 @@ nav {
     box-shadow: none;
 }
 
+
+.navbar {
+    border-radius: 0px;
+}
+
+.top-navbar .navbar-brand strong {
+    font-size: 20px;
+    font-weight: 600;
+    display: block;
+    color: #222;
+}
+
+
 .pagination>.active>a,
 .pagination>.active>a:focus,
 .pagination>.active>a:hover {
-    background-color: #003f67;
-    border-color: #003f67;
-}
-
-.navbar-brand {
-    padding-left: 2px !important;
-}
-
-.navbar .nav li a{
-    color: white;
-    height: 59px !important;
+    background-color: #5770af;
+    border-color: #5770af;
 }
 
 
-.navbar-default .navbar-nav > li > a:hover {
-    color: white;
-    background-color: transparent;
+
+.top-navbar {
+    position: fixed;
+    top: 0px;
+    width: 100%;
+    z-index: 300;
+    border: none;
+    padding-left: 25%;
+    padding-right: 25%;
+    height: 60px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    margin-bottom: 100px;
 }
 
+.top-navbar .navbar-brand {
+    margin: 0px;
+    width: 200px;
+    height: auto;
+    text-align: left;
+    padding: 10px 5px;
+    color: #1a2026;
+    background: transparent;
+}
+
+
+.navbar-brand .material-icons {
+    float: left;
+    font-size: 28px;
+    margin-right: 5px;
+    line-height: inherit;
+    height: auto;
+
+}
+
+.nav>li>a {
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-right: 5px;
+
+}
+
+.nav i,
+.nav i.material-icons {
+    height: 20px;
+    font-size: 15px;
+    margin-right: 5px;
+}
+
+
+
+.top-navbar .navbar-right {
+    width: auto;
+    height: 60px;
+    margin: 0px;
+    line-height: 1;
+    padding: 20px;
+    padding-right: 0px;
+    color: #1a2026;
+}
+
+.top-navbar .navbar-right>a {
+    padding: 0px;
+    font-size: 15px;
+}
+
+.top-navbar .navbar-right>a>i {
+    margin-right: 5px;
+    font-size: 16px;
+    height: 20px;
+}
+
+nav ul b {
+    font-weight: 500;
+}
+
+.dropdown-content {
+    width: 150px !important;
+    right: -50px !important;
+    top: 60px !important;
+
+}
+
+.dropdown-content li>a {
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.dropdown-content li>a>i {
+    margin-right: 12px;
+    font-size: 18px;
+}
+
+
+.dropdown-content li>fa {
+    font-size: 16px;
+
+}
+
+.logo-img {
+    width: auto;
+    height: 40px;
+}
 
 .navbar-text {
     margin: 0px;
-    height: 100%;
+    margin-left: -15px;
+}
+
+
+
+/* Hovers and Focuses --------------------------------------------------------*/
+
+.navbar-right>a:hover,
+.navbar-right>a:focus {
+    text-decoration: none;
+    outline: 0px;
+}
+
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus {
+    background-color: transparent;
+    outline: 0px;
+}
+
+
+nav ul a:hover {
+    background-color: #fff;
+}
+
+
+/*------------------------------------------------------------------------------
+    Colors
+------------------------------------------------------------------------------*/
+
+.top-navbar {
+    background: white;
+    box-shadow: none;
+    border: none;
+}
+
+.navbar-brand .material-icons {
+    color: #1a2026;
+}
+
+.navbar .nav li,
+.navbar .nav li a {
+    color: white;
+}
+
+
+.navbar-right>a:hover,
+.navbar-right>a:focus {
+    background: transparent;
+    color: #8b8b8b;
+}
+
+.navbar-default .navbar-brand:hover .navbar-default .navbar-brand:focus {
+    color: #2f3a44;
+}
+
+.navbar-default .navbar-nav>li>a:hover {
+    color: grey;
+}
+
+.nav>li>a:hover,
+.nav>li>a:hover {
+    background-color: transparent;
+    color: #8b8b8b;
+}
+
+.navbar-default .navbar-brand:hover {
+    color: #e5ebef;
+}
+
+.nav .open > a, .nav .open > a:focus, .nav .open > a:hover {
+    background-color: #102332 !important;
+    border-color: #102332 !important;
+}
+
+.dropdown-menu {
+  min-width: 100%;
+  width: 100%;
+  background-color: #102332;
+  padding-top: 10px;
+  margin-top: -2px;
+  height: 42px;
+
+}
+
+.dropdown-menu a {
+  height: 10px !important;
+}
+
+
+.dropdown-menu a:hover {
+    background-color: transparent !important;
+    border-color: transparent !important;
+    text-decoration: none;
 }
 
 
