@@ -59,7 +59,6 @@ def logout(request):
 @login_required
 def profile(request):
     context = compile_profile(request.user)
-    my_profile = get_object_or_404(models.MyProfile, owner=request.user)
     return render(request, 'profile.html', context)
 
 

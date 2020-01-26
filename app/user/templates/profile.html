@@ -64,14 +64,13 @@
                     <th class="text-left">Phase</th>
                   </tr>
                   <tbody>
-                  {% for project in joined_projects %}
+                  {% for element in joined_teams %}
                   <tr>
-                    <td class="text-left"><a href="{% url 'projects:project_details' pk=project.id %}"><b>{{
-                      project.name|truncatechars:16 }}</b></a></td>
-                    <td class="text-left">{{ project.description|truncatechars:80 }}</td>
-                    <td class="text-left"><img src="{% static 'img/leancoin.png' %}" class="icon"> {{ project.budget }}
+                    <td class="text-left"><a href="/projects/{{element.project.id}}/"><b>{{element.project|truncatechars:30 }}</b></a></td>
+                    <td class="text-left">{{element.project.description|truncatechars:80 }}</td>
+                    <td class="text-left"><img src="{% static 'img/leancoin.png' %}" class="icon"> {{element.project.budget}}
                     </td>
-                    <td class="text-left">{{ project.phase }}</td>
+                    <td class="text-left">{{element.project.phase}}</td>
                   </tr>
                   {% endfor %}
                   </tbody>

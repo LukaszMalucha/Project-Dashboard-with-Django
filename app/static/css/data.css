@@ -189,6 +189,7 @@ table {
     height: 20px;
     line-height: 20px;
     text-shadow: none;
+    width: 80px;
 }
 
 .btn-long {

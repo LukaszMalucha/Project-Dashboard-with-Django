@@ -19,10 +19,10 @@ def compile_profile(user):
     issues = models_project.IssueModel.objects.filter(assigned_to=user)
     teams = models_project.TeamMembershipModel.objects.filter(member=user)
     projects = models_project.ProjectModel.objects.filter(proposed_by=user)
+    joined_teams = models_project.TeamMembershipModel.objects.filter(member=user)
 
-    context = {"user": user, "my_profile": my_profile,
-               "position": position, "issues": issues,
-               "teams": teams, "projects": projects}
+    context = {"user": user, "my_profile": my_profile, "position": position,
+               "issues": issues, "teams": teams, "projects": projects, "joined_teams": joined_teams}
 
     return context
 
