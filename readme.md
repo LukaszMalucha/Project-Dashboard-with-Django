@@ -8,7 +8,7 @@
 
 #### TL:DR:
 
-Project management Dashboard made with Django.
+Project management Dashboard made with Django REST and Vue.js.
 
 Explore & Enjoy!
 
@@ -58,7 +58,7 @@ This Project is a simulation of work environment, where more traditional agile t
 
 #### Kanban Dashboard:
 
-![1](https://user-images.githubusercontent.com/26208598/54495673-ecd70e80-48dd-11e9-81b4-7c8634ed8a6a.JPG)
+![1](https://user-images.githubusercontent.com/26208598/73137207-97b36f80-404d-11ea-801c-8430a4d9fa70.PNG)
 
 1. Dropdown menu
 2. Project search bar 
@@ -72,7 +72,7 @@ This Project is a simulation of work environment, where more traditional agile t
 
 #### Project Details View:
 
-![2](https://user-images.githubusercontent.com/26208598/54495674-ee083b80-48dd-11e9-823d-56071d6be359.JPG)
+![2](https://user-images.githubusercontent.com/26208598/73137208-984c0600-404d-11ea-85af-3fcbb8a481e7.PNG)
 
 1. Team Requirements Card  - allows Coder to apply for a team
 2. & 3. - Join/Leave Team buttons
@@ -81,7 +81,7 @@ This Project is a simulation of work environment, where more traditional agile t
 
 #### User Profile - New User Perspective:
 
-![3](https://user-images.githubusercontent.com/26208598/54495675-ef396880-48dd-11e9-926a-010eacd33966.JPG)
+![3](https://user-images.githubusercontent.com/26208598/73137209-997d3300-404d-11ea-8071-69be8b7d411a.PNG)
 
 1. User Card - generic portrait along with generic profile details
 2. Edit Button - allows User to provide information
@@ -92,7 +92,7 @@ This Project is a simulation of work environment, where more traditional agile t
 
 #### Charities View:
 
-![4](https://user-images.githubusercontent.com/26208598/54495676-f1032c00-48dd-11e9-8df0-01ff5016fb01.JPG)
+![4](https://user-images.githubusercontent.com/26208598/73137211-9aae6000-404d-11ea-8a26-1d792a5cd191.PNG)
 
 1. New Charity(VISIBLE TO ADMIN ONLY) - allows Program Manager to propose new charities every month
 2. Charity Card - provides information regarding charity cause 
@@ -101,33 +101,25 @@ This Project is a simulation of work environment, where more traditional agile t
 
 <br>
 
+-----------------
+
 ## TOOLS, MODULES & TECHNIQUES
 
-##### Web Development:
+##### Backend Development:
+Django RESTful
 
-Django | Docker | Heroku | Bootstrap | Materialize | AWS S3
+##### Frontend Development
+Vue.js | Materialize | Chart.js
+
+##### Deployment
+Docker | Heroku | Travis CI | AWS S3
 
 ##### Database Development:
-
 Postgres | SQLite
 
-##### Python & JS – data analysis & visualisation:
+##### Testing
+django.test | coverage
 
-ChartJS
-
-
-## CREDITS & INSPIRATIONS
-
-
-##### Error 404 template:
-
-Robin Selmer:
-
-https://codepen.io/robinselmer/pen/vJjbOZ
-
-##### Team Members Portraits:
-
-https://www.pexels.com
 
 <br>
 
