@@ -1,0 +1,68 @@
+{% extends "base.html" %} {% load staticfiles %}{% load materializecss %}
+{% block extrahead %}
+<link href="{% static 'css/forms.css' %}" rel="stylesheet"/>
+{% endblock %}
+{% load bootstrap_tags %}
+
+{% block content %}
+
+{% block row_header %}
+<div class="row row-message">
+  {% if messages %} {% for message in messages %}
+  {% if message.tags == "success" %}
+  <div class="alert alert-success">
+    <div class="messages text-center">
+      {{ message }}
+    </div>
+  </div>
+  {% else %}
+  <div class="alert alert-danger">
+    <div class="messages text-center">
+      {{ message }}
+    </div>
+  </div>
+  {% endif %}
+  {% endfor %}
+  {% else %}
+
+  {% endif %}
+</div>
+{% endblock %}
+
+<div class="form-container">
+
+  <form class="form-signin" method="post" action="{% url 'user:register' %}" class="accountform">
+    <i class="material-icons" id="icon-login">assignment_turned_in</i>
+    <fieldset class="form-box">
+      <div class="row text-center">
+        <h4>Register User</h4>
+      </div>
+      <div class="row text-center">
+        <p>Already got an account? <a href="{% url 'user:login' %}">Log In</a></p>
+      </div>
+      <div class="row text-center">
+        <div class="input-field col s6">
+          <div class="input-field col s12 field-description">
+            <h6>Your Email Address:</h6>
+          </div>
+          <div class="input-field col s12 field-description">
+            <h6>Your Username:</h6>
+          </div>
+          <div class="input-field col s12 field-description">
+            <h6>Your Password:</h6>
+          </div>
+          <div class="input-field col s12 field-description">
+            <h6>Confirm Password:</h6>
+          </div>
+        </div>
+        <div class="input-field col s6">
+          {% csrf_token %}
+          {{ user_form|materializecss }}
+        </div>
+      </div>
+      <button type="submit" class="btn-login"><span>Continue <i class="far fa-arrow-alt-circle-right"></i></span>
+      </button>
+    </fieldset>
+  </form>
+</div> <!-- /container -->
+{% endblock %}

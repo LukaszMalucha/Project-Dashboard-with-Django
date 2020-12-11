@@ -4,4 +4,4 @@ env.py
 __pycache__?
 venv/*
 .idea/*
-
+*.env
