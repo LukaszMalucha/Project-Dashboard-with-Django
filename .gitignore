@@ -5,4 +5,3 @@ __pycache__?
 venv/*
 .idea/*
 *.env
-_old/*
