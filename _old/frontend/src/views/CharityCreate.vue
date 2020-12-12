@@ -92,9 +92,8 @@ export default {
     }
   },
   methods: {
-    setRequestPosition() {
-        this.requestPosition = window.localStorage.getItem("position");
-    },
+    ...mapGetters([ "getCharityList", "getPosition"]),
+    ...mapActions(["fetchCharityList", "performDeleteCharity"]),
     handleFileUpload() {
       this.charityImage = this.$refs.file.files[0];
     },

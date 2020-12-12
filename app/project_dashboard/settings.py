@@ -120,6 +120,7 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = "email"
 ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_ADAPTER = "project_dashboard.account_adapter.UserAccountAdapter"
 
 # STATIC & MEDIA
 STATIC_URL = "/static/"

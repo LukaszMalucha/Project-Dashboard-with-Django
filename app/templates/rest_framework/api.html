@@ -1,23 +1,26 @@
 {% extends "rest_framework/base.html" %}
-{% load static %}
+{% load staticfiles %}
 {% load i18n %}
 {% load rest_framework %}
 
 {% block style %}
 {{ block.super }}
+<link rel="shortcut icon" type="image/png" href="https://septellar.s3-eu-west-1.amazonaws.com/img/logo-small.png"/>
 <!-- Materialize-->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 <!-- FontAwesome Styles-->
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css" integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns" crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css"
+      integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns" crossorigin="anonymous">
 <!-- Custom Styles-->
-<link href="{% static 'css/api.css' %}" rel="stylesheet" />
-<link href="{% static 'css/navbar.css' %}" rel="stylesheet" />
-<!-- Google Fonts-->
-<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
+<link href="{% static 'css/api.css' %}" rel="stylesheet"/>
+<link href="{% static 'css/navbar.css' %}" rel="stylesheet"/>
+
+
+<!-- Fonts-->
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600&display=swap" rel="stylesheet">
 <!-- Material Icons-->
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
 
 {% endblock %}
 
@@ -27,24 +30,30 @@
 {% block navbar %}
 <nav class="navbar navbar-default top-navbar" role="navigation">
   <div class="navbar-header">
-    <a class="navbar-brand company-logo" href="/"><img class="company-logo"
-                                                       src="{% static 'img/logo-white.png' %}"
-                                                       alt="Logo"/></a>
-  </div>
+      <a class="navbar-brand waves-effect waves-dark" href="/">
+          <img src="https://septellar.s3-eu-west-1.amazonaws.com/img/septellar-white-md.png" alt="Logo"
+             class="img-logo"/>
+      </a>
+    </div>
   <ul class="nav navbar-top-links navbar-right">
-    <li><a class="nav-link" href="/api/user/create/"><i class="fas fa-user-plus"></i> <b>Register</b></a></li>
-    <li><a class="nav-link" href="/api/user/authenticate/"><i class="fas fa-user-check"></i> <b>Authenticate</b></a>
-    </li>
-    <li><a class="nav-link" href="/api/user/my-profile/"><i class="fas fa-user-circle"></i><b>My Profile</b></a></li>
     {% if user.is_authenticated %}
-    <li><a class="nav-link" id="dropdownMenuButton" data-toggle="dropdown"><i class="fas fa-caret-down"></i><b>{{ user }}</b></a>
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <a href="{% url 'user:logout' %}"><i class="fas fa-sign-out-alt"></i> Log Out</a>
+      <form method="post" action="/auth/logout/">
+        {% csrf_token %}
+        <span><button class="nav-button">Logout</button></span>
+      </form>
+    </li>
+    {% else %}
+    <li>
+      <div class="dropdown">
+        <button class="dropbtn nav-button"><i class="fas fa-caret-down"></i>Login/Register</button>
+        <div id="myDropdown" class="drop-content">
+          <a class="navigation" href="/auth/login/">Log In</a>
+          <a class="navigation" href="/auth/registration/">Register</a>
+        </div>
       </div>
     </li>
     {% endif %}
   </ul>
-
 </nav>
 {% endblock %}
 

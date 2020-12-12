@@ -180,6 +180,15 @@ a:hover {
 
 .details-header h5 {
   margin:0px;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  font-size: 18px;
+}
+
+.details-header h6 {
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  font-size: 16px;
 }
 
 .details-header p {

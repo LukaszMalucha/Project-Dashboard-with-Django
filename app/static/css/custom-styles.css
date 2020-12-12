@@ -106,6 +106,18 @@ a:hover {
   background-color: #3e73b9;
 }
 
+.col .row {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+select {
+  display: block;
+  width: 106%;
+  height: 2.4rem;
+  font-size: 14px;
+}
+
 
 /*----------------------------------------------
     ERROR 404
@@ -155,16 +167,14 @@ a:hover {
 .img-header {
     margin: auto;
     width: 80%;
-    max-width: 105px;
-    max-height: 160px;
-
+    max-width: 80px;
+    max-height: 120px;
 }
 
 .header {
-    height: 180px;
+    height: 140px;
     margin: 0px;
     background: white;
-    text-shadow: 1px 1px #f7f7f7;
     padding: 15px 16% 0 3%;
 }
 
@@ -180,10 +190,32 @@ a:hover {
 
 .details-header h5 {
   margin:0px;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  font-size: 18px;
+  font-weight: 600;
+  margin-top: 0px;
+}
+
+.details-header h6 {
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.details-header h4 {
+  margin:0px;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  font-size: 24px;
+  font-weight: 600;
+  margin-top: 0px;
 }
 
 .details-header p {
     margin-bottom: 0px;
+    margin-top: 0px;
 }
 
 .details-header p {
@@ -211,12 +243,12 @@ a:hover {
 }
 
 .title-username {
-  margin-top: 10px !important;
+  margin-top: 4px !important;
 }
 
 .profile-details {
-    margin-top: -10px;
-    font-size: 15px;
+    margin-top: -20px;
+    font-size: 12px;
     width: auto;
     background: transparent;
 }
@@ -232,7 +264,7 @@ a:hover {
 
 .profile-details td {
     border: none;
-    padding: 0px 5px 5px 0px;
+    padding: 0px 0px 5px 0px;
 }
 
 .icon {
@@ -256,18 +288,22 @@ a:hover {
 .card-status {
    border-radius: 5px;
    padding: 1%;
-   text-shadow: 1px 1px #e3e3e3;
-   font-size: 1.4rem;
+   font-size: 14px;
+   letter-spacing: 0.6px;
+   font-weight: 600;
+   text-transform: uppercase;
    box-shadow: 0 2px 2px 0 #A9A9A9, 0 2px 1px -2px #838383, 0 1px 4px 0 #838383;
    width: 95%;
    margin: auto;
    margin-bottom: 30px;
+   color: #303438;
 }
 
 .card-status i {
     color: #003f67;
     font-weight: 600;
-    font-size: 1.4rem;
+    font-size: 16px;
+    margin-right: 6px;
 }
 
 .fa-stop-circle {
@@ -369,12 +405,13 @@ a:hover {
     color: white;
     font-size: 12px;
     margin-left: 10px;
-    margin-top: 15px;
+    margin-top: 0px;
     border-radius: 5px;
     border: none;
-    height: 18px;
+    height: 16px;
     line-height: 16px;
     text-shadow: none;
+    cursor: pointer;
 }
 
 .btn-long {
@@ -401,6 +438,7 @@ a:hover {
   height: 18px;
   line-height: 16px;
   text-shadow: none;
+  cursor: pointer;
 }
 
 /*------------------------------------------------------------------------------

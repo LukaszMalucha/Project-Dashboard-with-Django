@@ -6,14 +6,14 @@ from django.urls import reverse
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from user.utils import compile_profile, personality_test
-
 from .forms import MyProfileForm, PersonalityForm
 
 
 class CurrentUserView(APIView):
     def get(self, request, *args, **kwargs):
         if str(request.user) != "AnonymousUser":
-            return Response({"email": request.user.email })
+            my_profile = get_object_or_404(models.MyProfile, owner=request.user)
+            return Response({"email": request.user.email, "position": my_profile.position })
         else:
             return Response({"error": "Anonymous"})
 

@@ -1,23 +1,10 @@
-$('.dropdown-trigger').dropdown();
-
-
-$(".alert").delay(4000).fadeOut(300, function() {
-    $(this).alert('close');
-});
-
-
-$(document).ready(function() {
-    $('.sidenav').sidenav();
-
-    $('select').formSelect();
-
-    $('#selectArea').formSelect();
-
-    $('.counter').counterUp({
-        delay: 10,
-        time: 400
-    });
-});
-
+function dropdown() {
+  var x = document.getElementById("myLinks");
+  if (x.style.display === "block") {
+    x.style.display = "none";
+  } else {
+    x.style.display = "block";
+  }
+}
 
 
