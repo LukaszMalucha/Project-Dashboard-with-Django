@@ -1,5 +1,5 @@
 <template>
-<div v-if="requestPosition == 'admin'" class="row plain-element">
+<div v-if="getPosition() == 'admin'" class="row plain-element">
   <div class="row header details-header">
       <div class="col m1 text-left plain-element img-column">
           <img src="@/assets/img/charity.jpg" class="img responsive img-header">
@@ -23,7 +23,7 @@
                       <img src="@/assets/img/icons/charity.png" class="img-responsive">
                       <h5> Start Fundraising Action </h5>
                   </div>
-                  <form @submit.prevent="onSubmit" class="form-content form-wide" enctype="multipart/form-data">
+                  <form @submit.prevent="createCharity" class="form-content form-wide" enctype="multipart/form-data">
                       <fieldset class="form-box">
                           <div id="formError" class="row row-error text-center">
                           {{ error }}
@@ -74,10 +74,11 @@
 
 
 <script>
-import axios from 'axios'
-import { CSRF_TOKEN } from "@/common/csrf_token.js"
-import router from "@/router.js"
+
+
 import NoPermissionComponent from "@/components/NoPermissionComponent.vue"
+import { mapGetters, mapActions } from "vuex";
+
 export default {
   name: 'CharityCreate',
   components: {
@@ -93,37 +94,23 @@ export default {
     }
   },
   methods: {
-    setRequestPosition() {
-        this.requestPosition = window.localStorage.getItem("position");
-    },
+    ...mapGetters([ "getCharityList", "getPosition"]),
+    ...mapActions(["fetchCharityList", "performCreateCharity"]),
     handleFileUpload() {
       this.charityImage = this.$refs.file.files[0];
     },
-    onSubmit() {
+    createCharity() {
       if (!this.charityName || !this.charityDescription || !this.charityImage) {
         this.error = "Fields can't be empty";
       } else {
-        let formData = new FormData();
-        formData.append("name", this.charityName);
-        formData.append("description", this.charityDescription);
-        formData.append("image", this.charityImage)
-        axios.post('/charity/charities/', formData,
-        { headers: { 'Content-Type': undefined,'X-CSRFTOKEN': CSRF_TOKEN} } )
-          .then(response => {
-            window.console.log(response);
-            router.push({
-              name: 'charity',
-            })
-          })
-          .catch(error => {
-            window.console.log(error.response);
-            document.getElementById("formError").textContent = error.response.statusText;
-          })
-        }
+        this.performCreateCharity({"charityName": this.charityName,
+                                   "charityDescription": this.charityDescription,
+                                   "charityImage": this.charityImage
+                                  })
       }
+    }
   },
   created() {
-    this.setRequestPosition();
     document.title = "New Fundraising Idea";
   }
 }

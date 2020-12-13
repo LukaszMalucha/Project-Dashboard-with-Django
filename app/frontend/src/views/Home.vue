@@ -23,7 +23,7 @@
                     <i class="fas fa-lightbulb"></i> Proposed
                 </div>
               </div>
-              <div v-for="project in projects"  :key="project.id" class="row plain-element">
+              <div v-for="project in getProjectList()"  :key="project.id" class="row plain-element">
                   <ProjectCardComponent v-if="project.phase == 'proposed'" :project="project"/>
               </div>
           </div>
@@ -33,7 +33,7 @@
                     <i class="fas fa-chart-line"></i> Analysis
                 </div>
               </div>
-              <div v-for="project in projects"  :key="project.id" class="row plain-element">
+              <div v-for="project in getProjectList()"  :key="project.id" class="row plain-element">
                   <ProjectCardComponent v-if="project.phase == 'analysis'" :project="project"/>
               </div>
           </div>
@@ -43,7 +43,7 @@
                     <i class="fas fa-cog"></i> Development
                 </div>
               </div>
-              <div v-for="project in projects"  :key="project.id" class="row plain-element">
+              <div v-for="project in getProjectList()"  :key="project.id" class="row plain-element">
                   <ProjectCardComponent v-if="project.phase == 'development'" :project="project"/>
               </div>
           </div>
@@ -53,7 +53,7 @@
                     <i class="fas fa-code"></i> Testing
                 </div>
               </div>
-              <div v-for="project in projects"  :key="project.id" class="row plain-element">
+              <div v-for="project in getProjectList()"  :key="project.id" class="row plain-element">
                   <ProjectCardComponent v-if="project.phase == 'testing'" :project="project"/>
               </div>
           </div>
@@ -63,7 +63,7 @@
                     <i class="fas fa-space-shuttle"></i> Deployment
                 </div>
               </div>
-              <div v-for="project in projects"  :key="project.id" class="row plain-element">
+              <div v-for="project in getProjectList()"  :key="project.id" class="row plain-element">
                   <ProjectCardComponent v-if="project.phase == 'deployment'" :project="project"/>
               </div>
           </div>
@@ -73,7 +73,7 @@
                     <i class="fas fa-stop-circle"></i> On Hold
               </div>
               </div>
-              <div v-for="project in projects"  :key="project.id" class="row plain-element">
+              <div v-for="project in getProjectList()"  :key="project.id" class="row plain-element">
                   <ProjectCardComponent v-if="project.phase == 'on hold'" :project="project"/>
               </div>
           </div>
@@ -85,6 +85,7 @@
 <script>
 import { apiService } from "@/common/api.service.js";
 import ProjectCardComponent from "@/components/ProjectCardComponent.vue"
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: 'Home',
@@ -94,12 +95,8 @@ export default {
   data() {
     return {
       search: "",
-      projects: [],
       countIssues: null,
       countProjects: null,
-      requestUser: null,
-      requestPosition: null,
-
     }
   },
   computed: {
@@ -109,23 +106,8 @@ export default {
 
   },
   methods: {
-    setRequestUser() {
-        this.requestUser = window.localStorage.getItem("email");
-    },
-    setRequestPosition() {
-        this.requestPosition = window.localStorage.getItem("position");
-    },
-    async getProjectsData() {
-      let endpoint = "/api/projects/projects/";
-      await apiService(endpoint)
-        .then(data => {
-          if (data) {
-            this.projects.push(...data.results);
-              this.countProjects = this.projects.length
-          }}).then (
-              window.console.log(this.projects)
-            )
-    },
+    ...mapGetters([ "getProjectList", "getPosition"]),
+    ...mapActions(["fetchProjectList", ]),
     async getIssueCount() {
       let endpoint = "/api/projects/issue-count/";
       await apiService(endpoint)
@@ -135,10 +117,8 @@ export default {
     },
   },
   created() {
-    this.getProjectsData()
+    this.fetchProjectList();
     this.getIssueCount();
-    this.setRequestUser();
-    this.setRequestPosition();
     document.title = "Project Dashboard | Septellar";
 
   }

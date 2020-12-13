@@ -17,7 +17,7 @@ const actions = {
       const response = await api.charityData();
       commit("setCharityList", response.results)
     },
-    async createCharity({ dispatch }, payload) {
+    async performCreateCharity({ dispatch }, payload) {
       await api.createCharity(payload);
       dispatch("fetchCharityList");
       router.push('/charity');

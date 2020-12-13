@@ -1,20 +1,20 @@
 <template>
   <div class="card project-card" :class="project.phase">
       <div class="row plain-element project-card-top">
-          <div class="col-xs-8 col-sm-8 col-md-8 col-lg-9 plain-element text-left">
+          <div class="col s8 m8 l9 plain-element left-align">
               <h6>{{ project.name|truncatechars(20) }}</h6>
 
           </div>
-          <div class="col-xs-4 col-sm-4 col-md-4 col-lg-3 plain-element text-right">
+          <div class="col s4 m4 l3 plain-element right-align">
               <img :src="project.portrait" class="img responsive portrait plain-element">
           </div>
       </div>
       <br>
       <div class="row plain-element project-card-bottom">
-          <div class="col-xs-8 col-sm-8 col-md-8 col-lg-9 plain-element text-left">
+          <div class="col s8 m8 l9 plain-element left-align">
               <p>{{ project.description|truncatechars(52) }}</p>
           </div>
-          <div class="col-xs-4 col-sm-4 col-md-4 col-lg-3 plain-element text-right">
+          <div class="col s4 m4 l3 plain-element right-align">
               <router-link :to="{name: 'project-details', params: { id: project.id }}"
                       class="btn btn-success btn-card" type="submit">
                   <i class="fas fa-sign-in-alt"></i>

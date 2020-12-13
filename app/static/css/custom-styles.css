@@ -260,6 +260,7 @@ select {
 
 .profile-details b {
     color: #003f67 !important;
+    margin-left: 10px;
 }
 
 .profile-details td {

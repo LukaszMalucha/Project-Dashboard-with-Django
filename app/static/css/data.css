@@ -87,7 +87,7 @@ table {
     border: 1px solid #dddddd;
     font-size: 14px;
     text-shadow: 1px 1px #f7f7f7;
-    min-height: 200px;
+    min-height: 210px;
 
 }
 
@@ -472,6 +472,13 @@ input[type="number"]:not(.browser-default) {
 
 }
 
+.span-radio {
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    text-shadow: none;
+    color: #000;
+}
+
 [type="radio"]:checked + span::after, [type="radio"].with-gap:checked + span::after {
     background-color: #003f67;
     border: 1px solid #003f67;
@@ -565,13 +572,17 @@ button {
     margin-left: auto;
     height: 20px;
     width: auto;
-    padding: 1px 4px;
-    font-size: 14px;
-    font-weight: 600;
-    line-height: 18px;
+    padding: 1px 8px;
+    line-height: 20px;
     color: white;
     border: none;
     text-shadow: none;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    font-weight: 700;
+}
+
 }
 
 /*------------------------------------------------------------------------------

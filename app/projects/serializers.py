@@ -25,7 +25,7 @@ class ProjectModelSerializer(serializers.ModelSerializer):
 
     def pm_name_field(self, obj):
         user = get_object_or_404(models.User, id=obj.proposed_by.id)
-        return user.name
+        return user.username
 
     def pm_email_field(self, obj):
         user = get_object_or_404(models.User, id=obj.proposed_by.id)
