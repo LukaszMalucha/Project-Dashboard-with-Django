@@ -4,52 +4,64 @@
 {% endblock %}
 {% load account socialaccount %}
 {% block content %}
+<div class="row row-message">
+  {% if form.errors %}
 
-  <div class="form-container">
-
-    <form class="form-user" method="POST" action="{% url 'account_login' %}">
-      {% csrf_token %}
-      <fieldset class="form-box">
-        <div class="row plain-element center-align">
-          <h3>Log In</h3>
-          <div class="row row-oauth">
-            <a href="/"> <i class="fab fa-twitter"></i> </a>
-            <a href="/"> <i class="fab fa-github"></i> </a>
-            <a href="/"> <i class="fab fa-google"></i> </a>
-          </div>
-        </div>
-        <div class="row text-center row-form">
-          <div class="row plain-element">
-            <div class="input-field col s12">
-              <input type="text" name="login" id="email" required id="id_login">
-              <label class="" for="id_login">Email</label>
-            </div>
-          </div>
-          <div class="row plain-element">
-            <div class="input-field col s12">
-              <input type="password" name="password" id="id_password" required>
-              <label class="" for="id_password">Password</label>
-            </div>
-          </div>
-          <div class="row plain-element">
-            <div class="input-field col s12">
-              <div class="">
-                <label>
-                  <input type="checkbox" name="remember" id="id_remember">
-                  <span class="label-checkbox">Remember Me</span>
-                </label>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row row-links">
-          <p><a>Forgot Password</a>&nbsp; | &nbsp; <a href="{% url 'account_signup' %}">Create an Account</a></p>
-        </div>
-        <button type="submit" class="btn-login"><span>Continue <i class="far fa-arrow-alt-circle-right"></i></span>
-        </button>
-      </fieldset>
-    </form>
+  {% for element in form.errors.values %}
+  <div class="alert alert-danger">
+    <div class="messages text-center">
+      {{ element }}
+    </div>
   </div>
-  <!-- /container -->
+  {% endfor %}
+
+  {% endif %}
+</div>
+<div class="form-container">
+
+  <form class="form-user" method="POST" action="{% url 'account_login' %}">
+    {% csrf_token %}
+    <fieldset class="form-box">
+      <div class="row plain-element center-align">
+        <h3>Log In</h3>
+        <div class="row row-oauth">
+          <a href="/"> <i class="fab fa-twitter"></i> </a>
+          <a href="/"> <i class="fab fa-github"></i> </a>
+          <a href="/"> <i class="fab fa-google"></i> </a>
+        </div>
+      </div>
+      <div class="row text-center row-form">
+        <div class="row plain-element">
+          <div class="input-field col s12">
+            <input type="text" name="login" id="email" required id="id_login">
+            <label class="" for="id_login">Email</label>
+          </div>
+        </div>
+        <div class="row plain-element">
+          <div class="input-field col s12">
+            <input type="password" name="password" id="id_password" required>
+            <label class="" for="id_password">Password</label>
+          </div>
+        </div>
+        <div class="row plain-element">
+          <div class="input-field col s12">
+            <div class="">
+              <label>
+                <input type="checkbox" name="remember" id="id_remember">
+                <span class="label-checkbox">Remember Me</span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row row-links">
+        <p><a>Forgot Password</a>&nbsp; | &nbsp; <a href="{% url 'account_signup' %}">Create an Account</a></p>
+      </div>
+      <button type="submit" class="btn-login"><span>Continue <i class="far fa-arrow-alt-circle-right"></i></span>
+      </button>
+    </fieldset>
+  </form>
+</div>
+<!-- /container -->
 
 {% endblock %}

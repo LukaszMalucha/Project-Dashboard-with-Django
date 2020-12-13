@@ -21,7 +21,7 @@ html {
     display: block;
     overflow: auto;
     position: relative;
-    top: 42px;
+    top: 36px;
 
 }
 
@@ -156,9 +156,6 @@ select {
   width: 100%;
 }
 
-.messages {
-    height: 20px;
-}
 
 /*----------------------------------------------
     PAGE HEADERS
@@ -279,6 +276,7 @@ select {
     height: 14px;
     margin-top: -1px;
 }
+
 
 
 /*----------------------------------------------

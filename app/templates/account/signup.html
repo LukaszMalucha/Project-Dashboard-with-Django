@@ -4,6 +4,19 @@
 {% endblock %}
 {% load account socialaccount %}
 {% block content %}
+  <div class="row row-message">
+    {% if form.errors %}
+    {% for element in form.errors.values|slice:":1" %}
+    <div  class="alert alert-danger">
+      <div class="messages text-center">
+
+        <span>{{ element }}</span>
+
+      </div>
+    </div>
+    {% endfor %}
+    {% endif %}
+  </div>
 
   <div class="form-container">
 

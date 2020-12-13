@@ -57,6 +57,70 @@ body {
 }
 
 /*----------------------------------------------
+    ALERTS
+------------------------------------------------*/
+
+
+.row-message {
+  position: fixed;
+  top: 36px;
+  width: 100%;
+  -webkit-animation: fadeOut 4s linear forwards;
+  animation: fadeOut 4s linear forwards;
+}
+
+
+.alert {
+  padding: .75rem 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.alert-success {
+  color: #3c763d;
+  background-color: #dff0d8;
+  border-color: #c3e6cb;
+  position: fixed;
+  width: 100%;
+  top: 36px;
+}
+
+.alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    position: fixed;
+    width: 100%;
+
+}
+
+.error {
+  color: red;
+}
+
+.errorlist {
+  margin: 0px;
+}
+
+
+@keyframes fadeOut {
+  0% {
+    opacity:1;
+  }
+  100% {
+    opacity:0;
+  }
+}
+
+@-moz-keyframes fadeOut {
+  0% {
+    opacity:1;
+  }
+  100% {
+    opacity:0;
+  }
+}
+
+/*----------------------------------------------
     FORM BOX
 ------------------------------------------------*/
 

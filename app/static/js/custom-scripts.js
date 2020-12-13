@@ -6,5 +6,3 @@ function dropdown() {
     x.style.display = "block";
   }
 }
-
-
