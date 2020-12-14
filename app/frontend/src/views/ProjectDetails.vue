@@ -99,7 +99,7 @@
                           <td class="td-position"><b>Manager:</b></td>
                           <td class="box plain-element">
                             <div class="plain-element">
-                              <img :src="pmPortrait" class="img responsive img-icon">
+                              <img :src="getProject().portrait" class="img responsive img-icon">
                               <p class="tooltip-hover">{{ getProject().pm_name }}</p>
                             </div>
                           </td>
@@ -108,7 +108,7 @@
                           <td class="td-position"><b>Html</b>:</td>
 
                           <td class="box">
-                            <div v-for="element in getProject().teamMembership" :key="element.id" class="plain-element">
+                            <div v-for="element in getTeamMembership()" :key="element.id" class="plain-element">
                               <img v-if="element.committed_skill == 'html'" :src="element.member_portrait"
                                    class="img responsive img-icon">
                               <p class="tooltip-hover">{{element.member_name}}</p>
@@ -118,7 +118,7 @@
                         <tr>
                           <td class="td-position"><b>Css</b>:</td>
                           <td class="box">
-                            <div v-for="element in getProject().teamMembership" :key="element.id" class="plain-element">
+                            <div v-for="element in getTeamMembership()" :key="element.id" class="plain-element">
                               <img v-if="element.committed_skill == 'css'" :src="element.member_portrait"
                                    class="img responsive img-icon">
                               <p class="tooltip-hover">{{element.member_name}}</p>
@@ -128,7 +128,7 @@
                         <tr>
                           <td class="td-position"><b>Js</b>:</td>
                           <td class="box">
-                            <div v-for="element in getProject().teamMembership" :key="element.id" class="plain-element">
+                            <div v-for="element in getTeamMembership()" :key="element.id" class="plain-element">
                               <img v-if="element.committed_skill == 'js'" :src="element.member_portrait"
                                    class="img responsive img-icon">
                               <p class="tooltip-hover">{{element.member_name}}</p>
@@ -138,7 +138,7 @@
                         <tr>
                           <td class="td-position"><b>Db</b>:</td>
                           <td class="box">
-                            <div v-for="element in getProject().teamMembership" :key="element.id" class="plain-element">
+                            <div v-for="element in getTeamMembership()" :key="element.id" class="plain-element">
                               <img v-if="element.committed_skill == 'db'" :src="element.member_portrait"
                                    class="img responsive img-icon">
                               <p class="tooltip-hover">{{element.member_name}}</p>
@@ -148,7 +148,7 @@
                         <tr>
                           <td class="td-position"><b>Python</b>:</td>
                           <td class="box">
-                            <div v-for="element in getProject().teamMembership" :key="element.id" class="plain-element">
+                            <div v-for="element in getTeamMembership()" :key="element.id" class="plain-element">
                               <img v-if="element.committed_skill == 'python'" :src="element.member_portrait"
                                    class="img responsive img-icon">
                               <p class="tooltip-hover">{{element.member_name}}</p>
@@ -225,7 +225,7 @@
                       </tr>
                       </thead>
                       <tbody>
-                      <tr v-for="element in getProject().projectIssues" :key="element.id">
+                      <tr v-for="element in getProject().project_issues" :key="element.id">
                         <td>{{element.name}}</td>
                         <td>{{element.description}}</td>
                         <td><img src="@/assets/img/leancoin.png" class="icon"> {{element.cost}}
@@ -261,7 +261,7 @@
                           <th class="text-left">Date</th>
                           <th class="text-left">Log Entry</th>
                         </tr>
-                        <tr v-for="element in projectMessages" :key="element.id">
+                        <tr v-for="element in getProjectMessages()" :key="element.id">
                           <td>{{ formatDate (element.message_date) }}</td>
                           <td>{{element.message}}</td>
                         </tr>
@@ -296,17 +296,11 @@ export default {
     return {
       project: {},
       error: null,
-      teamRequirements: {},
-      teamMembership: [],
-      projectMessages: [],
-      projectIssues: [],
-      teamCompositionData: {},
-      pmPortrait: "",
-      projectSchedule: "",
     }
   },
   methods: {
-    ...mapGetters(["getUsername", "getPosition", "getProject", "getTeamRequirements", "getTeamComposition"]),
+    ...mapGetters(["getUsername", "getPosition", "getProject", "getTeamMembership",
+                    "getTeamRequirements", "getTeamComposition", "getProjectMessages"]),
     ...mapActions(["fetchProjectDetails"]),
     
   //  Date converter
@@ -384,7 +378,6 @@ export default {
   },
   created() {
     this.getProjectData();
-
   }
 
 }

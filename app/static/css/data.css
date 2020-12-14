@@ -555,9 +555,9 @@ button {
 }
 
 .donation-button i{
-  font-size: 24px;
+  font-size: 16px;
   position: relative;
-  top: 2px;
+  top: 0px;
 }
 
 .donation-button label {

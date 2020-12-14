@@ -18,23 +18,23 @@
   </div>
   <div class="dashboard-cards">
       <div class="row row-form">
-          <div class="col s6 m5 l3 plain-element">
+          <div class="col s6 m5 l4 plain-element">
               <div class="card form-card">
                   <div class="card-header">
                       <img src="@/assets/img/icons/gear.png" class="img-responsive">
                       <h5> Reject Team Candidate </h5>
                   </div>
-                  <form @submit.prevent="onSubmit" class="form-content form-wide">
+                  <form @submit.prevent="teamReject" class="form-content form-wide">
                       <fieldset class="form-box">
                           <div id="formError" class="row row-error text-center">
                           {{ error }}
                           </div>
                           <div class="row plain-element">
                           <ul>
-                            <li v-for="element in teamMembership" :key="element.member_id">
+                            <li v-for="element in getTeamMembership()" :key="element.member_id">
                               <label>
                                 <input v-model="member" name="member" :value="element.member_id" type="radio"/>
-                                <span>{{element.member_name}} - {{element.committed_skill}}</span>
+                                <span class="span-radio">{{element.member_name}} - {{element.committed_skill}}</span>
                               </label>
                             </li>
                           </ul>
@@ -42,7 +42,7 @@
                           <div class="row"></div>
 
                       </fieldset>
-                      <button type="submit" class="btn-proceed"><span>Reject Team Candidate <i
+                          <button type="submit" class="btn-proceed"><span>Reject Team Candidate <i
                                   class="far fa-arrow-alt-circle-right"></i></span>
                           </button>
                   </form>
@@ -58,7 +58,6 @@
 
 
 <script>
-import { apiService } from "@/common/api.service.js";
 import NoPermissionComponent from "@/components/NoPermissionComponent.vue";
 import { mapGetters, mapActions } from "vuex";
 
@@ -76,29 +75,20 @@ export default {
     return {
       error: "",
       member: "",
-      projectPM: null,
-      teamMembership: [],
-      phaseList: ["proposed", "analysis", "development", "testing", "deployment"],
+
     }
   },
   methods: {
-    ...mapGetters(["getUsername", "getProject"]),
-    ...mapActions(["fetchProjectDetails", "defineTeamRequirements"]),
-    onSubmit() {
-      let endpoint = `/api/projects/${this.id}/team-reject/${this.member}/`;
-      let method = "DELETE";
-      apiService(endpoint, method)
-        .then(data => {
-           if (data.non_field_errors) {
-              this.error = data.non_field_errors[0]
-           } else if (!data) {
-              this.$router.push({
-                  name: "project-details",
-                  params: { id: this.id }
-            })
-          }
-      })
+    ...mapGetters(["getUsername", "getPosition", "getProject", "getTeamMembership",
+                    "getTeamRequirements", "getTeamComposition", "getProjectMessages"]),
+    ...mapActions(["fetchProjectDetails", "performTeamReject"]),
+
+    teamReject() {
+      this.performTeamReject({"project" : this.id, "member" : this.member})
     }
+
+
+
   },
   created() {
     this.fetchProjectDetails(this.id);

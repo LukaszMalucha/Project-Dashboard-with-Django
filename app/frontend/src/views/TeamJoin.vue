@@ -1,10 +1,10 @@
 <template>
-<div class="row plain-element">
+<div v-if="getPosition() == 'Coder'" class="row plain-element">
     <div class="row header details-header">
-      <div class="col-md-1 text-left plain-element img-column">
+      <div class="col m1 text-left plain-element img-column">
           <img src="@/assets/img/propose-project.jpg" class="img responsive img-header">
       </div>
-      <div class="col-md-9 col-lg-6 text-left plain-element">
+      <div class="col m9 l6 text-left plain-element">
           <div class="box box-details">
               <h5>Join Team</h5>
           </div>
@@ -18,13 +18,13 @@
   </div>
   <div class="dashboard-cards">
       <div class="row row-form">
-          <div class="col-sm-8 col-md-6 col-lg-5">
+          <div class="col s8 m6 l5">
               <div class="card form-card">
                   <div class="card-header">
                       <img src="@/assets/img/icons/gear.png" class="img-responsive">
                       <h5> Join Team </h5>
                   </div>
-                  <form @submit.prevent="onSubmit" class="form-content form-wide">
+                  <form @submit.prevent="teamJoin" class="form-content form-wide">
                       <fieldset class="form-box">
                           <div id="formError" class="row row-error text-center">
                           {{ error }}
@@ -32,32 +32,41 @@
                           <div class="row plain-element">
                           <ul>
                             <li v-for="element in skillList" :key="element">
-                              <label>
-                                <input v-model="skill" name="skill" :value="element" type="radio"/>
-                                <span>{{element}}</span>
-                              </label>
+                              <div class="row">
+                                <label>
+                                  <input v-model="skill" name="skill" :value="element" type="radio"/>
+                                  <span class="span-radio">{{element}}</span>
+                                </label>
+                              </div>
                             </li>
                           </ul>
                           </div>
                           <div class="row"></div>
-                          <button type="submit" class="btn-proceed"><span>Join Team <i
+                      </fieldset>
+                      <button type="submit" class="btn-proceed"><span>Join Team <i
                                   class="far fa-arrow-alt-circle-right"></i></span>
                           </button>
-                      </fieldset>
                   </form>
               </div>
           </div>
       </div>
   </div>
 </div>
+<div v-else class="row plain-element">
+    <NoPermissionComponent/>
+</div>
 </template>
 
 
 <script>
-import { apiService } from "@/common/api.service.js";
+import { mapGetters, mapActions } from "vuex";
+import NoPermissionComponent from "@/components/NoPermissionComponent.vue"
 
 export default {
   name: "TeamJoin",
+  components: {
+    NoPermissionComponent
+  },
   props: {
     id: {
       required: true,
@@ -65,38 +74,19 @@ export default {
   },
   data() {
     return {
-      requestUser: null,
       error: null,
       skill: null,
       skillList: ['html', 'css', 'js', 'db', 'python']
     }
   },
   methods: {
-    setRequestUser() {
-        this.requestUser = window.localStorage.getItem("email");
-    },
-    onSubmit() {
-      let endpoint = `/api/projects/${this.id}/team-join/`;
-      let method = "POST";
-      apiService(endpoint, method, {project: this.id, member: this.requestUser, committed_skill: this.skill})
-        .then(data => {
-           if (data.non_field_errors) {
-              this.error = data.non_field_errors[0]
-           } else if (!data) {
-              this.error = "Something went wrong. Try again later"
-          } else if (data.error) {
-              this.error = data.error
-          } else {
-            this.$router.push({
-                  name: "project-details",
-                  params: { id: this.id }
-            });
-          }
-      })
+    ...mapGetters(["getPosition", "getUsername"]),
+    ...mapActions(["performTeamJoin"]),
+    teamJoin() {
+      this.performTeamJoin({"project" : this.id, "member" : this.getUsername(), "committed_skill" : this.skill})
     }
   },
   created() {
-    this.setRequestUser();
     document.title = "Join Project Team";
   }
 }

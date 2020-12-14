@@ -62,6 +62,18 @@ export default {
   teamReject(project, member) {
     let endpoint = `/api/projects/${project}/team-reject/${member}/`;
     return apiService(endpoint, "DELETE");
+  },
+  teamJoin(project, member, committed_skill) {
+    let endpoint = `/api/projects/${project}/team-join/`;
+    return apiService(endpoint, "POST", {project: project, member: member, committed_skill: committed_skill});
+  },
+  reportIssue(project, name, description, cost) {
+    let endpoint = `/api/projects/${project}/issue-create/`;
+    return apiService(endpoint, "POST", {project: project, name: name, description: description, cost: cost});
+  },
+  issueCount() {
+    let endpoint = "/api/projects/issue-count/";
+    return apiService(endpoint);
   }
 
 

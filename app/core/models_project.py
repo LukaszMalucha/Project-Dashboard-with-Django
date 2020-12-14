@@ -110,7 +110,7 @@ class TeamMembershipModel(models.Model):
 
     def get_name(self):
         user = get_object_or_404(User, id=self.member.id)
-        return user.name
+        return user.username
 
     def get_personality(self):
         my_profile = get_object_or_404(MyProfile, id=self.member.id)

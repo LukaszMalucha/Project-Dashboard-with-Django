@@ -180,6 +180,9 @@ select {
 
 }
 
+
+
+
 .details-header {
     padding-left: 10%;
     padding-right: 10%;
@@ -217,6 +220,10 @@ select {
 
 .details-header p {
    color: black;
+}
+
+.details-header b {
+  margin-left: 10px;
 }
 
 .summary {

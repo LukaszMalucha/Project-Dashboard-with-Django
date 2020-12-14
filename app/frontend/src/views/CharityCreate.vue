@@ -11,7 +11,7 @@
           <p>
             Fundraising is a great way to engage your friends, family and community to make a difference in the world.
             Today you can turn pretty much any activity into a charity event and start fundraising action for your
-            favourite charities. If you want to start your own fundraising project, contact program manager.
+            favourite charities. If you want to start your own fundraising project, contact manager.
           </p>
       </div>
   </div>

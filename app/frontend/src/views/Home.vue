@@ -11,8 +11,8 @@
             <h5>Kanban Board</h5>
             <router-link :to="{name: 'project-create'}" class="btn-algorithm blue">Start New Project</router-link>
           </div>
-          <h6>Active Projects:  &nbsp; <b v-if="countProjects">{{ countProjects }} </b></h6>
-          <h6>Issue Counter:  &nbsp; <b v-if="countIssues">{{ countIssues }}</b></h6>
+          <h6>Project Count:  <b v-if="getProjectList()" style="margin-left: 7.5px">{{ getProjectList().length }} </b></h6>
+          <h6>Issue Counter:  <b v-if="getIssueCount()"> {{ getIssueCount() }} </b></h6>
       </div>
     </div>
     <div class="dashboard-cards">
@@ -83,7 +83,6 @@
 </template>
 
 <script>
-import { apiService } from "@/common/api.service.js";
 import ProjectCardComponent from "@/components/ProjectCardComponent.vue"
 import { mapGetters, mapActions } from "vuex";
 
@@ -94,9 +93,6 @@ export default {
   },
   data() {
     return {
-      search: "",
-      countIssues: null,
-      countProjects: null,
     }
   },
   computed: {
@@ -106,21 +102,14 @@ export default {
 
   },
   methods: {
-    ...mapGetters([ "getProjectList", "getPosition"]),
-    ...mapActions(["fetchProjectList", ]),
-    async getIssueCount() {
-      let endpoint = "/api/projects/issue-count/";
-      await apiService(endpoint)
-        .then(data => {
-          this.countIssues = data.issue_count
-      })
-    },
+    ...mapGetters([ "getProjectList", "getPosition", "getIssueCount"]),
+    ...mapActions(["fetchProjectList", "performIssueCount"]),
+
   },
   created() {
     this.fetchProjectList();
-    this.getIssueCount();
+    this.performIssueCount();
     document.title = "Project Dashboard | Septellar";
-
-  }
+  },
 }
 </script>

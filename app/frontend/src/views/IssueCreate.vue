@@ -1,10 +1,10 @@
 <template>
-<div v-if="requestUser == projectPM" class="row plain-element">
+<div v-if="getUsername() == getProject().pm_email" class="row plain-element">
   <div class="row header details-header">
-      <div class="col-md-1 text-left plain-element img-column">
+      <div class="col m1 text-left plain-element img-column">
           <img src="@/assets/img/propose-project.jpg" class="img responsive img-header">
       </div>
-      <div class="col-md-9 col-lg-6 text-left plain-element">
+      <div class="col m9 l6 text-left plain-element">
           <div class="box box-details">
               <h5>Report Project Issue</h5>
           </div>
@@ -12,13 +12,13 @@
   </div>
   <div class="dashboard-cards">
         <div class="row row-form">
-          <div class="col-sm-8 col-md-6 col-lg-5 plain-element">
+          <div class="col s8 m6 l5 plain-element">
               <div class="card form-card">
                   <div class="card-header">
                       <img src="@/assets/img/icons/gear.png" class="img-responsive">
                       <h5> Report Project Issue </h5>
                   </div>
-                  <form @submit.prevent="onSubmit" class="form-content form-wide" enctype="multipart/form-data">
+                  <form @submit.prevent="reportIssue" class="form-content form-wide" enctype="multipart/form-data">
                       <fieldset class="form-box">
                           <div id="formError" class="row row-error text-center">
                           {{ error }}
@@ -48,10 +48,11 @@
                             </div>
                           </div>
                           <div class="row"></div>
-                          <button type="submit" class="btn-proceed"><span>Report Project Issue <i
+
+                      </fieldset>
+                      <button type="submit" class="btn-proceed"><span>Report Project Issue <i
                                   class="far fa-arrow-alt-circle-right"></i></span>
                           </button>
-                      </fieldset>
                   </form>
               </div>
           </div>
@@ -66,8 +67,10 @@
 
 
 <script>
-import { apiService } from "@/common/api.service.js";
 import NoPermissionComponent from "@/components/NoPermissionComponent.vue"
+import { mapGetters, mapActions } from "vuex";
+
+
 export default {
   name: 'IssueCreate',
   props: {
@@ -84,49 +87,17 @@ export default {
       issueName: null,
       issueDescription: null,
       issueCost: null,
-      projectPM: null,
-      requestUser: null,
     }
   },
   methods: {
-    setRequestUser() {
-        this.requestUser = window.localStorage.getItem("email");
+    ...mapGetters(["getUsername", "getPosition", "getProject"]),
+    ...mapActions(["fetchProjectDetails", "performReportIssue"]),
+    reportIssue() {
+        this.performReportIssue({"project": this.id, "name": this.issueName, "description" : this.issueDescription, "cost" : this.issueCost  })
     },
-    getProjectData() {
-      let endpoint = `/api/projects/projects/${this.id}/`;
-      apiService(endpoint)
-          .then(data => {
-            this.projectPM = data.pm_email;
-          })
-    },
-    onSubmit() {
-      if (!this.issueName || !this.issueDescription || !this.issueCost) {
-        this.error = "Fields can't be empty";
-      } else {
-        let endpoint = `/api/projects/${this.id}/issue-create/`;
-        let method = "POST";
-        apiService(endpoint, method, {project: this.id,
-                                      name: this.issueName,
-                                      description: this.issueDescription,
-                                      cost: this.issueCost, assigned_to: this.error})
-          .then(data => {
-             if (data.non_field_errors) {
-                this.error = data.non_field_errors[0]
-             } else if (!data) {
-                this.error = "Something went wrong. Try again later"
-            } else {
-              this.$router.push({
-                    name: "project-details",
-                    params: { id: this.id }
-              })
-            }
-        })
-      }
-    }
   },
   created() {
-    this.setRequestUser();
-    this.getProjectData();
+    this.fetchProjectDetails(this.id);
     document.title = "Report Project Issue";
   }
 }

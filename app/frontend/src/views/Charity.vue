@@ -10,8 +10,8 @@
               <router-link :to="{name: 'charity-create'}" v-if="getPosition() == 'admin'" class="btn-algorithm green">New Charity</router-link>
               <div class="plain element" v-if="this.inCart > 0">
                 <router-link :to="{name: 'charity-donations', params: { cart: checkout , cartList: checkoutList}}" class="donation-button">
-                  <i class="fas fa-donate"></i>
-                  <label class="badge glow">{{ inCart }}</label>
+                  <i class="fas fa-donate"></i>{{ inCart }}
+
                 </router-link>
               </div>
 
@@ -19,7 +19,7 @@
           <p>
             Fundraising is a great way to engage your friends, family and community to make a difference in the world.
             Today you can turn pretty much any activity into a charity event and start fundraising action for your
-            favourite charities. If you want to start your own fundraising project, contact program manager.
+            favourite charities. If you want to start your own fundraising project, contact manager.
           </p>
           <h6>We collected: <b class="counter">728</b> &euro;</h6>
       </div>
@@ -74,7 +74,6 @@ export default {
     },
     deleteCharity(charity) {
       this.performDeleteCharity(charity)
-      this.fetchCharityList()
     }
   },
   created() {

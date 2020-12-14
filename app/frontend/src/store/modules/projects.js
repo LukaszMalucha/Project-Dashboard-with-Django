@@ -8,6 +8,7 @@ const state = {
     teamRequirements: null,
     teamComposition: null,
     teamMembership: null,
+    projectMessages: null,
 };
 
 const getters = {
@@ -16,6 +17,7 @@ const getters = {
     getTeamRequirements: state => state.teamRequirements,
     getTeamComposition: state => state.teamComposition,
     getTeamMembership: state => state.teamMembership,
+    getProjectMessages: state => state.projectMessages
 };
 
 
@@ -37,9 +39,11 @@ const actions = {
     async fetchProjectDetails({ commit }, project) {
       const response = await api.projectDetails(project);
       commit("setProject", response);
-      commit("setTeamRequirements", response.team_requirements)
-      commit("setTeamComposition", response.project_team_composition)
-      commit("setTeamMembership", response.team_membership)
+      commit("setTeamRequirements", response.team_requirements);
+      commit("setTeamComposition", response.project_team_composition);
+      commit("setTeamMembership", response.team_membership);
+      commit("setProjectMessages", response.project_messages);
+      window.console.log(response)
     },
     performAdvanceProject({commit}, payload) {
       api.advanceProject(payload.project, payload.phase);
@@ -61,8 +65,11 @@ const actions = {
       commit("setMessage", "OK");
       router.push(`/projects/${payload.project}`);
     },
-
-
+    performTeamJoin({commit}, payload ) {
+      api.teamJoin(payload.project, payload.member, payload.committed_skill)
+      commit("setMessage", "OK");
+      router.push(`/projects/${payload.project}`);
+    },
 };
 
 
@@ -82,6 +89,9 @@ const mutations = {
   setTeamMembership: (state, teamMembership) => {
     state.teamMembership = teamMembership
   },
+  setProjectMessages: (state, projectMessages) => {
+    state.projectMessages = projectMessages
+  }
 };
 
 
