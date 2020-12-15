@@ -165,6 +165,12 @@ WEBPACK_LOADER = {
     }
 }
 
+## For testing media
+# AWS_STORAGE_BUCKET_NAME = env("AWS_STORAGE_BUCKET_NAME")
+# AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
+# PUBLIC_MEDIA_LOCATION = "media"
+# MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/{PUBLIC_MEDIA_LOCATION}/"
+# DEFAULT_FILE_STORAGE = "project_dashboard.storage_backends.PublicMediaStorage"
 
 # DEPLOYMENT
 if not DEBUG:
@@ -192,13 +198,13 @@ if not DEBUG:
 
     STATIC_LOCATION = "static"
     STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/{STATIC_LOCATION}/"
-    STATICFILES_STORAGE = "pdf_vault.storage_backends.StaticStorage"
+    STATICFILES_STORAGE = "project_dashboard.storage_backends.StaticStorage"
 
     # s3 public media settings
 
     PUBLIC_MEDIA_LOCATION = "media"
     MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/{PUBLIC_MEDIA_LOCATION}/"
-    DEFAULT_FILE_STORAGE = "pdf_vault.storage_backends.PublicMediaStorage"
+    DEFAULT_FILE_STORAGE = "project_dashboard.storage_backends.PublicMediaStorage"
 
     DATABASES = {"default": dj_database_url.parse(os.environ.get("DATABASE_URL"))}
 

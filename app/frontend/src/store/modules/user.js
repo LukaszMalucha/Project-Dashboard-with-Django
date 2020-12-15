@@ -44,7 +44,11 @@ const mutations = {
   },
   setPosition: (state, position) => {
     state.position = position
+  },
+  setError: (state, error) => {
+    state.error = error
   }
+
 };
 
 

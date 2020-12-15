@@ -19,24 +19,7 @@
 </div>
 
 
-<div class="row row-message">
-  {% if messages %} {% for message in messages %} {% if message.tags == "success" %}
-  <div class="alert alert-success">
-    <div class="messages text-center">
-      {{ message }}
-    </div>
-  </div>
-  {% else %}
-  <div class="alert alert-danger">
-    <div class="messages text-center">
-      {{ message }}
-    </div>
-  </div>
-  {% endif %} {% endfor %}
-  {% else %}
 
-  {% endif %}
-</div>
 {% endblock %}
 <div class="dashboard-cards">
   <div class="row row-form">

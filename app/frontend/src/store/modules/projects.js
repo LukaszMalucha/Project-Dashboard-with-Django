@@ -24,51 +24,87 @@ const getters = {
 const actions = {
     async fetchProjectList({ commit }) {
       const response = await api.projectData();
-      commit("setProjectList", response.results)
+      if (!response)  {
+          commit("setError", "Something went wrong. Try again later")
+      }  else {
+          commit("setProjectList", response.results)
+      }
     },
-    async performCreateProject({ commit }, payload) {
-      await api.createProject(payload);
-      commit("setMessage", "OK");
-      router.push('/');
+    async performCreateProject({ commit, dispatch }, payload) {
+      const response = await api.createProject(payload);
+      if (!response)  {
+          commit("setError", "Something went wrong. Try again later")
+      }  else {
+          dispatch("fetchProjectList");
+          router.push('/');
+      }
     },
-    performDeleteProject({ commit }, project) {
-      api.deleteProject(project);
-      commit("setMessage", "OK");
-      router.push('/');
+    performDeleteProject({ dispatch, commit  }, project) {
+      const response = api.deleteProject(project);
+      if (!response)  {
+        commit("setError", "Something went wrong. Try again later")
+      }  else {
+        dispatch("fetchProjectList");
+        router.push('/');
+      }
     },
     async fetchProjectDetails({ commit }, project) {
       const response = await api.projectDetails(project);
-      commit("setProject", response);
-      commit("setTeamRequirements", response.team_requirements);
-      commit("setTeamComposition", response.project_team_composition);
-      commit("setTeamMembership", response.team_membership);
-      commit("setProjectMessages", response.project_messages);
-      window.console.log(response)
+      if (!response)  {
+        commit("setError", "Something went wrong. Try again later")
+      }  else {
+        commit("setProject", response);
+        commit("setTeamRequirements", response.team_requirements);
+        commit("setTeamComposition", response.project_team_composition);
+        commit("setTeamMembership", response.team_membership);
+        commit("setProjectMessages", response.project_messages);
+        router.push('/');
+      }
     },
     performAdvanceProject({commit}, payload) {
-      api.advanceProject(payload.project, payload.phase);
-      commit("setMessage", "OK");
-      router.push(`/projects/${payload.project}`);
+      const response = api.advanceProject(payload.project, payload.phase);
+      if (!response)  {
+        commit("setError", "Something went wrong. Try again later")
+      }  else {
+        commit("setMessage", "OK");
+        router.push(`/projects/${payload.project}`);
+      }
     },
-    performCompleteProject({commit}, project) {
-      api.completeProject(project);
-      commit("setMessage", "OK");
-      router.push('/');
+    performCompleteProject({dispatch, commit }, project) {
+      const response = api.completeProject(project);
+      if (!response)  {
+        commit("setError", "Something went wrong. Try again later")
+      }  else {
+        dispatch("fetchProjectList");
+        router.push('/');
+      }
     },
     defineTeamRequirements({commit}, payload){
-      api.teamRequirements(payload.project, payload.html, payload.css, payload.js, payload.db, payload.python);
-      commit("setMessage", "OK");
-      router.push(`/projects/${payload.project}`);
+      const response = api.teamRequirements(payload.project, payload.html, payload.css, payload.js, payload.db, payload.python);
+      if (!response)  {
+        commit("setError", "Something went wrong. Try again later")
+      }  else {
+        commit("setMessage", "OK");
+        router.push(`/projects/${payload.project}`);
+      }
     },
     performTeamReject({commit}, payload ) {
-      api.teamReject(payload.project, payload.member)
-      commit("setMessage", "OK");
-      router.push(`/projects/${payload.project}`);
+      const response = api.teamReject(payload.project, payload.member);
+      if (!response)  {
+        commit("setError", "Something went wrong. Try again later")
+      }  else {
+        commit("setMessage", "OK");
+        router.push(`/projects/${payload.project}`);
+      }
     },
     performTeamJoin({commit}, payload ) {
-      api.teamJoin(payload.project, payload.member, payload.committed_skill)
+      const response = api.teamJoin(payload.project, payload.member, payload.committed_skill);
+      if (!response)  {
+        commit("setError", "Something went wrong. Try again later")
+      }  else {
       commit("setMessage", "OK");
       router.push(`/projects/${payload.project}`);
+      }
     },
 };
 

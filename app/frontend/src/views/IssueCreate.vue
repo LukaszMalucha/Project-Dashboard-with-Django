@@ -21,7 +21,7 @@
                   <form @submit.prevent="reportIssue" class="form-content form-wide" enctype="multipart/form-data">
                       <fieldset class="form-box">
                           <div id="formError" class="row row-error text-center">
-                          {{ error }}
+                          {{ getError() }}
                           </div>
                           <div class="row plain-element">
                             <div class="input-field col s4 text-right">
@@ -90,11 +90,15 @@ export default {
     }
   },
   methods: {
-    ...mapGetters(["getUsername", "getPosition", "getProject"]),
+    ...mapGetters(["getUsername", "getPosition", "getProject", "getError"]),
     ...mapActions(["fetchProjectDetails", "performReportIssue"]),
     reportIssue() {
-        this.performReportIssue({"project": this.id, "name": this.issueName, "description" : this.issueDescription, "cost" : this.issueCost  })
-    },
+      if (!this.issueName || !this.issueDescription || !this.issueCost) {
+        this.error = "Fields can't be empty";
+      } else {
+          this.performReportIssue({"project": this.id, "name": this.issueName, "description" : this.issueDescription, "cost" : this.issueCost })
+      }
+    }
   },
   created() {
     this.fetchProjectDetails(this.id);
