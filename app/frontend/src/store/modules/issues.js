@@ -25,6 +25,11 @@ const actions = {
     async performIssueCount({ commit }) {
       const response = await api.issueCount()
       commit("setIssueCount", response.issue_count)
+    },
+    async performAssignIssue({ dispatch }, issue) {
+      await api.assignIssue(issue)
+      dispatch("fetchProjectDetails")
+
     }
 
 };

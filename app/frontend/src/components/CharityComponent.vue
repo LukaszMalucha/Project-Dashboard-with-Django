@@ -12,7 +12,7 @@
                     </span>
                     <p>{{ charity.description| truncatechars(60) }}</p>
                         <button type="submit" @click="triggerAddDonation" class="btn btn-algorithm green">
-                          Donate 5 <img src="@/assets/img/leancoin-button.png" class="icon-small">
+                          Donate 5 <img src="https://project-gamification.s3-eu-west-1.amazonaws.com/static/img/leancoin-button.png" class="icon-small">
                         </button>
 
                 </div>

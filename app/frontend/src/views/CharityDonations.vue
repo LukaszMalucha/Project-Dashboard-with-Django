@@ -2,7 +2,7 @@
 <div v-if="this.checkout_cart.length == undefined" class="row plain-element">
   <div class="row header details-header">
       <div class="col m1 text-left plain-element img-column">
-          <img src="@/assets/img/charity.jpg" class="img responsive img-header">
+          <img src="https://project-gamification.s3-eu-west-1.amazonaws.com/static/img/charity.jpg" class="img responsive img-header">
       </div>
       <div class="col m9 l8 text-left plain-element">
           <div class="box box-details">
@@ -19,7 +19,7 @@
 <div v-else class="row plain-element">
   <div class="row header details-header">
     <div class="col m1 text-left plain-element img-column">
-        <img src="@/assets/img/charity.jpg" class="img responsive img-header">
+        <img src="https://project-gamification.s3-eu-west-1.amazonaws.com/static/img/charity.jpg" class="img responsive img-header">
     </div>
     <div class="col m8 text-left plain-element">
         <div class="box box-details">

@@ -372,14 +372,14 @@ select {
 
 .portrait {
     height: 45px;
-    width: 66%;
+    width: 60%;
     border-top-right-radius: 5px;
     border-bottom-left-radius: 5px;
 }
 
 .btn-card {
     height: 55px;
-    width: 66%;
+    width: 60%;
     background: #003f67;
     padding: 1%;
     box-shadow: none;

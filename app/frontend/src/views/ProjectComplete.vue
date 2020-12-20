@@ -2,7 +2,7 @@
 <div v-if="getPosition() == 'admin'" class="row plain-element">
   <div class="row header details-header">
       <div class="col m1 text-left plain-element img-column">
-          <img src="@/assets/img/propose-project.jpg" class="img responsive img-header">
+          <img src="https://project-gamification.s3-eu-west-1.amazonaws.com/static/img/propose-project.jpg" class="img responsive img-header">
       </div>
       <div class="col m9 l6 text-left plain-element">
           <div class="box box-details">
@@ -15,7 +15,7 @@
         <div class="col s8 m6 l4 plain-element">
             <div class="card form-card">
                 <div class="card-header">
-                    <img src="@/assets/img/icons/gear.png" class="img-responsive">
+                    <img src="https://project-gamification.s3-eu-west-1.amazonaws.com/static/img/icons/gear.png" class="img-responsive">
                     <p><b> Finish Project </b></p>
                 </div>
                  <form @submit.prevent="completeProject" class="form-content form-wide" enctype="multipart/form-data">

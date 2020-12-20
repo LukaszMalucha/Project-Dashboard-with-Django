@@ -2,7 +2,7 @@
 <div v-if="getPosition()" class="row plain-element">
   <div class="row header details-header">
       <div class="col m1 text-left plain-element img-column">
-          <img src="@/assets/img/propose-project.jpg" class="img responsive img-header">
+          <img src="https://project-gamification.s3-eu-west-1.amazonaws.com/static/img/propose-project.jpg" class="img responsive img-header">
       </div>
       <div class="col m9 l6 text-left plain-element">
           <div class="box box-details">
@@ -21,12 +21,15 @@
         <div class="col s8 m6 l5 plain-element">
             <div class="card form-card">
                 <div class="card-header">
-                    <img src="@/assets/img/icons/gear.png" class="img-responsive">
+                    <img src="https://project-gamification.s3-eu-west-1.amazonaws.com/static/img/icons/gear.png" class="img-responsive">
                     <h5> Propose Project </h5>
                 </div>
                  <form @submit.prevent="createProject" class="form-content form-wide" enctype="multipart/form-data">
                       <fieldset class="form-box">
                           <div id="formError" class="row row-error text-center">
+                              <div v-if="getPosition() == 'guest'" class="row plain-element">
+                                  Go to your profile to set the position first
+                              </div>
                           {{ error }}
                           </div>
                           <div class="row plain-element">

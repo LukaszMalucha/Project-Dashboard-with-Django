@@ -2,7 +2,7 @@
 <div v-if="getUsername() == getProject().pm_email" class="row plain-element">
   <div class="row header details-header">
       <div class="col m1 text-left plain-element img-column">
-          <img src="@/assets/img/propose-project.jpg" class="img responsive img-header">
+          <img src="https://project-gamification.s3-eu-west-1.amazonaws.com/static/img/propose-project.jpg" class="img responsive img-header">
       </div>
       <div class="col m9 l6 text-left plain-element">
           <div class="box box-details">
@@ -21,7 +21,7 @@
           <div class="col s6 m4 l3 plain-element">
               <div class="card form-card">
                   <div class="card-header">
-                      <img src="@/assets/img/icons/gear.png" class="img-responsive">
+                      <img src="https://project-gamification.s3-eu-west-1.amazonaws.com/static/img/icons/gear.png" class="img-responsive">
                       <h5> Team Requirements </h5>
                   </div>
                   <form @submit.prevent="teamRequirements" class="form-content form-wide">

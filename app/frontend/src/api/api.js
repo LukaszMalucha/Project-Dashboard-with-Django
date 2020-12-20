@@ -74,6 +74,10 @@ export default {
   issueCount() {
     let endpoint = "/api/projects/issue-count/";
     return apiService(endpoint);
+  },
+  assignIssue(issue) {
+    let endpoint = `/api/projects/issues/${issue}/issue-assign/`;
+    return apiService(endpoint, "PATCH");
   }
 
 

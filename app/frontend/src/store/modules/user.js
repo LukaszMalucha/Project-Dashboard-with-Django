@@ -31,6 +31,9 @@ const actions = {
     }
     else {
       commit('setUsername', null);
+      commit('setPosition',  null);
+      window.localStorage.setItem('username', null);
+      window.localStorage.setItem('position', null);
     }
 
   },

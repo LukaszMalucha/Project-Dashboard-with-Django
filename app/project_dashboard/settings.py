@@ -165,12 +165,7 @@ WEBPACK_LOADER = {
     }
 }
 
-## For testing media
-# AWS_STORAGE_BUCKET_NAME = env("AWS_STORAGE_BUCKET_NAME")
-# AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
-# PUBLIC_MEDIA_LOCATION = "media"
-# MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/{PUBLIC_MEDIA_LOCATION}/"
-# DEFAULT_FILE_STORAGE = "project_dashboard.storage_backends.PublicMediaStorage"
+
 
 # DEPLOYMENT
 if not DEBUG:

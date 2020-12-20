@@ -9,6 +9,8 @@ const state = {
     teamComposition: null,
     teamMembership: null,
     projectMessages: null,
+    teamProfiles: null,
+    teamChartData: {},
 };
 
 const getters = {
@@ -17,7 +19,9 @@ const getters = {
     getTeamRequirements: state => state.teamRequirements,
     getTeamComposition: state => state.teamComposition,
     getTeamMembership: state => state.teamMembership,
-    getProjectMessages: state => state.projectMessages
+    getProjectMessages: state => state.projectMessages,
+    getTeamChartData: state => state.teamChartData,
+    getTeamProfiles: state => state.teamProfiles,
 };
 
 
@@ -48,7 +52,7 @@ const actions = {
         router.push('/');
       }
     },
-    async fetchProjectDetails({ commit }, project) {
+    async fetchProjectDetails({ commit, dispatch }, project) {
       const response = await api.projectDetails(project);
       if (!response)  {
         commit("setError", "Something went wrong. Try again later")
@@ -58,7 +62,10 @@ const actions = {
         commit("setTeamComposition", response.project_team_composition);
         commit("setTeamMembership", response.team_membership);
         commit("setProjectMessages", response.project_messages);
-        router.push('/');
+        const teamDict = response.project_team_composition
+        commit("setTeamProfiles", teamDict['team_profiles'])
+        window.console.log(teamDict['team_profiles'])
+        dispatch("fillTeamChart", teamDict['team_profiles'])
       }
     },
     performAdvanceProject({commit}, payload) {
@@ -106,6 +113,20 @@ const actions = {
       router.push(`/projects/${payload.project}`);
       }
     },
+    fillTeamChart({ commit }, dataset) {
+      const dataLabelsTeamChart = Object.keys(dataset);
+      const dataValuesTeamChart = Object.values(dataset);
+      const chartData = {
+        labels: dataLabelsTeamChart,
+        datasets: [
+          {
+            backgroundColor: ["#2b5b89","#f28e2b", "#e15759", "#76b7b2"],
+            data: dataValuesTeamChart
+          }
+        ]
+      };
+      commit("setTeamChartData", chartData)
+    },
 };
 
 
@@ -127,7 +148,13 @@ const mutations = {
   },
   setProjectMessages: (state, projectMessages) => {
     state.projectMessages = projectMessages
-  }
+  },
+  setTeamChartData: (state, teamChartData) => {
+    state.teamChartData = teamChartData
+  },
+  setTeamProfiles: (state, teamProfiles) => {
+    state.teamProfiles = teamProfiles
+  },
 };
 
 

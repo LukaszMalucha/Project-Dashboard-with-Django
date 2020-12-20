@@ -2,14 +2,14 @@
   <div class="row plain-element">
     <div class="row header details-header">
       <div class="col m1 text-left plain-element img-column">
-        <img src="@/assets/img/project-details.jpg" class="img responsive img-header">
+        <img src="https://project-gamification.s3-eu-west-1.amazonaws.com/static/img/project-details.jpg" class="img responsive img-header">
       </div>
       <div class="col m9 l9 text-left plain-element">
         <div class="box box-details" v-if="project">
           <h5>{{ getProject().name }}</h5>
           <button v-if="getPosition() == 'admin'" @click="advanceProject()" class="btn-algorithm green">
-            <b v-if="getProject().phase == 'proposed'">Launch Project</b>
-            <b v-else>Advance Project</b>
+            <span v-if="getProject().phase == 'proposed'">Launch Project</span>
+            <span v-else>Advance Project</span>
           </button>
           <button v-if="getPosition() == 'admin' && getProject().phase == 'deployment'"
               @click="completeProject()" class="btn-algorithm green">Finish Project!
@@ -23,7 +23,7 @@
           </tr>
           <tr>
             <td>Budget: &nbsp;</td>
-            <td><b><img src="@/assets/img/leancoin.png" class="icon"> {{ getProject().budget }}</b></td>
+            <td><b><img src="https://project-gamification.s3-eu-west-1.amazonaws.com/static/img/leancoin.png" class="icon"> {{ getProject().budget }}</b></td>
           </tr>
           <tr>
             <td>Phase:</td>
@@ -52,15 +52,15 @@
                     <table v-if="getTeamRequirements()">
                       <thead>
                       <tr>
-                        <th class="text-center"><img src="@/assets/img/icons/html.png"
+                        <th class="text-center"><img src="https://project-gamification.s3-eu-west-1.amazonaws.com/static/img/icons/html.png"
                                                      class="img responsive img-skill"></th>
-                        <th class="text-center"><img src="@/assets/img/icons/css.png"
+                        <th class="text-center"><img src="https://project-gamification.s3-eu-west-1.amazonaws.com/static/img/icons/css.png"
                                                      class="img responsive img-skill"></th>
-                        <th class="text-center"><img src="@/assets/img/icons/js.png"
+                        <th class="text-center"><img src="https://project-gamification.s3-eu-west-1.amazonaws.com/static/img/icons/js.png"
                                                      class="img responsive img-skill"></th>
-                        <th class="text-center"><img src="@/assets/img/icons/db.png"
+                        <th class="text-center"><img src="https://project-gamification.s3-eu-west-1.amazonaws.com/static/img/icons/db.png"
                                                      class="img responsive img-skill"></th>
-                        <th class="text-center"><img src="@/assets/img/icons/python.png"
+                        <th class="text-center"><img src="https://project-gamification.s3-eu-west-1.amazonaws.com/static/img/icons/python.png"
                                                      class="img responsive img-skill"></th>
                       </tr>
                       </thead>
@@ -161,8 +161,10 @@
                   </div>
                   <div class="col m6 plain-element">
                     <div class="row plain-element">
-                  
-                </div>
+                      <div class="row plain-element">
+                        <team-chart :chart-data="getTeamChartData()" :styles="chartStyles"></team-chart>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -228,7 +230,7 @@
                       <tr v-for="element in getProject().project_issues" :key="element.id">
                         <td>{{element.name}}</td>
                         <td>{{element.description}}</td>
-                        <td><img src="@/assets/img/leancoin.png" class="icon"> {{element.cost}}
+                        <td><img src="https://project-gamification.s3-eu-west-1.amazonaws.com/static/img/leancoin.png" class="icon"> {{element.cost}}
                         </td>
                         <td id="assignCell" v-if="getProject().pm_email == element.assignee">
                           <button id="buttonAssign" @click="assignIssue(element.id)" class="btn-table green">Assign to Me
@@ -280,12 +282,13 @@
 
 
 <script>
-import { apiService } from "@/common/api.service.js";
 import { mapGetters, mapActions } from "vuex";
+import TeamChart from "@/common/TeamChart.js";
 
 export default {
   name: "ProjectDetails",
   components: {
+    TeamChart
   },
   props: {
     id: {
@@ -299,9 +302,9 @@ export default {
     }
   },
   methods: {
-    ...mapGetters(["getUsername", "getPosition", "getProject", "getTeamMembership",
+    ...mapGetters(["getUsername", "getPosition", "getProject", "getTeamMembership", "getTeamChartData",
                     "getTeamRequirements", "getTeamComposition", "getProjectMessages"]),
-    ...mapActions(["fetchProjectDetails"]),
+    ...mapActions(["fetchProjectDetails", "performAssignIssue"]),
     
   //  Date converter
     formatDate(value) {
@@ -357,12 +360,10 @@ export default {
       })
     },
     assignIssue(issue_id){
-    let endpoint = `/api/projects/issues/${issue_id}/issue-assign/`;
-        let method = "PATCH";
-        apiService(endpoint, method, {})
+    this.performAssignIssue(issue_id)
         .then(
           document.getElementById('buttonAssign').style.display = "none",
-//          document.getElementById('assignCell').textContent = "this.requestUser"
+          document.getElementById('assignCell').textContent = this.getUsername()
         )
     }
   },
@@ -378,6 +379,7 @@ export default {
   },
   created() {
     this.getProjectData();
+    window.console.log(this.getTeamChartData())
   }
 
 }
