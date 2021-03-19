@@ -11,7 +11,7 @@ django-registration==3.0.1
 django-rest-auth==0.9.5
 django-storages==1.7.1
 django-webpack-loader==0.6.0
-DjangoRestFramework==3.9.1
+DjangoRestFramework==3.11.2
 gunicorn==19.9.0
 Pillow==7.0.0
 psycopg2-binary==2.8.4
