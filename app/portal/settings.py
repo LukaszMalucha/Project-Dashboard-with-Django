@@ -41,7 +41,6 @@ INSTALLED_APPS = [
 
     # CORS
     "corsheaders",
-    "materializecssform",
     "storages",
 
     # REST FRAMEWORK
