@@ -1,0 +1,392 @@
+/*------------------------------------------------------------------------------
+    TOP NAVBAR
+------------------------------------------------------------------------------*/
+
+.navbar {
+	border-radius: 0px;
+}
+
+.navbar-header a {
+	font-size: 14px;
+	letter-spacing: 1px;
+	line-height: 36px;
+	margin-top: 0px;
+	font-weight: 400;
+	display: block;
+	color: #fff;
+}
+
+.top-navbar {
+	position: fixed;
+	top: 0px;
+	width: 100%;
+	z-index: 300;
+	border: none;
+	height: 36px;
+	min-height: 36px;
+	padding-left: 0.5%;
+	padding-right: 0.5%;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	margin-bottom: 0px;
+	box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+	background-color: #003f67;
+	border: none;
+}
+
+.navbar-brand .material-icons {
+	color: #1a2026;
+}
+
+
+/*------------------------------------------------------------------------------
+    LEFT-SIDE HEADER AREA
+------------------------------------------------------------------------------*/
+
+
+.top-navbar .navbar-brand {
+	margin: 0px;
+	height: 36px;
+	float: left;
+	text-align: left;
+	padding: 0px;
+	font-weight: 400;
+	color: #fff;
+	background: transparent;
+	text-transform: uppercase;
+}
+
+.navbar-header {
+	width: 200px;
+	margin-left: 0px;
+	float: left;
+}
+
+.navbar-brand .material-icons,
+.navbar-brand .fab {
+	float: left;
+	font-size: 18px;
+	margin-right: 5px;
+	margin-top: -3px;
+	letter-spacing: 1px;
+	height: auto;
+	background: #0077b5;
+	padding: 3px 3px 3px 3px;
+	color: #fff;
+	font-weight: normal;
+}
+
+.navbar-header:hover,
+.navbar-header:focus {
+	background: transparent;
+	color: #00539E;
+}
+
+
+.navbar-header a:hover {
+	text-decoration: none !important;
+}
+
+
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus {
+	background-color: transparent;
+	outline: 0px;
+}
+
+.navbar-default .navbar-brand:hover {
+	color: #00539E;
+}
+
+.navbar-default .navbar-brand:hover .navbar-default .navbar-brand:focus {
+	color: #e5ebef;
+}
+
+
+/*------------------------------------------------------------------------------
+    RIGHT SIDE LINKS
+------------------------------------------------------------------------------*/
+
+
+nav ul a {
+ font-size: 10px;
+ letter-spacing: 0.4px;
+ color: #fff;
+text-transform: uppercase;
+}
+
+.nav-link {
+	height: 100% !important;
+	margin: 0px;
+	padding: 12px 12px;
+}
+
+.nav i,
+.nav i.material-icons {
+	height: 12px;
+	font-size: 12px;
+	margin-right: 6px;
+}
+
+
+.img-logo {
+	height: 20px;
+	margin: 9px 8px 7px 0px;
+}
+
+.top-navbar .navbar-right {
+	width: auto;
+	height: 36px;
+	margin: 0px;
+	line-height: 1;
+	padding: 0px;
+	color: #fff;
+	float: right !important;
+}
+
+.top-navbar .navbar-right>a {
+	padding: 0px;
+	letter-spacing: 1px;
+	font-size: 15px;
+}
+
+.top-navbar .navbar-right>a>i {
+	margin-right: 5px;
+	font-size: 16px;
+	height: 36px;
+}
+
+
+.navbar-right>a:hover,
+.navbar-right>a:focus {
+	text-decoration: none;
+	outline: 0px;
+}
+
+
+nav ul a:hover {
+	background-color: #102332;
+	color: #fff;
+}
+
+nav ul li:hover,
+nav ul li:active {
+	background: transparent;
+	color: #fff;
+}
+
+
+nav ul a:hover {
+	color: #fff;
+}
+
+.nav>li>a:hover,
+.nav>li>a:focus,
+.nav>li>a:active {
+	background-color: #102332;
+	color: #fff;
+}
+
+.navbar-right>a:hover,
+.navbar-right>a:focus {
+	background: #102332;
+	color: #fff;
+}
+
+
+.nav-button {
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.6px;
+  color: #fff;
+  text-transform: uppercase;
+  padding: 0px 0px 0px 8px;
+  height: 12px;
+	margin: 12px 0px 11px 0px;
+  background: none !important;
+  border: none;
+  cursor: pointer;
+}
+
+.nav-button i {
+  position: relative;
+  top: 1px;
+
+}
+
+.btn-logout {
+  margin: 13px 0px 11px 0px;
+}
+
+
+/*------------------------------------------------------------------------------
+    DROPDOWN
+------------------------------------------------------------------------------*/
+
+
+.drop-content {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0.1s, opacity 0.5s linear;
+  position: relative;
+  background-color: #003f67;
+  width: 120px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  left: 10px;
+}
+
+
+.drop-content a {
+  color: #fff;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+
+.drop-content a:hover {
+  background-color: #102332;
+}
+
+
+
+.dropdown:hover .drop-content {
+  visibility: visible;
+  opacity: 1;
+}
+
+
+/*------------------------------------------------------------------------------
+    HAMBURGER
+------------------------------------------------------------------------------*/
+
+
+.topnav {
+  display: none;
+  overflow: hidden;
+  background-color: #003f67;
+  position: relative;
+
+}
+
+
+.topnav #myLinks {
+  display: none;
+}
+
+
+.topnav a {
+  color: #fff;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 14px;
+  display: block;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+}
+
+.topnav .nav-button {
+  font-size: 16px;
+  text-align: left;
+  width: 100%;
+  margin: 0px;
+  padding: 14px 16px;
+  height: auto;
+}
+
+.topnav .nav-button:hover {
+  color: #fff;
+}
+
+.topnav .img-logo {
+  margin: 0px;
+}
+
+.topnav a.icon {
+  background: #003f67;
+  display: block;
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 12px 16px 12px 12px !important;
+}
+
+.topnav a:hover {
+  color: #fff;
+
+}
+
+.topnav .navbar-brand {
+  padding: 12px 12px 0px 12px !important;
+}
+
+
+.topnav .active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+/*------------------------------------------------------------------------------
+    MEDIA QUERIES
+------------------------------------------------------------------------------*/
+
+@media(max-width:1700px) {
+	.top-navbar {
+		padding-left: 0.5%;
+		padding-right: 0.5%;
+	}
+	.navbar-header {
+		width: 30%;
+	}
+}
+
+@media(max-width:1400px) {
+	.top-navbar {}
+}
+
+@media(min-width:1026px) {
+	.sidenav-trigger {
+		display: none !important;
+	}
+}
+
+@media(max-width:1025px) {
+	.top-navbar {
+		padding-left: 0.5%;
+		padding-right: 0px;
+	}
+	.nav>li>a {
+		padding-right: 0px;
+	}
+	.nav-link {
+		display: none !important;
+	}
+	.navbar-header {
+		width: 60%;
+	}
+	nav a.sidenav-trigger i {
+		height: 36px;
+		line-height: 36px;
+	}
+	#trigger {
+		position: relative;
+	}
+	#search-form {
+		display: none;
+	}
+}
+
+@media only screen and (max-width: 601px) {
+  .navbar {
+    display: none;
+  }
+  .topnav {
+    display: block;
+  }
+
+  .topnav .navbar-brand {
+      width: 30%;
+  }
+}
+

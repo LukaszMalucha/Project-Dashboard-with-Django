@@ -1,0 +1,404 @@
+
+
+/*----------------------------------------------
+    LOGIN/REGISTER FORMS
+------------------------------------------------*/
+
+body {
+	background-color: #f5f5f5;
+}
+
+#page-index {
+	background-image: none;
+}
+
+.form-container {
+	padding-top: 140px;
+	width: 70%;
+	margin: auto;
+}
+
+.form-user {
+	text-align: center;
+	max-width: 36%;
+	padding: 15px 0px 0px 0px;
+	margin: 0 auto;
+	background-color: white;
+	border-color: transparent;
+  border: 1px solid #b3b3b3;
+  box-shadow: 1px 1px 1px 0px #b3b3b3;
+	border-radius: 15px;
+	color: #222222;
+	font-weight: 500;
+	margin-bottom: 50px;
+
+}
+
+.btn-login {
+    width: 100.2%;
+    height: 50px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    border-color: transparent;
+    text-align: right;
+    color: white;
+    background-color: #003f67;
+    font-size: 18px;
+    cursor: pointer;
+    position: relative;
+    left: 0px;
+    top: 1px;
+}
+
+.btn-login:hover,
+.btn-login:active,
+.btn-login:focus {
+	background-color: #002f4e;
+}
+
+/*----------------------------------------------
+    ALERTS
+------------------------------------------------*/
+
+
+.row-message {
+  position: fixed;
+  top: 36px;
+  width: 100%;
+  -webkit-animation: fadeOut 4s linear forwards;
+  animation: fadeOut 4s linear forwards;
+}
+
+
+.alert {
+  padding: .75rem 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.alert-success {
+  color: #3c763d;
+  background-color: #dff0d8;
+  border-color: #c3e6cb;
+  position: fixed;
+  width: 100%;
+  top: 36px;
+}
+
+.alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    position: fixed;
+    width: 100%;
+
+}
+
+.error {
+  color: red;
+}
+
+.errorlist {
+  margin: 0px;
+}
+
+
+@keyframes fadeOut {
+  0% {
+    opacity:1;
+  }
+  100% {
+    opacity:0;
+  }
+}
+
+@-moz-keyframes fadeOut {
+  0% {
+    opacity:1;
+  }
+  100% {
+    opacity:0;
+  }
+}
+
+/*----------------------------------------------
+    FORM BOX
+------------------------------------------------*/
+
+.form-box {
+	margin: 0px;
+	padding: 0px;
+	border-bottom-left-radius: 15px;
+	border-bottom-right-radius: 15px;
+	border: none;
+}
+
+
+.form-box a {
+  color: #868686;
+  letter-spacing: 1px;
+  font-size: 12px;
+}
+
+
+.form-box a:hover,
+.form-box a:active,
+.form-box a:focus {
+  color: #003f67;
+}
+
+
+.form-box h3 {
+  margin: 10px;
+  margin-bottom: 20px;
+  letter-spacing: 1px;
+
+}
+
+
+.row-oauth i{
+   margin: 6px 12px;
+   font-size: 16px;
+    color: #868686;
+}
+
+.row-oauth i:hover,
+.row-oauth i:active,
+.row-oauth i:focus {
+  color: #003f67;
+}
+
+
+.row-links {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  color: #868686;
+  letter-spacing: 1px;
+  font-size: 12px;
+}
+
+.row-form {
+    width: 60%;
+    margin: auto;
+}
+
+.input-field {
+	margin-top: 16px;
+	margin-bottom: 16px;
+}
+
+.field-description {
+	text-align: right;
+	position: relative;
+	margin-top: 20px;
+	margin-bottom: 30px;
+	height: 39px;
+}
+
+.field-description h6 {
+	font-size: 14px;
+	font-weight: 600;
+	color: #222;
+	color: #181b1d;
+}
+
+.input-field>label {
+  font-size: 12px;
+	letter-spacing: 1px;
+}
+
+input[type="email"]:not(.browser-default):focus:not([readonly]),
+input[type="password"]:not(.browser-default):focus:not([readonly]),
+input[type="text"]:not(.browser-default):focus:not([readonly]) {
+	border-bottom: 1px solid #003f67;
+	box-shadow: 0 1px 0 0 #003f67;
+}
+
+input[type="email"]:not(.browser-default),
+input[type="password"]:not(.browser-default),
+input[type="text"]:not(.browser-default) {
+  border-bottom: 1px solid #9e9e9e;
+  height: 3rem;
+  color: #003f67;
+  margin: 0 0 8px 0;
+}
+
+.form-box .active {
+  color: #003f67 !important;
+  background: transparent !important;
+}
+
+.orange-text {
+	font-size: 12px;
+}
+
+
+blockquote {
+	font-size: 12px;
+	color: red;
+	border: none;
+	position: relative;
+	top: -50px;
+}
+
+/*----------------------------------------------
+    USER PROFILE
+------------------------------------------------*/
+
+.user-profile {
+	border-radius: 15px;
+	height: 600px;
+	width: 500px;
+	margin: auto;
+	background: white;
+	text-align: center !important;
+	position: relative;
+  border: 1px solid #b3b3b3;
+  box-shadow: 1px 1px 1px 0px #b3b3b3;
+}
+
+.user-profile row {
+	margin: auto;
+}
+
+.user-profile table tr {
+	border: none;
+}
+
+.col-background {
+	height: 600px;
+	background: linear-gradient(to bottom, #2768b2 0%, #003f67 100%);
+	border-top-left-radius: 15px;
+	border-bottom-left-radius: 15px;
+}
+
+.portrait {
+	padding: 0;
+	background: #a7a7a7;
+	overflow: hidden;
+	width: 100px;
+	height: 100px;
+	margin: auto;
+	border-radius: 50%;
+}
+
+.img-portrait {
+	height: 100%;
+	margin: auto;
+	opacity: 0.98;
+}
+
+.img-portrait:hover {
+	opacity: 0.8;
+	transform: scale(1.05);
+	transition-duration: 600ms;
+}
+
+.col-profile {
+	padding: 60px;
+}
+
+.col-profile h6 {
+	font-size: 14px;
+}
+
+.col-profile b {
+	color: #333 !important;
+}
+
+.btn-edit {
+	border: none;
+	border-radius: 10px;
+	height: 18px;
+	width: auto;
+	background: #00548a;
+	padding: 0px 6px;
+	font-size: 12px;
+	font-weight: 500;
+	line-height: 18px;
+	margin-left: 10px;
+	color: white;
+	position: absolute;
+	cursor: pointer;
+}
+
+.btn-edit:hover,
+.btn-edit:active,
+.btn-edit:focus {
+	background: #003f67;
+}
+
+.file-field input[type="text"]:not(.browser-default) {
+	border-bottom: 0px solid black;
+}
+
+.file-field .btn {
+	background-color: #003f67;
+	font-size: 10px;
+	height: 32px;
+	line-height: 32px;
+	border-radius: 5px;
+	margin-top: 10px;
+	width: 100%;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.file-field .btn a {
+	color: white;
+}
+
+.file-field .btn:hover,
+.file-field .btn:active,
+.file-field .btn:focus {
+	color: white;
+	background: #003f67;
+}
+
+.label-checkbox {
+  font-size: 12px
+}
+
+
+/*----------------------------------------------
+    MEDIA QUERIES
+------------------------------------------------*/
+
+@media(max-width:1500px) {
+
+	.form-signin {
+		max-width: 60%;
+	}
+
+	#page-index {
+		padding-top: 0px;
+	}
+
+  .form-user {
+		max-width: 60%;
+	}
+
+}
+
+@media(max-width:859px) {
+	.form-signin {
+		max-width: 100%;
+	}
+
+	.form-user {
+		max-width: 100%;
+	}
+}
+
+@media(max-width:610px) {
+	.user-profile {
+		width: 400px;
+	}
+}
+
+@media(max-width:400px) {
+	.user-profile {
+		width: 300px;
+	}
+}
+

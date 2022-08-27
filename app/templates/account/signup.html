@@ -1,0 +1,60 @@
+{% extends "base.html" %} {% load static %}{% load materializecss %}
+{% block extrahead %}
+<link href="{% static 'css/forms.css' %}" rel="stylesheet"/>
+{% endblock %}
+{% load account socialaccount %}
+{% block content %}
+  <div class="row row-message">
+    {% if form.errors %}
+    {% for element in form.errors.values|slice:":1" %}
+    <div  class="alert alert-danger">
+      <div class="messages text-center">
+
+        <span>{{ element }}</span>
+
+      </div>
+    </div>
+    {% endfor %}
+    {% endif %}
+  </div>
+
+  <div class="form-container">
+
+    <form class="form-user" method="POST" action="{% url 'account_signup' %}">
+      {% csrf_token %}
+      <fieldset class="form-box">
+          <div class="row plain-element center-align">
+            <h3>Sign Up</h3>
+          </div>
+          <div class="row text-center row-form">
+            <div class="row plain-element">
+              <div class="input-field col s12">
+                <input type="text" name="email" id="id_email" required>
+                <label class="" for="id_email">Email</label>
+              </div>
+            </div>
+            <div class="row plain-element">
+              <div class="input-field col s12">
+                <input type="password" name="password1" id="id_password1" required>
+                <label class="" for="id_password1">Password</label>
+              </div>
+            </div>
+            <div class="row plain-element">
+              <div class="input-field col s12">
+                <input type="password" name="password2" id="id_password2" required>
+                <label class="" for="id_password2">Confirm Password</label>
+              </div>
+            </div>
+
+          </div>
+          <div class="row row-links">
+            <p><a :to="{% url 'account_login' %}"> Already have an account?  Log in</a></p>
+          </div>
+          <button type="submit" class="btn-login"><span>Continue <i class="far fa-arrow-alt-circle-right"></i></span>
+          </button>
+        </fieldset>
+    </form>
+  </div>
+  <!-- /container -->
+
+{% endblock %}

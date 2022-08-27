@@ -1,0 +1,337 @@
+/*----------------------------------------------
+    COMMON  STYLES
+------------------------------------------------*/
+
+body {
+    font-family: 'Play', sans-serif;
+    position: relative;
+    margin: 0;
+    padding-bottom: 0;
+    background-color: #e6ecf0;
+    background-image: url('../../static/img/background_form.png');
+    background-size: cover;
+}
+
+.wrapper {
+    margin-top: 10px;
+    padding-right: 25%;
+    padding-left: 25%;
+}
+
+#page-index {
+    background: none;
+}
+
+
+.container {
+    margin-top: 20px;
+    margin-bottom: 100px;
+    padding: 10px;
+    width: 100%;
+    background-color: white;
+    border-radius: 20px;
+    border: 1px outset grey;
+
+}
+
+.welcome {
+    padding: 10px 15px 10px 0px;
+}
+
+
+h1,
+.page-header {
+    color: #83ab41;
+    margin: 10px 0px 10px 0px;
+    border: none;
+}
+
+
+
+.btn {
+    background-color: #83ab41;
+    border-radius: 5px;
+    font-weight: 600;
+}
+
+.region .btn-default {
+  margin-top: 5px !important;
+  margin-right: 1em !important;
+}
+
+
+.welcome .btn {
+    margin: 10px;
+}
+
+primary:active:focus,
+.btn-primary:active:hover,
+.open>.dropdown-toggle.btn-primary.focus,
+.open>.dropdown-toggle.btn-primary:focus,
+.open>.dropdown-toggle.btn-primary:hover,
+.btn-primary:active:focus,
+.btn-primary:active:hover,
+.btn:hover,
+.btn:focus,
+.btn:active {
+    background-color: #6d8f36;
+}
+
+.button-form {
+    margin-top: 5px;
+}
+
+.btn-danger {
+    background-color: #cf0d16;
+}
+
+.btn-danger:hover,
+.btn-danger:focus,
+.btn-danger:active {
+    background-color: #ba0b13;
+    color: white;
+}
+
+
+.modal .button-form {
+    margin-top: 0px;
+}
+
+p {
+    color: black;
+}
+
+
+.route {
+    font-weight: normal;
+    width: 100%;
+    font-size: 0.8rem;
+}
+
+.btn-default:hover,
+btn-default:active,
+btn-default:focus,
+.route:hover,
+.route:active,
+.route:focus {
+    background-color: #6d8f36;
+    color: white;
+}
+
+
+#deleteModal {
+    width: 35%;
+    background-color: transparent;
+    box-shadow: none;
+}
+
+.modal .modal-footer {
+    background-color: transparent;
+    border: none;
+}
+
+
+/*------------------------------------------------------------------------------
+    TOP NAVBAR
+------------------------------------------------------------------------------*/
+
+nav {
+    background-color: transparent;
+    box-shadow: none;
+}
+
+.pagination>.active>a,
+.pagination>.active>a:focus,
+.pagination>.active>a:hover {
+    background-color: #83ab41;
+    border-color: #83ab41;
+}
+
+.navbar .nav li a{
+    color: black;
+}
+
+
+.navbar-default .navbar-nav > li > a:hover {
+    color: #919932;
+    background-color: transparent;
+}
+
+
+.navbar-text {
+    margin: 0px;
+}
+
+#user {
+    padding-right: 0px;
+    color: #24292e;
+}
+/*------------------------------------------------------------------------------
+    BREADCRUMB
+------------------------------------------------------------------------------*/
+
+.breadcrumb {
+    background: transparent;
+
+}
+
+ul.breadcrumb {
+    margin-top: 10px;
+}
+
+.breadcrumb li.active a {
+    color: black;
+}
+
+.breadcrumb li.active a:hover {
+    color: grey;
+}
+
+
+
+/*------------------------------------------------------------------------------
+    CONTENTS
+------------------------------------------------------------------------------*/
+
+#content {
+    padding-bottom: 10px;
+}
+
+.prettyprint {
+    border: 1px solid #acacae;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 13px;
+}
+
+
+
+
+.well {
+    border: 1px solid #acacae;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 13px;
+    border-top-left-radius: 0px;
+}
+
+.well label {
+    color: #333;
+
+}
+
+
+.nav-tabs>li.active>a,
+.nav-tabs>li.active>a:focus,
+.nav-tabs>li.active>a:hover {
+    color: black;
+}
+
+.nav-tabs {
+    border: none;
+}
+
+
+/*------------------------------------------------------------------------------
+    EDIT & ADD FORMS +
+------------------------------------------------------------------------------*/
+
+input[type="password"]:not(.browser-default),
+input.invalid[type="password"]:not(.browser-default),
+input.invalid[type="password"]:not(.browser-default):focus,
+input[type="password"]:not(.browser-default):focus:not([readonly]),
+input.valid[type="password"]:not(.browser-default),
+input[type="password"]:not(.browser-default),
+input[type="email"]:not(.browser-default),
+input.invalid[type="email"]:not(.browser-default),
+input.invalid[type="email"]:not(.browser-default):focus,
+input[type="email"]:not(.browser-default):focus:not([readonly]),
+input.valid[type="email"]:not(.browser-default),
+input[type="number"]:not(.browser-default):focus:not([readonly]),
+input.valid[type="number"]:not(.browser-default),
+input.invalid[type="text"]:not(.browser-default),
+input.invalid[type="text"]:not(.browser-default):focus,
+input.invalid[type="text"]:not(.browser-default),
+input[type="text"]:not(.browser-default):focus:not([readonly]),
+input[type="text"]:not(.browser-default),
+input.valid[type="text"]:not(.browser-default),
+input[type="search"]:not(.browser-default),
+input[type="search"]:not(.browser-default):focus:not([readonly]),
+input.invalid[type="number"]:not(.browser-default),
+input.invalid[type="number"]:not(.browser-default),
+input.invalid[type="number"]:not(.browser-default):focus,
+input[type="number"]:not(.browser-default) {
+    border-bottom: none;
+    box-shadow: none;
+    color: black;
+    padding: 0px 0px 0px 5px;
+}
+
+input[type="password"]:not(.browser-default),
+input.invalid[type="password"]:not(.browser-default),
+input.invalid[type="password"]:not(.browser-default):focus,
+input[type="email"]:not(.browser-default),
+input.invalid[type="email"]:not(.browser-default),
+input.invalid[type="email"]:not(.browser-default):focus,
+input[type="number"]:not(.browser-default),
+input.invalid[type="number"]:not(.browser-default),
+input.invalid[type="number"]:not(.browser-default):focus,
+input[type="text"]:not(.browser-default),
+input.invalid[type="text"]:not(.browser-default),
+input.invalid[type="number"]:not(.browser-default) {
+    background-color: white;
+    border-radius: 5px;
+}
+
+
+.nav-tabs>li.active>a,
+.nav-tabs>li.active>a:focus,
+.nav-tabs>li.active>a:hover {
+
+    background-color: #fff;
+    border: 1px solid #acacae;
+    border-bottom-color: transparent;
+}
+
+
+/*------------------------------------------------------------------------------
+    MEDIA QUERIES
+------------------------------------------------------------------------------*/
+
+
+
+@media(max-width:952px) {
+
+
+    .dropdown-content {
+        margin-top: -10px;
+    }
+
+
+
+    h1 {
+       font-size: 2.2rem;
+    }
+
+
+}
+
+
+@media(max-width:415px) {
+
+
+
+
+    h3 {
+        font-size: 16px;
+    }
+
+    .welcome {
+        padding: 0px;
+    }
+
+    .btn-col {
+        padding: 0px;
+        width: 90%;
+    }
+
+}
+

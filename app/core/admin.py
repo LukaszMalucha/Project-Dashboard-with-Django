@@ -1,0 +1,106 @@
+from core import models, models_charity, models_project
+from django.contrib import admin
+
+
+# USER PROFILE
+
+class MyProfileModelAdmin(admin.ModelAdmin):
+    """Displaying MyProfile in Admin Panel"""
+    list_display = ["owner", "position", "personality", "image"]
+
+    class Meta:
+        model = models.MyProfile
+
+    list_filter = (
+        "position", "personality"
+    )
+
+
+# CHARITY
+
+class CharityModelAdmin(admin.ModelAdmin):
+    """Displaying Charity in Admin Panel"""
+    ordering = ["name"]
+    list_display = ["name", "description"]
+
+    class Meta:
+        model = models_charity.CharityModel
+
+
+class DonationModelAdmin(admin.ModelAdmin):
+    class Meta:
+        model = models_charity.DonationModel
+
+    list_display = ["charity", "date"]
+
+    list_filter = (
+        "donor", "charity__name"
+    )
+
+
+# PROJECTS
+
+
+class ProjectModelAdmin(admin.ModelAdmin):
+    """Displaying Projects in Admin Panel"""
+    ordering = ["name"]
+    list_display = ["name", "phase", "proposed_by", "budget", "id"]
+
+    class Meta:
+        model = models_project.ProjectModel
+
+
+class IssueModelAdmin(admin.ModelAdmin):
+    """Displaying Issues in Admin Panel"""
+    list_display = ["name", "project", "cost", "assigned_to"]
+
+    list_filter = (
+        "project",
+    )
+
+    class Meta:
+        model = models_project.IssueModel
+
+
+class TeamRequirementsModelAdmin(admin.ModelAdmin):
+    """Displaying Skillset List in Admin Panel"""
+    list_display = ["project", "html", "css", "js", "db", "python"]
+
+    class Meta:
+        model = models_project.TeamRequirementsModel
+
+
+class TeamMembershipModelAdmin(admin.ModelAdmin):
+    """Displaying Team Membership in Admin Panel"""
+    list_display = ["project", "member", "committed_skill"]
+
+    search_fields = ["project", "member", "committed_skill"]
+
+    class Meta:
+        model = models_project.TeamMembershipModel
+
+
+class ProjectMessageModelAdmin(admin.ModelAdmin):
+    """Displaying Project Messages in Admin Panel"""
+    list_display = ["project", "message_date", "message"]
+    # change_list_template = "admin/project_message_summary_change_list.html"
+    date_hierarchy = "message_date"
+    search_fields = ["message"]
+    list_filter = (
+        "project",
+    )
+
+
+
+admin.site.register(models.MyProfile, MyProfileModelAdmin)
+
+admin.site.register(models_charity.CharityModel, CharityModelAdmin)
+admin.site.register(models_charity.DonationModel, DonationModelAdmin)
+
+admin.site.register(models_project.ProjectModel, ProjectModelAdmin)
+
+admin.site.register(models_project.IssueModel, IssueModelAdmin)
+admin.site.register(models_project.TeamRequirementsModel, TeamRequirementsModelAdmin)
+admin.site.register(models_project.TeamMembershipModel, TeamMembershipModelAdmin)
+admin.site.register(models_project.ProjectMessageModel, ProjectMessageModelAdmin)
+

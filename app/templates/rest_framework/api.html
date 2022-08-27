@@ -1,0 +1,83 @@
+{% extends "rest_framework/base.html" %}
+{% load static %}
+{% load i18n %}
+{% load rest_framework %}
+
+{% block style %}
+{{ block.super }}
+<link rel="shortcut icon" type="image/png" href="https://septellar.s3-eu-west-1.amazonaws.com/img/logo-small.png"/>
+<!-- Materialize-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+<!-- FontAwesome Styles-->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css"
+      integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns" crossorigin="anonymous">
+<!-- Custom Styles-->
+<link href="{% static 'css/api.css' %}" rel="stylesheet"/>
+<link href="{% static 'css/navbar.css' %}" rel="stylesheet"/>
+
+
+<!-- Fonts-->
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600&display=swap" rel="stylesheet">
+<!-- Material Icons-->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+{% endblock %}
+
+
+{% block title %}REST API{% endblock %}
+
+{% block navbar %}
+<nav class="navbar navbar-default top-navbar" role="navigation">
+  <div class="navbar-header">
+      <a class="navbar-brand waves-effect waves-dark" href="/">
+          <img src="https://septellar.s3-eu-west-1.amazonaws.com/img/septellar-white-md.png" alt="Logo"
+             class="img-logo"/>
+      </a>
+    </div>
+  <ul class="nav navbar-top-links navbar-right">
+    {% if user.is_authenticated %}
+      <form method="post" action="/auth/logout/">
+        {% csrf_token %}
+        <span><button class="nav-button">Logout</button></span>
+      </form>
+    </li>
+    {% else %}
+    <li>
+      <div class="dropdown">
+        <button class="dropbtn nav-button"><i class="fas fa-caret-down"></i>Login/Register</button>
+        <div id="myDropdown" class="drop-content">
+          <a class="navigation" href="/auth/login/">Log In</a>
+          <a class="navigation" href="/auth/registration/">Register</a>
+        </div>
+      </div>
+    </li>
+    {% endif %}
+  </ul>
+</nav>
+{% endblock %}
+
+{% block breadcrumbs %}
+<ul class="breadcrumb">
+  {% for breadcrumb_name, breadcrumb_url in breadcrumblist %}
+  {% if forloop.last %}
+  <li class="active"><a href="{{ breadcrumb_url }}">{{ breadcrumb_name }}</a></li>
+  {% else %}
+  <li><a href="{{ breadcrumb_url }}">{{ breadcrumb_name }}</a></li>
+  {% endif %}
+  {% empty %}
+  {% block breadcrumbs_empty %}&nbsp;{% endblock breadcrumbs_empty %}
+  {% endfor %}
+</ul>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+

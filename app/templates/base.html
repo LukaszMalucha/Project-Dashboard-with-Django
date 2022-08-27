@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Project Dashboard</title>
+  <meta name="Description" content="Project management Dashboard made with Django.
+                                        This Project is a simulation of work environment, where more traditional
+                                        agile techniques are blended with key gamification concepts of 'reward' and 'role'. ">
+  <meta name="KeyWords" content="data, django, dashboard">
+  <link rel="shortcut icon" type="image/png" href="https://septellar.s3-eu-west-1.amazonaws.com/img/logo-small.png"/>
+    <!-- Fonts-->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600&display=swap" rel="stylesheet">
+  <!-- Material Icons-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- Materialize-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <!-- FontAwesome Styles-->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css"
+        integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns" crossorigin="anonymous">
+  <script src="https://kit.fontawesome.com/cb5db23bd5.js"></script>
+  <!-- Custom Styles-->
+  <link href="{% static 'css/custom-styles.css' %}" rel="stylesheet"/>
+  <link href="{% static 'css/navbar.css' %}" rel="stylesheet"/>
+  <link href="{% static 'css/data.css' %}" rel="stylesheet"/>
+  <!-- Material Icons-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  {% block extrahead %}{% endblock %} {% block head_js %} {% endblock head_js %}
+</head>
+
+<body>
+<div id="wrapper">
+  <!-- TOP NAVBAR -->
+  {% block navbar %}
+  <nav class="navbar navbar-default top-navbar" role="navigation">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">
+        <img src="https://septellar.s3-eu-west-1.amazonaws.com/img/septellar-white-md.png" alt="Logo"
+             class="img-logo"/>
+      </a>
+    </div>
+    <ul class="nav navbar-top-links navbar-right">
+      <li><a class="nav-link" href="/"><i class="fas fa-project-diagram"></i>Dashboard</a>
+      </li>
+      <li><a class="nav-link" href="/api/projects/"><i class="fas fa-terminal"></i>REST Api</a>
+      </li>
+      <li><a class="nav-link" href="/charity"><i class="fas fa-donate"></i>Charity</a>
+      </li>
+      <li><a class="nav-link"
+             href="{% url 'user:profile' %}"><i class="fas fa-user-alt"></i>Profile</a></li>
+      {% if user.is_authenticated %}
+      <li>
+        <form method="post" action="{% url 'account_logout' %}">
+          {% csrf_token %}
+          <span><button class="nav-button btn-logout">Logout</button></span>
+        </form>
+      </li>
+      {% else %}
+
+      <li>
+        <div class="dropdown">
+          <button class="dropbtn nav-button"><i class="fas fa-caret-down"></i>Login/Register</button>
+          <div id="myDropdown" class="drop-content">
+            <a href="{% url 'account_login' %}">Log In</a>
+            <a href="{% url 'account_signup' %}">Register</a>
+          </div>
+        </div>
+      </li>
+      {% endif %}
+    </ul>
+
+  </nav>
+  <div class="topnav">
+    <a class="navbar-brand" href="/">
+      <img src="https://septellar.s3-eu-west-1.amazonaws.com/img/septellar-white-md.png" alt="Logo"
+           class="img-logo"/>
+    </a>
+    <div id="myLinks">
+      {% if user.is_authenticated %}
+      <form method="post" action="{% url 'account_logout' %}">
+        {% csrf_token %}
+        <span><button class="nav-button">Logout</button></span>
+      </form>
+
+      {% else %}
+      <a href="{% url 'account_login' %}">Log In</a>
+      <a href="{% url 'account_signup' %}">Register</a>
+      {% endif %}
+    </div>
+    <a href="javascript:void(0);" class="icon" onclick="dropdown()">
+      <i class="fa fa-bars"></i>
+    </a>
+  </div>
+
+  {% endblock %}
+  <!-- PAGE-WRAPPER -->
+
+  <!-- PAGE-INDEX -->
+  <div id="page-index">
+
+    {% block content %}
+    {% endblock %}
+
+  </div>
+  <!-- PAGE-INDEX -->
+</div>
+<div class="footer">
+  <p><a target="_blank" href="https://www.freeprivacypolicy.com/privacy/view/9b972ff9a2aaeda03f07216c15625791/">Privacy
+    Policy</a> • © 2019 - 2020 www.unflasked.com - All Rights Reserved • Powered by Septellar &trade;</p>
+</div>
+<!-- /. WRAPPER  -->
+<!-- JS Scripts-->
+
+<!-- Materialize Js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+<!-- Custom Js -->
+<script src="{% static 'js/custom-scripts.js' %}"></script>
+
+{% block js %}
+{% endblock %}
+
+</body>
+
+</html>
