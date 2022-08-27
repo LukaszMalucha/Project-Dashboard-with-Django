@@ -5,6 +5,7 @@ django-allauth==0.47.0
 django-cors-headers==3.3.0
 django-daterange-filter==1.3.0
 django-environ==0.9.0
+django-filter==21.1
 dj-rest-auth==1.1.0
 django-materializecss-form==1.1.12
 django-allauth==0.47.0
